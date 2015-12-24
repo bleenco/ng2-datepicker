@@ -1,0 +1,38 @@
+{
+  "name": "ng2-datepicker",
+  "version": "0.1.0",
+  "description": "Angular2 Datepicker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkuri/ng2-datepicker.git"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "prepublish": "tsd install && tsc"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "datepicker",
+    "date",
+    "directive"
+  ],
+  "author": "Jan Kuri <jkuri88@gmail.com>",
+  "main": "ng2-datepicker.js",
+  "typings": "./ng2-datepicker.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "angular2": "2.0.0-beta.0",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
+    "moment": "^2.10.6",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "zone.js": "0.5.10"
+  },
+  "devDependencies": {
+    "systemjs": "0.19.6",
+    "tsd": "^0.6.5",
+    "typescript": "^1.7.3"
+  }
+}

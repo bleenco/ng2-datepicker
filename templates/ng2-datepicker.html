@@ -1,0 +1,32 @@
+<input type="text" 
+       class="ng-datepicker-input" 
+       (focus)="openDatepicker()" 
+       [value]="viewValue">
+
+<div class="ng-datepicker" *ngIf="isOpened">
+  <div class="controls">
+    <div class="left">
+      <i class="fa fa-backward prev-year-btn" (click)="prevYear()"></i>
+      <i class="fa fa-angle-left prev-month-btn" (click)="prevMonth()"></i>
+    </div>
+    <span class="date">
+      {{ dateValue }}
+    </span>
+    <div class="right">
+      <i class="fa fa-angle-right next-month-btn" (click)="nextMonth()"></i>
+      <i class="fa fa-forward next-year-btn" (click)="nextYear()"></i>
+    </div>
+  </div>
+  <div class="day-names">
+    <span *ngFor="#dn of dayNames">
+      <span>{{ dn }}</span>
+    </span>
+  </div>
+  <div class="calendar">
+    <span *ngFor="#d of days; #i = index;">
+      <span class="day" [ngClass]="{'disabled': !d.enabled}" (click)="selectDate($event, d)">
+        {{ d.day }}
+      </span>
+    </span>
+  </div>
+</div>
