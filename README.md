@@ -30,6 +30,7 @@ If you are using SystemJS you can map to ng2-datepicker in your configuration.
 
 ```ts
 import {Component} from 'angular2/core';
+import {FORM_DIRECTIVES} from 'angular2/common';
 import {DatePicker} from 'ng2-datepicker';
 
 class Test {
@@ -41,7 +42,7 @@ class Test {
     <datepicker [(ngModel)]="test.date"></datepicker>
     <datepicker [(ngModel)]="test1.date" view-value="DD.MM.YYYY" model-value="DD.MM.YYYY" init-date="12.5.2017"></datepicker>
   `,
-  directives: [DatePicker]
+  directives: [DatePicker, FORM_DIRECTIVES]
 })
 
 class App {
