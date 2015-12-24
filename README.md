@@ -17,6 +17,9 @@ If you are using SystemJS you can map to ng2-datepicker in your configuration.
 
 ```html
 <!-- index.html -->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 <script>
   SystemJS.config({
     map: {
