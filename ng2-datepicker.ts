@@ -19,7 +19,6 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
   public dayNames: Array<string>;
   private el: any;
   private date: any;
-  private firstWeekDaySunday: boolean;
   private viewContainer: ViewContainerRef;
   private onChange: Function;
   private onTouched: Function;
@@ -28,6 +27,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
   @Input('model-format') modelFormat: string;
   @Input('view-format') viewFormat: string;
   @Input('init-date') initDate: string;
+  @Input('first-week-day-sunday') firstWeekDaySunday: boolean;
 
   constructor(cd: NgModel, viewContainer: ViewContainerRef) {
     cd.valueAccessor = this;
@@ -81,10 +81,20 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     let month = date.month();
     let year = date.year();
     let n = 1;
-    let firstWeekDay = date.set('date', 1).day();
+    let firstWeekDay = null;
 
     this.dateValue = date.format('MMMM YYYY');
     this.days = [];
+
+    if (this.firstWeekDaySunday === true) {
+      firstWeekDay = date.set('date', 2).day();
+    } else {
+      firstWeekDay = date.set('date', 1).day();
+    }
+
+    if (firstWeekDay !== 1) {
+        n -= firstWeekDay - 1;
+    }
 
     for (let i = n; i <= lastDayOfMonth; i += 1) {
       if (i > 0) {

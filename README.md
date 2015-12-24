@@ -20,7 +20,8 @@ If you are using SystemJS you can map to ng2-datepicker in your configuration.
 <script>
   SystemJS.config({
     map: {
-      "ng2-slimscroll": "node_modules/ng2-slimscroll/ng2-slimscroll.js"
+      "ng2-slimscroll": "node_modules/ng2-slimscroll/ng2-slimscroll.js",
+      "moment": "node_modules/moment/moment.js"
     }
   });
 </script>
