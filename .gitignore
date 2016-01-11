@@ -3,4 +3,4 @@ typings/
 npm-debug.log
 ng2-datepicker.d.ts
 ng2-datepicker.js
-ng2-datepicker.js.map
+*.map

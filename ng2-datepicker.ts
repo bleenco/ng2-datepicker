@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, Input, AfterViewInit} from 'angular2/core';
+import {Component, ViewContainerRef, Input, Output, EventEmitter, AfterViewInit} from 'angular2/core';
 import {NgIf, NgFor, NgClass, NgModel, FORM_DIRECTIVES, ControlValueAccessor} from 'angular2/common';
 import * as moment_ from 'moment';
 
@@ -23,11 +23,15 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
   private onChange: Function;
   private onTouched: Function;
   private cd: any;
+  private cannonical: number;
 
   @Input('model-format') modelFormat: string;
   @Input('view-format') viewFormat: string;
   @Input('init-date') initDate: string;
   @Input('first-week-day-sunday') firstWeekDaySunday: boolean;
+  @Input('static') isStatic: boolean;
+
+  @Output() changed: EventEmitter<Date> = new EventEmitter<Date>();
 
   constructor(cd: NgModel, viewContainer: ViewContainerRef) {
     cd.valueAccessor = this;
@@ -71,9 +75,12 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
 
   public selectDate(e, date): void {
     e.preventDefault();
+    if (this.isSelected(date)) return;
+
     let selectedDate = moment(date.day + '.' + date.month + '.' + date.year, 'DD.MM.YYYY');
     this.setValue(selectedDate);
     this.closeDatepicker();
+    this.changed.emit(selectedDate.toDate());
   }
 
   private generateCalendar(date): void {
@@ -93,7 +100,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     }
 
     if (firstWeekDay !== 1) {
-        n -= firstWeekDay - 1;
+      n -= firstWeekDay - 1;
     }
 
     for (let i = n; i <= lastDayOfMonth; i += 1) {
@@ -103,6 +110,11 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
         this.days.push({ day: null, month: null, year: null, enabled: false });
       }
     }
+  }
+
+  isSelected(date) {
+    let selectedDate = moment(date.day + '.' + date.month + '.' + date.year, 'DD.MM.YYYY');
+    return selectedDate.toDate().getTime() === this.cannonical;
   }
 
   private generateDayNames(): void {
@@ -118,7 +130,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     let body = document.getElementsByTagName('body')[0];
 
     body.addEventListener('click', (e) => {
-      if (!this.isOpened || !e.target) { return; }
+      if (!this.isOpened || !e.target)  return;
       if (this.el !== e.target && !this.el.contains(e.target)) {
         this.closeDatepicker();
       }
@@ -129,6 +141,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     let val = moment(value, this.modelFormat || 'YYYY-MM-DD');
     this.viewValue = val.format(this.viewFormat || 'Do MMMM YYYY');
     this.cd.viewToModelUpdate(val.format(this.modelFormat || 'YYYY-MM-DD'));
+    this.cannonical = val.toDate().getTime();
   }
 
   private initValue(): void {
@@ -142,7 +155,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
   }
 
   writeValue(value: string): void {
-    if (!value) { return; }
+    if (!value) return;
     this.setValue(value);
   }
 
