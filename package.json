@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Angular2 Datepicker",
   "repository": {
     "type": "git",
@@ -31,5 +31,8 @@
     "tsd": "^0.6.5",
     "typescript": "^1.7.5",
     "zone.js": "0.5.10"
+  },
+  "dependencies": {
+    "moment": "^2.11.2"
   }
 }
