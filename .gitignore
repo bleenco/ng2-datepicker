@@ -1,0 +1,16 @@
+# misc
+**/*.js
+**/*.js.map
+!make.js
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+
+# bundles
+bundles/
+
+# typings
+typings/
