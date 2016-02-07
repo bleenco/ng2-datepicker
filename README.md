@@ -9,7 +9,7 @@ Angular2 Datepicker Component
 
 ## Installation: 
 
-This component is compatible with `angular-cli` and it's recommended way to use it with conjuction with it.
+This component is compatible with `angular-cli` and it's recommended way to use it in conjunction with it.
 Note that you **must** use `angular-cli` current master as `npm` package is outdated.
 
 ### Installation procedure:

@@ -9,8 +9,5 @@
 # IDEs and editors
 /.idea
 
-# bundles
-bundles/
-
 # typings
 typings/
