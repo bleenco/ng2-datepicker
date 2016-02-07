@@ -22,6 +22,7 @@ npm link
 ````shell
 ng new your-project-name
 cd your-project-name
+npm link angular-cli
 ng install ng2-datepicker
 ````
 
