@@ -40,7 +40,7 @@ class Test {
 @Component({
   template: `
     <datepicker [(ngModel)]="test.date"></datepicker>
-    <datepicker [(ngModel)]="test1.date" view-value="DD.MM.YYYY" model-value="DD.MM.YYYY" init-date="12.5.2017"></datepicker>
+    <datepicker [(ngModel)]="test1.date" view-format="DD.MM.YYYY" model-format="YYY-MM-DD" init-date="2017-05-12"></datepicker>
   `,
   directives: [DatePicker, FORM_DIRECTIVES]
 })
