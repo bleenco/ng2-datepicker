@@ -325,7 +325,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     }
 
     if (firstWeekDay !== 1) {
-      n -= firstWeekDay - 1;
+      n -= (firstWeekDay + 6) % 7;
     }
 
     for (let i = n; i <= lastDayOfMonth; i += 1) {
