@@ -6,6 +6,13 @@ import * as moment_ from 'moment';
 
 const moment: moment.MomentStatic = (<any>moment_)['default'] || moment_;
 
+interface CalendarDate {
+  day: number;
+  month: number;
+  year: number;
+  enabled: boolean;
+}
+
 @Component({
   selector: 'datepicker[ngModel]',
   template: `
@@ -240,7 +247,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
   public isOpened: boolean;
   public dateValue: string;
   public viewValue: string;
-  public days: Array<Object>;
+  public days: Array<CalendarDate>;
   public dayNames: Array<string>;
   private el: any;
   private date: any;
@@ -298,7 +305,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     this.generateCalendar(this.date);
   }
 
-  public selectDate(e, date): void {
+  public selectDate(e: MouseEvent, date: CalendarDate): void {
     e.preventDefault();
     if (this.isSelected(date)) return;
 
@@ -308,12 +315,12 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     this.changed.emit(selectedDate.toDate());
   }
 
-  private generateCalendar(date): void {
+  private generateCalendar(date: moment.Moment): void {
     let lastDayOfMonth = date.endOf('month').date();
     let month = date.month();
     let year = date.year();
     let n = 1;
-    let firstWeekDay = null;
+    let firstWeekDay: number = null;
 
     this.dateValue = date.format('MMMM YYYY');
     this.days = [];
@@ -337,7 +344,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     }
   }
 
-  isSelected(date) {
+  isSelected(date: CalendarDate) {
     let selectedDate = moment(date.day + '.' + date.month + '.' + date.year, 'DD.MM.YYYY');
     return selectedDate.toDate().getTime() === this.cannonical;
   }
