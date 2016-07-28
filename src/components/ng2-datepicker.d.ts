@@ -1,11 +1,16 @@
-/// <reference path="../../typings/tsd.d.ts" />
-import { ViewContainerRef, EventEmitter, AfterViewInit } from 'angular2/core';
-import { NgModel, ControlValueAccessor } from 'angular2/common';
+import { ViewContainerRef, EventEmitter, AfterViewInit } from '@angular/core';
+import { ControlValueAccessor, NgModel } from '@angular/common';
+export interface CalendarDate {
+    day: number;
+    month: number;
+    year: number;
+    enabled: boolean;
+}
 export declare class DatePicker implements ControlValueAccessor, AfterViewInit {
     isOpened: boolean;
     dateValue: string;
     viewValue: string;
-    days: Array<Object>;
+    days: Array<CalendarDate>;
     dayNames: Array<string>;
     private el;
     private date;
@@ -28,9 +33,9 @@ export declare class DatePicker implements ControlValueAccessor, AfterViewInit {
     prevMonth(): void;
     nextYear(): void;
     nextMonth(): void;
-    selectDate(e: any, date: any): void;
+    selectDate(e: MouseEvent, date: CalendarDate): void;
     private generateCalendar(date);
-    isSelected(date: any): boolean;
+    isSelected(date: CalendarDate): boolean;
     private generateDayNames();
     private initMouseEvents();
     private setValue(value);

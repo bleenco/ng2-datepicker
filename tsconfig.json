@@ -1,13 +1,22 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "module": "system",
-    "target": "ES5",
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "mapRoot": "",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "rootDir": ".",
+    "sourceMap": true,
+    "sourceRoot": "./",
+    "target": "es5"
   },
+  "files": [
+    "typings/index.d.ts",
+    "ng2-datepicker.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

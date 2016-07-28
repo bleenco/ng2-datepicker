@@ -1,12 +1,17 @@
-/// <reference path="../../typings/tsd.d.ts" />
-
-import {Component, ViewContainerRef, Input, Output, EventEmitter, AfterViewInit} from 'angular2/core';
-import {NgIf, NgFor, NgClass, NgModel, FORM_DIRECTIVES, ControlValueAccessor} from 'angular2/common';
+import {
+  Component, 
+  ViewContainerRef, 
+  Input, 
+  Output, 
+  EventEmitter, 
+  AfterViewInit
+} from '@angular/core';
+import {FORM_DIRECTIVES, ControlValueAccessor, NgModel} from '@angular/common';
 import * as moment_ from 'moment';
 
 const moment: moment.MomentStatic = (<any>moment_)['default'] || moment_;
 
-interface CalendarDate {
+export interface CalendarDate {
   day: number;
   month: number;
   year: number;
@@ -239,9 +244,7 @@ interface CalendarDate {
     line-height: 50px;
   }
   `],
-  providers: [],
-  directives: [FORM_DIRECTIVES, NgIf, NgFor, NgClass],
-  pipes: []
+  directives: [FORM_DIRECTIVES],
 })
 export class DatePicker implements ControlValueAccessor, AfterViewInit {
   public isOpened: boolean;

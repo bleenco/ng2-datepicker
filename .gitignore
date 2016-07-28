@@ -1,10 +1,7 @@
-# misc
 **/*.js
 **/*.js.map
-!make.js
 
-# dependencies
+npm-debug.log
+
 /node_modules
-
-# IDEs and editors
-/.idea
+/typings
