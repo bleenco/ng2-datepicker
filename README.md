@@ -5,25 +5,13 @@ Angular2 Datepicker Component
 
 ## Demo
 
-[http://jankuri.com/components/angular2-datepicker](http://jankuri.com/components/angular2-datepicker)
+[http://demo.jankuri.com/ng2-datepicker](http://demo.jankuri.com/ng2-datepickerr)
 
 ## Installation: 
 
-This component is compatible with `angular-cli` and it's recommended way to use it in conjunction with it.
-Note that you **must** use `angular-cli` current master as `npm` package is outdated.
 
-### Installation procedure:
 ````shell
-git clone https://github.com/angular/angular-cli.git
-cd angular-cli 
-npm install
-npm link
-````
-````shell
-ng new your-project-name
-cd your-project-name
-npm link angular-cli
-ng install ng2-datepicker
+npm install ng2-datepicker
 ````
 
 ## Use Example:
@@ -31,7 +19,7 @@ ng install ng2-datepicker
 ```ts
 import {Component} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
-import {DatePicker} from 'ng2-datepicker';
+import {DatePicker} from 'ng2-datepicker/ng2-datepicker';
 
 class Test {
   date: string;
@@ -55,10 +43,6 @@ class App {
   }
 }
 ```
-
-## Author
-
-[Jan Kuri](http://www.jankuri.com)
 
 ## Licence
 
