@@ -38,12 +38,12 @@ interface CalendarDate {
       </div>
     </div>
     <div class="day-names">
-      <span *ngFor="#dn of dayNames">
+      <span *ngFor="let dn of dayNames">
         <span>{{ dn }}</span>
       </span>
     </div>
     <div class="calendar">
-      <span *ngFor="#d of days; #i = index;">
+      <span *ngFor="let d of days; let i = index">
         <span class="day" [ngClass]="{'disabled': !d.enabled, 'selected': isSelected(d)}" (click)="selectDate($event, d)">
           {{ d.day }}
         </span>
