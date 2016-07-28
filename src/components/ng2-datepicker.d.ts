@@ -1,5 +1,5 @@
 import { ViewContainerRef, EventEmitter, AfterViewInit } from '@angular/core';
-import { ControlValueAccessor, NgModel } from '@angular/common';
+import { NgModel, ControlValueAccessor } from '@angular/common';
 export interface CalendarDate {
     day: number;
     month: number;

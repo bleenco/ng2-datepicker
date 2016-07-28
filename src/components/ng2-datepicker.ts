@@ -4,12 +4,13 @@ import {
   Input, 
   Output, 
   EventEmitter, 
-  AfterViewInit
+  AfterViewInit,
+  provide,
+  forwardRef
 } from '@angular/core';
-import {FORM_DIRECTIVES, ControlValueAccessor, NgModel} from '@angular/common';
-import * as moment_ from 'moment';
-
-const moment: moment.MomentStatic = (<any>moment_)['default'] || moment_;
+import {NgModel, ControlValueAccessor} from '@angular/common';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import * as moment from 'moment';
 
 export interface CalendarDate {
   day: number;
@@ -31,15 +32,15 @@ export interface CalendarDate {
   <div class="ng-datepicker" *ngIf="isStatic || isOpened" [ngClass]="{ static: isStatic }">
     <div class="controls">
       <div class="left">
-        <i class="fa fa-backward prev-year-btn" (click)="prevYear()"></i>
-        <i class="fa fa-angle-left prev-month-btn" (click)="prevMonth()"></i>
+        <i class="ion-arrow-left-b prev-year-btn" (click)="prevYear()"></i>
+        <i class="ion-arrow-left-a prev-month-btn" (click)="prevMonth()"></i>
       </div>
       <span class="date">
         {{ dateValue }}
       </span>
       <div class="right">
-        <i class="fa fa-angle-right next-month-btn" (click)="nextMonth()"></i>
-        <i class="fa fa-forward next-year-btn" (click)="nextYear()"></i>
+        <i class="ion-arrow-right-a next-month-btn" (click)="nextMonth()"></i>
+        <i class="ion-arrow-right-b next-year-btn" (click)="nextYear()"></i>
       </div>
     </div>
     <div class="day-names">
@@ -89,7 +90,7 @@ export interface CalendarDate {
   }
 
   .ng-datepicker > .controls > .left {
-    width: 35px;
+    width: 40px;
     display: inline-block;
     float: left;
     margin: 5px 0 0 3px;
@@ -100,16 +101,17 @@ export interface CalendarDate {
     display: block;
     font-size: 14px;
     opacity: 0.4;
+    margin: -2px 0 0 2px;
   }
 
   .ng-datepicker > .controls > .left > i.prev-month-btn {
     float: left;
-    margin: -5px 0 0 9px;
+    margin: -10px 0 0 9px;
     display: block;
   }
 
   .ng-datepicker > .controls > span.date {
-    width: 170px;
+    width: 160px;
     text-align: center;
     font-size: 14px;
     color: #565a5c;
@@ -119,7 +121,7 @@ export interface CalendarDate {
   }
 
   .ng-datepicker > .controls > .right {
-    width: 35px;
+    width: 40px;
     display: inline-block;
     float: right;
     margin: 5px 0 0 0;
@@ -130,11 +132,12 @@ export interface CalendarDate {
     display: block;
     font-size: 14px;
     opacity: 0.4;
+    margin: -2px 2px 0 0;
   }
 
   .ng-datepicker > .controls > .right > i.next-month-btn {
     float: left;
-    margin: -6px 9px 0 0;
+    margin: -10px 9px 0 0;
   }
 
   .ng-datepicker > .day-names {
@@ -144,7 +147,7 @@ export interface CalendarDate {
   }
 
   .ng-datepicker > .day-names > span {
-    width: 35.7px;
+    width: calc(250px / 7);
     text-align: center;
     color: #82888a;
     float: left;
@@ -152,14 +155,14 @@ export interface CalendarDate {
   }
 
   .ng-datepicker > .calendar {
-    width: 255px;
+    width: 250px;
     display: inline-block;
-    margin: -3px 0 -3.5px -1px;
+    margin: -5px 0 -6px -1px;
     padding: 0;
   }
 
   .ng-datepicker > .calendar > span > span.day {
-    width: 35px;
+    width: calc(250px / 7);
     height: 35px;
     border-left: 1px solid #c4c4c4;
     border-bottom: 1px solid #c4c4c4;
@@ -190,12 +193,12 @@ export interface CalendarDate {
   }
 
   .ng-datepicker > .calendar > span > span.day:hover {
-    background: #2193b0;
+    background: rgba(0, 0, 0, 0.4);
     color: #fff;
   }
 
   .ng-datepicker > .calendar > span > span.day.selected {
-    background: #186c81;
+    background: rgba(0, 0, 0, 0.8);
     cursor: default;
     pointer-events: none;
     color: #fff;
@@ -244,7 +247,14 @@ export interface CalendarDate {
     line-height: 50px;
   }
   `],
-  directives: [FORM_DIRECTIVES],
+  directives: [NgModel],
+  providers: [
+    { 
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DatePicker),
+      multi: true
+    }
+  ]
 })
 export class DatePicker implements ControlValueAccessor, AfterViewInit {
   public isOpened: boolean;
@@ -259,7 +269,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
   private onTouched: Function;
   private cd: any;
   private cannonical: number;
-
+  
   @Input('model-format') modelFormat: string;
   @Input('view-format') viewFormat: string;
   @Input('init-date') initDate: string;
@@ -329,9 +339,9 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     this.days = [];
 
     if (this.firstWeekDaySunday === true) {
-      firstWeekDay = date.set('date', 2).day();
+      firstWeekDay = date.set('day', 2).day();
     } else {
-      firstWeekDay = date.set('date', 1).day();
+      firstWeekDay = date.set('day', 1).day();
     }
 
     if (firstWeekDay !== 1) {
