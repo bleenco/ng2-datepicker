@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Angular2 Datepicker",
   "main": "ng2-datepicker.js",
   "typings": "ng2-datepicker.d.ts",
@@ -9,6 +9,7 @@
     "url": "git+https://github.com/jkuri/ng2-datepicker.git"
   },
   "scripts": {
+    "postinstall": "typings install",
     "prepublish": "typings install && tsc"
   },
   "keywords": [
