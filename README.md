@@ -5,7 +5,7 @@ Angular2 Datepicker Component
 
 ## Demo
 
-[http://demo.jankuri.com/ng2-datepicker](http://demo.jankuri.com/ng2-datepickerr)
+[http://demo.jankuri.com/ng2-datepicker](http://demo.jankuri.com/ng2-datepicker)
 
 ## Installation: 
 
