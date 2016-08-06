@@ -339,9 +339,9 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
     this.days = [];
 
     if (this.firstWeekDaySunday === true) {
-      firstWeekDay = date.set('day', 2).day();
+      firstWeekDay = date.date(2).day();
     } else {
-      firstWeekDay = date.set('day', 1).day();
+      firstWeekDay = date.date(1).day();
     }
 
     if (firstWeekDay !== 1) {
