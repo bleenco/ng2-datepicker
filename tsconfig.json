@@ -3,20 +3,21 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "mapRoot": "",
+    "mapRoot": "./",
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": false,
-    "rootDir": ".",
     "sourceMap": true,
-    "sourceRoot": "./",
-    "target": "es5"
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "moment"
+    ]
   },
-  "files": [
-    "typings/index.d.ts",
-    "ng2-datepicker.ts"
-  ],
   "exclude": [
     "node_modules"
   ]
