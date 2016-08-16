@@ -1,9 +1,10 @@
 import {
-  Component, 
-  ViewContainerRef, 
-  Input, 
-  Output, 
-  EventEmitter, 
+  Component,
+  OnInit,
+  ViewContainerRef,
+  Input,
+  Output,
+  EventEmitter,
   AfterViewInit,
   provide,
   forwardRef
@@ -249,14 +250,14 @@ export interface CalendarDate {
   `],
   directives: [NgModel],
   providers: [
-    { 
+    {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DatePicker),
       multi: true
     }
   ]
 })
-export class DatePicker implements ControlValueAccessor, AfterViewInit {
+export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
   public isOpened: boolean;
   public dateValue: string;
   public viewValue: string;
@@ -269,7 +270,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
   private onTouched: Function;
   private cd: any;
   private cannonical: number;
-  
+
   @Input('model-format') modelFormat: string;
   @Input('view-format') viewFormat: string;
   @Input('init-date') initDate: string;
@@ -288,6 +289,11 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
 
   ngAfterViewInit() {
     this.initValue();
+  }
+
+  ngOnInit() {
+    this.date = moment(this.initDate);
+    this.generateCalendar(this.date);
   }
 
   public openDatepicker(): void {
@@ -414,10 +420,8 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit {
 
   private init(): void {
     this.isOpened = false;
-    this.date = moment();
     this.firstWeekDaySunday = false;
     this.generateDayNames();
-    this.generateCalendar(this.date);
     this.initMouseEvents();
   }
 }
