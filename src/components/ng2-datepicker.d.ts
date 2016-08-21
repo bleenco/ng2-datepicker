@@ -1,4 +1,4 @@
-import { ViewContainerRef, EventEmitter, AfterViewInit } from '@angular/core';
+import { OnInit, ViewContainerRef, EventEmitter, AfterViewInit } from '@angular/core';
 import { NgModel, ControlValueAccessor } from '@angular/common';
 export interface CalendarDate {
     day: number;
@@ -6,7 +6,7 @@ export interface CalendarDate {
     year: number;
     enabled: boolean;
 }
-export declare class DatePicker implements ControlValueAccessor, AfterViewInit {
+export declare class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
     isOpened: boolean;
     dateValue: string;
     viewValue: string;
@@ -27,6 +27,7 @@ export declare class DatePicker implements ControlValueAccessor, AfterViewInit {
     changed: EventEmitter<Date>;
     constructor(cd: NgModel, viewContainer: ViewContainerRef);
     ngAfterViewInit(): void;
+    ngOnInit(): void;
     openDatepicker(): void;
     closeDatepicker(): void;
     prevYear(): void;
