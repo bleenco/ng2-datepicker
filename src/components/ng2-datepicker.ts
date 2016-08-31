@@ -11,7 +11,9 @@ import {
 } from '@angular/core';
 import {NgModel, ControlValueAccessor} from '@angular/common';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import * as moment from 'moment';
+import * as moment_ from 'moment';
+
+const moment: any = (<any>moment_).default || moment_;
 
 export interface CalendarDate {
   day: number;
@@ -334,7 +336,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
     this.changed.emit(selectedDate.toDate());
   }
 
-  private generateCalendar(date: moment.Moment): void {
+  private generateCalendar(date: any): void {
     let lastDayOfMonth = date.endOf('month').date();
     let month = date.month();
     let year = date.year();
