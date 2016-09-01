@@ -1,5 +1,5 @@
-import { OnInit, ViewContainerRef, EventEmitter, AfterViewInit } from '@angular/core';
-import { NgModel, ControlValueAccessor } from '@angular/common';
+import { ViewContainerRef, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
 export interface CalendarDate {
     day: number;
     month: number;
@@ -25,7 +25,7 @@ export declare class DatePicker implements ControlValueAccessor, AfterViewInit, 
     firstWeekDaySunday: boolean;
     isStatic: boolean;
     changed: EventEmitter<Date>;
-    constructor(cd: NgModel, viewContainer: ViewContainerRef);
+    constructor(viewContainer: ViewContainerRef);
     ngAfterViewInit(): void;
     ngOnInit(): void;
     openDatepicker(): void;
@@ -44,5 +44,4 @@ export declare class DatePicker implements ControlValueAccessor, AfterViewInit, 
     writeValue(value: string): void;
     registerOnChange(fn: (_: any) => {}): void;
     registerOnTouched(fn: (_: any) => {}): void;
-    private init();
 }

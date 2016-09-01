@@ -1,16 +1,14 @@
 import {
   Component,
-  OnInit,
   ViewContainerRef,
   Input,
   Output,
   EventEmitter,
+  OnInit,
   AfterViewInit,
-  provide,
-  forwardRef
+  forwardRef,
 } from '@angular/core';
-import {NgModel, ControlValueAccessor} from '@angular/common';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import * as moment_ from 'moment';
 
 const moment: any = (<any>moment_).default || moment_;
@@ -23,7 +21,7 @@ export interface CalendarDate {
 }
 
 @Component({
-  selector: 'datepicker[ngModel]',
+  selector: 'date-picker',
   template: `
   <input type="text"
          class="ng-datepicker-input"
@@ -160,7 +158,7 @@ export interface CalendarDate {
   .ng-datepicker > .calendar {
     width: 250px;
     display: inline-block;
-    margin: -5px 0 -6px -1px;
+    margin: -4px 0 -4px -1px;
     padding: 0;
   }
 
@@ -250,7 +248,6 @@ export interface CalendarDate {
     line-height: 50px;
   }
   `],
-  directives: [NgModel],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -273,20 +270,17 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
   private cd: any;
   private cannonical: number;
 
-  @Input('model-format') modelFormat: string;
-  @Input('view-format') viewFormat: string;
-  @Input('init-date') initDate: string;
-  @Input('first-week-day-sunday') firstWeekDaySunday: boolean;
-  @Input('static') isStatic: boolean;
+  @Input() modelFormat: string;
+  @Input() viewFormat: string;
+  @Input() initDate: string;
+  @Input() firstWeekDaySunday: boolean;
+  @Input() isStatic: boolean;
 
   @Output() changed: EventEmitter<Date> = new EventEmitter<Date>();
 
-  constructor(cd: NgModel, viewContainer: ViewContainerRef) {
-    cd.valueAccessor = this;
-    this.cd = cd;
+  constructor(viewContainer: ViewContainerRef) {
     this.viewContainer = viewContainer;
     this.el = viewContainer.element.nativeElement;
-    this.init();
   }
 
   ngAfterViewInit() {
@@ -294,6 +288,10 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
   }
 
   ngOnInit() {
+    this.isOpened = false;
+    this.firstWeekDaySunday = false;
+    this.generateDayNames();
+    this.initMouseEvents();
     this.date = moment(this.initDate);
     this.generateCalendar(this.date);
   }
@@ -380,10 +378,10 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
   }
 
   private initMouseEvents(): void {
-    let body = document.getElementsByTagName('body')[0];
+    let body = document.querySelector('body');
 
     body.addEventListener('click', (e) => {
-      if (!this.isOpened || !e.target) return;
+      if (!this.isOpened || !e.target) { return; };
       if (this.el !== e.target && !this.el.contains(e.target)) {
         this.closeDatepicker();
       }
@@ -393,7 +391,6 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
   private setValue(value: any): void {
     let val = moment(value, this.modelFormat || 'YYYY-MM-DD');
     this.viewValue = val.format(this.viewFormat || 'Do MMMM YYYY');
-    this.cd.viewToModelUpdate(val.format(this.modelFormat || 'YYYY-MM-DD'));
     this.cannonical = val.toDate().getTime();
   }
 
@@ -408,7 +405,7 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
   }
 
   writeValue(value: string): void {
-    if (!value) return;
+    if (!value) { return; }
     this.setValue(value);
   }
 
@@ -418,12 +415,5 @@ export class DatePicker implements ControlValueAccessor, AfterViewInit, OnInit {
 
   registerOnTouched(fn: (_: any) => {}): void {
     this.onTouched = fn;
-  }
-
-  private init(): void {
-    this.isOpened = false;
-    this.firstWeekDaySunday = false;
-    this.generateDayNames();
-    this.initMouseEvents();
   }
 }
