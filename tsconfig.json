@@ -3,23 +3,11 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "rootDir": "./",
-    "mapRoot": "./",
+    "lib": ["es6", "dom"],
+    "rootDir": ".",
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmitOnError": true,
-    "noImplicitAny": false,
     "sourceMap": true,
-    "target": "es5",
-    "lib": ["es6", "dom"],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "types": [
-      "moment"
-    ]
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    "target": "es5"
+  }
 }
