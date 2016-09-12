@@ -3,6 +3,7 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "srcDir": "./",
     "mapRoot": "./",
     "module": "commonjs",
     "moduleResolution": "node",
