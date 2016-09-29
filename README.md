@@ -16,12 +16,17 @@ npm install ng2-datepicker --save
 
 ## Usage
 
-**Option A:** Using ng2-datepicker with Angular CLI, Angular 2.0.0+ and `ReactiveFormsModule`
+_Usage examples are based on a project created with [Angular CLI](https://github.com/angular/angular-cli) + Angular 2.0.0+_
+
+**Option A:** Using ng2-datepicker with `ngModel`
 
 1. Import `DatePicker` component in `app.module.ts`
   ```ts
+  import { BrowserModule } from '@angular/platform-browser';
   import { NgModule } from '@angular/core';
-  import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+  import { FormsModule } from '@angular/forms';
+  import { HttpModule } from '@angular/http';
+  
   import { DatePicker } from 'ng2-datepicker/ng2-datepicker';
 
   import { AppComponent } from './app.component';
@@ -32,15 +37,53 @@ npm install ng2-datepicker --save
       DatePicker
     ],
     imports: [
+      BrowserModule,
       FormsModule,
-      ReactiveFormsModule
+      HttpModule
     ],
+    providers: [],
     bootstrap: [AppComponent]
   })
   export class AppModule {}
   ```
 
-2. Use `<datepicker>` component in `AppComponent`
+2. Use `<datepicker>` in `app.component.html`
+  ```html
+  <datepicker [(ngModel)]="date" [expanded]="true"></datepicker>
+  
+  Selected date is: {{ date }}
+  ```
+
+**Option B:** Using ng2-datepicker with `FormBuilder` (ReactiveFormsModule)
+
+1. Import `DatePicker` component and `ReactiveFormsModule` in `app.module.ts`
+  ```ts
+  import { BrowserModule } from '@angular/platform-browser';
+  import { NgModule } from '@angular/core';
+  import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+  import { HttpModule } from '@angular/http';
+  import { DatePicker } from 'ng2-datepicker/ng2-datepicker';
+
+  import { AppComponent } from './app.component';
+  
+  @NgModule({
+    declarations: [
+      Appcomponent,
+      DatePicker
+    ],
+    imports: [
+      BrowserModule,
+      FormsModule,
+      HttpModule,
+      ReactiveFormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule {}
+  ```
+
+2. Create FormControl for date field in `app.component.ts`
   
   ```ts
   import { Component, OnInit } from '@angular/core';
@@ -66,7 +109,7 @@ npm install ng2-datepicker --save
   }
   ```
   
-  Template:
+3. Use `<datepicker>` with `formControlName` in `app.component.html`
   
   ```html
   <form [formGroup]="dataForm">
