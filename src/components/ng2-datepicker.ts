@@ -115,7 +115,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
           year: null,
           enabled:false,
           today: false,
-          selected: selected 
+          selected: false 
         });
       }
     }
