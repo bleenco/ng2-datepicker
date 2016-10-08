@@ -53,9 +53,17 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   set value(value: any) {
-    let date = (value instanceof moment) ? value : moment(value, this.format);
+      let date: moment_.Moment;
+      let formatValue:any = value;
+      if(moment_.isMoment(value)){
+        date = value;
+        formatValue = date.format(this.format);
+      } else {
+        date = moment(value, this.format);
+        formatValue = value;
+      }
     this.viewDate = date.format(this.viewFormat);
-    this.onChangeCallback(value);
+    this.onChangeCallback(formatValue);
   }
 
   ngOnInit() {
