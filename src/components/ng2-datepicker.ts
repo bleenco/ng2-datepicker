@@ -20,7 +20,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  moduleId: module.id,
+  moduleId: 'module.id',
   selector: 'datepicker',
   templateUrl: './ng2-datepicker.component.html',
   styleUrls: ['./ng2-datepicker.css'],

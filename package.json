@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "1.0.9",
+  "version": "1.1.1",
   "description": "Angular2 Datepicker",
   "main": "ng2-datepicker.ts",
   "repository": {
@@ -20,15 +20,16 @@
   "author": "Jan Kuri <jkuri88@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@angular/common": "2.0.0-rc.6",
-    "@angular/compiler": "2.0.0-rc.6",
-    "@angular/core": "2.0.0-rc.6",
-    "@angular/forms": "^2.0.0-rc.6",
-    "@angular/platform-browser": "2.0.0-rc.6",
-    "rxjs": "5.0.0-beta.11",
-    "typescript": "^2.0.2",
-    "zone.js": "0.6.17",
-    "@types/moment": "^2.11.29"
+    "@angular/common": "^2.0.1",
+    "@angular/compiler": "^2.0.1",
+    "@angular/core": "^2.0.1",
+    "@angular/forms": "^2.0.1",
+    "@angular/platform-browser": "^2.0.1",
+    "@types/moment": "^2.11.29",
+    "@types/node": "^6.0.42",
+    "rxjs": "5.0.0-beta.12",
+    "typescript": "^2.0.3",
+    "zone.js": "0.6.25"
   },
   "dependencies": {
     "moment": "^2.14.1"
