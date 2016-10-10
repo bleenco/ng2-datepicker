@@ -11,13 +11,13 @@
       <i class="ion-arrow-right-b" (click)="nextMonth()"></i>
     </div>
     <div class="ui-kit-calendar-day-names">
-      <span>Mon</span>
-      <span>Tue</span>
-      <span>Wed</span>
-      <span>Thu</span>
-      <span>Fri</span>
-      <span>Sat</span>
-      <span>Sun</span>
+      <span>{{weekdays.monday}}</span>
+      <span>{{weekdays.tuesday}}</span>
+      <span>{{weekdays.wednesday}}</span>
+      <span>{{weekdays.thursday}}</span>
+      <span>{{weekdays.friday}}</span>
+      <span>{{weekdays.saturday}}</span>
+      <span>{{weekdays.sunday}}</span>
     </div>
     <div class="ui-kit-calendar-days">
       <span *ngFor="let d of days; let i = index;" 
