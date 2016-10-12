@@ -1,9 +1,7 @@
-import { Component, Input, OnInit, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
-import * as moment_ from 'moment';
-
-const moment: any = (<any>moment_).default || moment_;
+import * as moment from 'moment';
 
 export interface CalendarDate {
   day: number;
@@ -25,40 +23,34 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   template: '<ng-content></ng-content>',
   providers: [CALENDAR_VALUE_ACCESSOR]
 })
-export class DatePickerComponent implements ControlValueAccessor, OnInit {
+export class DatePickerComponent implements ControlValueAccessor {
   @Input() format = 'YYYY-MM-DD';
-  @Input() viewFormat = 'D MMMM YYYY';
   @Input() firstWeekdaySunday = false;
 
-  @Output() onDateChanged = new EventEmitter<any>();
+  @Output() onDateChanged = new EventEmitter<moment.Moment>();
 
   /* is it used ? */
   private onChange: Function;
   private onTouched: Function;
   /* */
 
-  //can't be private because ngModel on input needs access to it
-  protected viewDate: string = null;
+  private _date = moment();
 
   /* Value accessor stuff */
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  get value(): any {
-    return this.viewDate;
+  public get date(): moment.Moment {
+    return this._date;
   }
 
-  set value(value: any) {
-    let date = (value instanceof moment) ? value : moment(value, this.format);
-    this.viewDate = date.format(this.viewFormat);
-    //so value may be a moment or a string, shouldn't we be consistent on the value returned ?
-    //Below implementation will solve ngOnInit problem
-    //this.onChangeCallback( (value instanceof moment) ? value.format(this.format) : value );
+  public set date(value: moment.Moment) {
+    this._date = value;
     this._onValueChanged(value);
   }
 
   writeValue(value: any) {
-    this.viewDate = value;
+    this.date = (value instanceof moment) ? value : moment(value, this.format);
   }
 
   registerOnChange(fn: any) {
@@ -70,18 +62,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
   /* */
 
-  ngOnInit() {
-    setTimeout(() => {
-      if (!this.viewDate) {
-        let value = moment();
-        this.value = value;
-        //set value() is already calling onchangecallback
-        this._onValueChanged(value.format(this.format));
-      }
-    });
-  }
-
-  private _onValueChanged(value: any) {
+  private _onValueChanged(value: moment.Moment) {
     this.onChangeCallback(value);
     this.onDateChanged.emit(value);
   }
@@ -103,7 +84,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     }
 
     let days = [];
-    let selectedDate = moment(this.value, this.viewFormat);
+    let selectedDate = this.date;
     for (let i = n, end = date.endOf('month').date(); i <= end; i += 1) {
       //why not : let currentDate = moment([year, month, i]);
       let currentDate = moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
@@ -136,10 +117,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   selectDate(date: CalendarDate) {
-    let selectedDate = moment(`${date.day}.${date.month}.${date.year}`, 'DD.MM.YYYY');
-    this.value = selectedDate.format(this.format);
-    //this.viewDate is already set by set value()
-    //this.viewDate = selectedDate.format(this.viewFormat);
+    this.date = moment(`${date.day}.${date.month}.${date.year}`, 'DD.MM.YYYY');
   }
 
 }

@@ -1,13 +1,13 @@
 <div [class]="class">
-  <input type="hidden" [(ngModel)]="dp.viewDate">
+  <input type="hidden" [(ngModel)]="dp.date">
   <div class="ui-kit-calendar-input" [class.opened]="opened || expanded" (click)="toggle()">
-    <span [class.opened]="opened || expanded">{{ dp.viewDate }}</span>
+    <span [class.opened]="opened || expanded">{{ dp.date | momentFormat: viewFormat }}</span>
     <i class="ion-ios-calendar-outline"></i>
   </div>
   <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
     <div class="ui-kit-calendar-cal-top">
       <i class="ion-arrow-left-b" (click)="prevMonth()"></i>
-      <span>{{ displayDate.format('MMMM YYYY') }}</span>
+      <span>{{ displayDate | momentFormat: 'MMMM YYYY' }}</span>
       <i class="ion-arrow-right-b" (click)="nextMonth()"></i>
     </div>
     <div class="ui-kit-calendar-day-names">

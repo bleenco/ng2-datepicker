@@ -1,8 +1,6 @@
 import { Component, Input, ElementRef, OnInit } from '@angular/core';
 
-import * as moment_ from 'moment';
-
-const moment: any = (<any>moment_).default || moment_;
+import * as moment from 'moment';
 
 import { CalendarDate, DatePickerComponent } from '../datepicker';
 
@@ -14,6 +12,7 @@ import { CalendarDate, DatePickerComponent } from '../datepicker';
 })
 export class DatePickerIonicComponent implements OnInit {
 
+  @Input() viewFormat = 'D MMMM YYYY';
   @Input() class: string;
   @Input() expanded: boolean;
   @Input() opened = false;
@@ -27,12 +26,15 @@ export class DatePickerIonicComponent implements OnInit {
 
   constructor(private dp: DatePickerComponent, elRef: ElementRef) {
     this.el = elRef.nativeElement;
-    dp.onDateChanged.subscribe(
-      () => { this.buildCalendar(); }
-    );
   }
 
   ngOnInit() {
+    this.dp.onDateChanged.subscribe(
+      () => { this.buildCalendar(); }
+    );
+    this.buildCalendar();
+
+
     this.class = `ui-kit-calendar-container ${this.class}`;
 
     /* TODO use renderer.listenGlobal() */
