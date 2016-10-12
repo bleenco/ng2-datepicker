@@ -77,7 +77,9 @@
         width: 40px;
         height: 40px;
         text-align: center;
-        cursor: pointer; }
+        cursor: pointer;
+        vertical-align: baseline;
+      }
       .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-cal-top span {
         display: block;
         float: left;
@@ -112,7 +114,9 @@
         cursor: pointer;
         border-radius: 50%; }
         .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span.today {
-          border: 1px solid #fff; }
+          border: 1px solid #fff;
+          box-sizing: border-box;
+        }
         .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span:hover, .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span.is-active {
           background: #fff;
           color: #44c8f9; }

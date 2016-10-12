@@ -7,7 +7,7 @@
   <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
     <div class="ui-kit-calendar-cal-top">
       <i class="ion-arrow-left-b" (click)="prevMonth()"></i>
-      <span>{{ date.format('MMMM YYYY') }}</span>
+      <span>{{ displayDate.format('MMMM YYYY') }}</span>
       <i class="ion-arrow-right-b" (click)="nextMonth()"></i>
     </div>
     <div class="ui-kit-calendar-day-names">
@@ -20,8 +20,8 @@
       <span>Sun</span>
     </div>
     <div class="ui-kit-calendar-days">
-      <span *ngFor="let d of days; let i = index;" 
-            (click)="selectDate($event, i)"
+      <span *ngFor="let d of days"
+            (click)="onDateclick($event, d)"
             [class.today]="d.today"
             [class.is-active]="d.selected">
         {{ d.day }}
