@@ -1,5 +1,5 @@
-import { Input, OnInit } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { Component, Input, OnInit, forwardRef, Output, EventEmitter } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 import * as moment_ from 'moment';
 
@@ -14,10 +14,23 @@ export interface CalendarDate {
   selected: boolean;
 }
 
-export abstract class DatePickerCore implements ControlValueAccessor, OnInit {
+export const CALENDAR_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => DatePickerComponent),
+  multi: true
+};
+
+@Component({
+  selector: 'date-picker',
+  template: '<ng-content></ng-content>',
+  providers: [CALENDAR_VALUE_ACCESSOR]
+})
+export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() format = 'YYYY-MM-DD';
   @Input() viewFormat = 'D MMMM YYYY';
   @Input() firstWeekdaySunday = false;
+
+  @Output() onDateChanged = new EventEmitter<any>();
 
   /* is it used ? */
   private onChange: Function;
@@ -57,8 +70,6 @@ export abstract class DatePickerCore implements ControlValueAccessor, OnInit {
   }
   /* */
 
-  abstract onInit();
-
   ngOnInit() {
     setTimeout(() => {
       if (!this.viewDate) {
@@ -68,16 +79,12 @@ export abstract class DatePickerCore implements ControlValueAccessor, OnInit {
         this._onValueChanged(value.format(this.format));
       }
     });
-
-    this.onInit();
   }
 
   private _onValueChanged(value: any) {
     this.onChangeCallback(value);
-    this.onDateChanged(value);
+    this.onDateChanged.emit(value);
   }
-
-  abstract onDateChanged(value: any)
 
   generateCalendar(month: number, year: number): CalendarDate[] {
     let today = moment();

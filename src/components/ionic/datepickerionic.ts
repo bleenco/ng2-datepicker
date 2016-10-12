@@ -1,26 +1,18 @@
-import { Component, Input, ElementRef, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, ElementRef, OnInit } from '@angular/core';
 
 import * as moment_ from 'moment';
 
 const moment: any = (<any>moment_).default || moment_;
 
-import { CalendarDate, DatePickerCore } from '../datepickercore';
-
-export const CALENDAR_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DatePickerIonic),
-  multi: true
-};
+import { CalendarDate, DatePickerComponent } from '../datepicker';
 
 @Component({
   moduleId: 'module.id',
-  selector: 'datepicker-sample',
+  selector: 'datepicker-ionic',
   template: require('./ionic.component.html'),
   styles: [ require('./ionic.css') ],
-  providers: [CALENDAR_VALUE_ACCESSOR]
 })
-export class DatePickerIonic extends DatePickerCore {
+export class DatePickerIonicComponent implements OnInit {
 
   @Input() class: string;
   @Input() expanded: boolean;
@@ -33,13 +25,14 @@ export class DatePickerIonic extends DatePickerCore {
 
   private days: CalendarDate[] = [];
 
-  constructor(elRef: ElementRef) {
-    super();
-
+  constructor(private dp: DatePickerComponent, elRef: ElementRef) {
     this.el = elRef.nativeElement;
+    dp.onDateChanged.subscribe(
+      () => { this.buildCalendar(); }
+    );
   }
 
-  onInit() {
+  ngOnInit() {
     this.class = `ui-kit-calendar-container ${this.class}`;
 
     /* TODO use renderer.listenGlobal() */
@@ -55,16 +48,12 @@ export class DatePickerIonic extends DatePickerCore {
   onDateclick(e: MouseEvent, date: CalendarDate) {
     e.preventDefault();
 
-    this.selectDate(date);
+    this.dp.selectDate(date);
     this.close();
   }
 
-  onDateChanged(value: any) {
-    this.buildCalendar();
-  }
-
   buildCalendar() {
-     this.days = this.generateCalendar(this.displayDate.month(), this.displayDate.year());
+     this.days = this.dp.generateCalendar(this.displayDate.month(), this.displayDate.year());
   }
 
   nextMonth() {
