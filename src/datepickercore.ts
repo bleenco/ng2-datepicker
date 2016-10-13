@@ -23,23 +23,66 @@ export abstract class DatePickerCore implements ControlValueAccessor {
   private onTouched: Function;
   /* */
 
-  private _date = moment();
+  private _dates: moment.Moment[];
+  //thoses are reference to date inside _dates
+  //should treat thoses var as readonly (never call mutable methods on it)
+  private minDate: moment.Moment;
+  private maxDate: moment.Moment;
+
+  public get dates(): moment.Moment[] {
+    return this._dates;
+  }
+
+  public set dates(dates: moment.Moment[]) {
+    //this may be weird to set a property to null and having it being an empty array
+    //but this is too annoying to handle null dates
+    dates = dates || [];
+
+    this._dates = dates;
+
+    if ( dates.length == 0 ) {
+      this.minDate = this.maxDate = null;
+    }
+    else {
+      dates.forEach( d => {
+        if ( !this.minDate || d.isBefore(this.minDate) )
+          this.minDate = d;
+
+        if ( !this.maxDate || d.isAfter(this.maxDate) )
+          this.maxDate = d;
+      });
+    }
+
+    this._onValueChanged(this._dates);
+  }
+
+  //keep a simple api for when we only use 1 date
+  public get date(): moment.Moment {
+    return this._dates[0];
+  }
+
+  public set date(value: moment.Moment) {
+    this.dates = [value];
+  }
+
+  constructor() {
+    this.reset();
+  }
+
+  reset() {
+    this.dates = [];
+  }
+
 
   /* Value accessor stuff */
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  public get date(): moment.Moment {
-    return this._date;
-  }
-
-  public set date(value: moment.Moment) {
-    this._date = value;
-    this._onValueChanged(value);
-  }
-
   writeValue(value: any) {
-    this.date = (value instanceof moment) ? value : moment(value, this.format);
+    let values = (value instanceof Array) ? value : [value];
+
+    this.dates = values.map(
+      v => moment.isMoment(v) ? v : moment(v, this.format) );
   }
 
   registerOnChange(fn: any) {
@@ -51,15 +94,34 @@ export abstract class DatePickerCore implements ControlValueAccessor {
   }
   /* */
 
-  private _onValueChanged(value: moment.Moment) {
+  private _onValueChanged(value: moment.Moment[]) {
     this.onChangeCallback(value);
-    this.onDateChanged(value);
+    this.onDatesChanged(value);
   }
 
-  abstract onDateChanged(date: moment.Moment);
+  abstract onDatesChanged(date: moment.Moment[]);
 
-  isDaySelected(day: CalendarDay) {
-    return this.date.isSame(day.date);
+  addDate(day: CalendarDay) {
+    this.dates = [...this.dates, day.date];
+  }
+
+  removeDate(day: CalendarDay) {
+    let dayDate = day.date;
+
+    this.dates = this.dates.filter( d => !d.isSame(dayDate) );
+  }
+
+  //easy API when using only 1 date
+  setDate(day: CalendarDay) {
+    this.date = day.date;
+  }
+
+  isDateActive(date: moment.Moment) {
+    return this.dates.find( d => d.isSame(date) );
+  }
+
+  isDateSelected(date: moment.Moment) {
+    return date && date.isBetween(this.minDate, this.maxDate, 'day', '[]');
   }
 
   generateMonthCalendar(month: number, year: number): CalendarDay[] {
@@ -84,7 +146,6 @@ export abstract class DatePickerCore implements ControlValueAccessor {
       let currentDate = moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
       //why not just => isToday = today.isSame(currentDate, 'day')
       let isToday = (today.isSame(currentDate, 'day') && today.isSame(currentDate, 'month')) ? true : false;
-      //let selected = (selectedDate.isSame(currentDate, 'day')) ? true : false;
 
       if (i > 0) {
         days.push({
@@ -109,9 +170,4 @@ export abstract class DatePickerCore implements ControlValueAccessor {
 
     return days;
   }
-
-  selectDay(day: CalendarDay) {
-    this.date = day.date;
-  }
-
 }

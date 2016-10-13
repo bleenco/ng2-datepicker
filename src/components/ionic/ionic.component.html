@@ -23,7 +23,7 @@
       <span *ngFor="let d of days"
             (click)="onDateclick($event, d)"
             [ngClass]="d.state"
-            [class.is-active]="isDaySelected(d)">
+            [class.is-active]="isDateActive(d.date)">
         {{ d.date | momentFormat: 'D' }}
       </span>
     </div>

@@ -8,8 +8,8 @@ import { dpProviders } from '../../helpers/providers';
 @Component({
   moduleId: 'module.id',
   selector: 'datepicker-ionic',
-  templateUrl: './ionic.component.html',
-  styleUrls: [ './ionic.css' ],
+  template: require('./ionic.component.html'),
+  styles: [ require('./ionic.css') ],
   providers: dpProviders(DatePickerIonicComponent)
 })
 export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
@@ -49,13 +49,11 @@ export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
   onDateclick(e: MouseEvent, day: CalendarDay) {
     e.preventDefault();
 
-    this.selectDay(day);
+    this.setDate(day);
     this.close();
   }
 
-  onDateChanged(date: moment.Moment) {
-    //this.buildCalendar();
-  }
+  onDatesChanged(dates: moment.Moment[]) { }
 
   buildCalendar() {
      this.days = this.generateMonthCalendar(this.displayDate.month(), this.displayDate.year());
