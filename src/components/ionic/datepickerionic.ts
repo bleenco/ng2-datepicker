@@ -2,17 +2,18 @@ import { Component, Input, ElementRef, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { CalendarDate, DatePickerComponent } from '../datepicker';
+import { CalendarDay, DatePickerCore } from '../../datepickercore';
+import { dpProviders } from '../../helpers/providers';
 
 @Component({
   moduleId: 'module.id',
   selector: 'datepicker-ionic',
-  template: require('./ionic.component.html'),
-  styles: [ require('./ionic.css') ],
+  templateUrl: './ionic.component.html',
+  styleUrls: [ './ionic.css' ],
+  providers: dpProviders(DatePickerIonicComponent)
 })
-export class DatePickerIonicComponent implements OnInit {
+export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
 
-  @Input() viewFormat = 'D MMMM YYYY';
   @Input() class: string;
   @Input() expanded: boolean;
   @Input() opened = false;
@@ -22,18 +23,16 @@ export class DatePickerIonicComponent implements OnInit {
   //only month and year relevant
   private displayDate = moment();
 
-  private days: CalendarDate[] = [];
+  private days: CalendarDay[] = [];
 
-  constructor(private dp: DatePickerComponent, elRef: ElementRef) {
+  constructor(elRef: ElementRef) {
+    super();
+
     this.el = elRef.nativeElement;
   }
 
   ngOnInit() {
-    this.dp.onDateChanged.subscribe(
-      () => { this.buildCalendar(); }
-    );
     this.buildCalendar();
-
 
     this.class = `ui-kit-calendar-container ${this.class}`;
 
@@ -47,24 +46,28 @@ export class DatePickerIonicComponent implements OnInit {
     }, false);
   }
 
-  onDateclick(e: MouseEvent, date: CalendarDate) {
+  onDateclick(e: MouseEvent, day: CalendarDay) {
     e.preventDefault();
 
-    this.dp.selectDate(date);
+    this.selectDay(day);
     this.close();
   }
 
+  onDateChanged(date: moment.Moment) {
+    //this.buildCalendar();
+  }
+
   buildCalendar() {
-     this.days = this.dp.generateCalendar(this.displayDate.month(), this.displayDate.year());
+     this.days = this.generateMonthCalendar(this.displayDate.month(), this.displayDate.year());
   }
 
   nextMonth() {
-    this.displayDate.add(1, 'month');
+    this.displayDate = this.displayDate.clone().add(1, 'month');
     this.buildCalendar();
   }
 
   prevMonth() {
-    this.displayDate.subtract(1, 'month');
+    this.displayDate = this.displayDate.clone().subtract(1, 'month');
     this.buildCalendar();
   }
 
