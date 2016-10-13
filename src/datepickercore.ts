@@ -6,7 +6,6 @@ import * as moment from 'moment';
 export interface CalendarDay {
   date: moment.Moment;
   state: {
-    enabled:   boolean;
     today:     boolean;
     currMonth: boolean;
   };
@@ -16,7 +15,7 @@ export abstract class DatePickerCore implements ControlValueAccessor {
 
   @Input() format = 'YYYY-MM-DD';
   @Input() viewFormat = 'D MMMM YYYY';
-  @Input() firstWeekdaySunday = false;
+  @Input() firstWeekDay = 1;
 
   /* is it used ? */
   private onChange: Function;
@@ -124,50 +123,43 @@ export abstract class DatePickerCore implements ControlValueAccessor {
     return date && date.isBetween(this.minDate, this.maxDate, 'day', '[]');
   }
 
+  // Once we handle locale refractor using .weekDay() instead of .day()
+  // and remove @Output() firstWeekDay
   generateMonthCalendar(month: number, year: number): CalendarDay[] {
     let today = moment();
 
     if (month < 0 || month > 11)
       month = today.month();
 
+    if (!year)
+      year = today.year();
 
+    //start date
     let date = moment([year, month]);
+    date.subtract( mod(date.day() - this.firstWeekDay), 'd');
 
-    let n = 1;
-    let firstWeekDay: number = (this.firstWeekdaySunday) ? date.date(2).day() : date.date(1).day();
+    //end date
+    let lastWeekDay = mod(this.firstWeekDay - 1);
+    let endDate = moment([year, month]).endOf('month');
+    endDate.add( mod(lastWeekDay - endDate.day()), 'd');
 
-    if (firstWeekDay !== 1) {
-      n -= (firstWeekDay + 6) % 7;
-    }
+    let days = [];
+    while ( date.isBefore(endDate) ) {
+      days.push({
+        date: date,
+        state: {
+          today: today.isSame(date, 'day'),
+          currMonth: date.month() == month
+        }
+      });
 
-    let days: CalendarDay[] = [];
-    for (let i = n, end = date.endOf('month').date(); i <= end; i += 1) {
-      //why not : let currentDate = moment([year, month, i]);
-      let currentDate = moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
-      //why not just => isToday = today.isSame(currentDate, 'day')
-      let isToday = (today.isSame(currentDate, 'day') && today.isSame(currentDate, 'month')) ? true : false;
-
-      if (i > 0) {
-        days.push({
-          date: currentDate,
-          state: {
-            enabled: true,
-            today: isToday,
-            currMonth: true
-          }
-        });
-      } else {
-        days.push({
-          date: null,
-          state: {
-            enabled: false,
-            today:   false,
-            currMonth: false
-          }
-        });
-      }
+      date = date.clone().add(1, 'd');
     }
 
     return days;
   }
+}
+
+function mod(n: number): number {
+  return ((n % 7) + 7) % 7;
 }

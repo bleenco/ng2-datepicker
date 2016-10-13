@@ -49,8 +49,10 @@ export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
   onDateclick(e: MouseEvent, day: CalendarDay) {
     e.preventDefault();
 
-    this.setDate(day);
-    this.close();
+    if ( day.date.month() === this.displayDate.month() ) {
+      this.setDate(day);
+      this.close();
+    }
   }
 
   onDatesChanged(dates: moment.Moment[]) { }

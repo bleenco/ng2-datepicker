@@ -117,7 +117,11 @@
           border: 1px solid #fff;
           box-sizing: border-box;
         }
-        .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span:hover, .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span.is-active {
+        .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span:not(.currMonth) {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+        .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span.currMonth:hover, .ui-kit-calendar-container .ui-kit-calendar-cal-container .ui-kit-calendar-days span.is-active {
           background: #fff;
           color: #44c8f9; }
   .ui-kit-calendar-container .ui-kit-calendar-input {
