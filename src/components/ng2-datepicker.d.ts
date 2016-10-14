@@ -4,6 +4,7 @@ export declare const CALENDAR_VALUE_ACCESSOR: any;
 export declare class DatePickerComponent implements ControlValueAccessor, OnInit {
     class: string;
     expanded: boolean;
+    inverted: boolean;
     opened: boolean;
     format: string;
     viewFormat: string;

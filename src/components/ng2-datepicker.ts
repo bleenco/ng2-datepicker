@@ -29,6 +29,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() class: string;
   @Input() expanded: boolean;
+  @Input() inverted: boolean;
   @Input() opened: boolean;
   @Input() format: string;
   @Input() viewFormat: string;
@@ -60,6 +61,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
     this.class = `ui-kit-calendar-container ${this.class}`;
+    
     this.opened = this.opened || false;
     this.format = this.format || 'YYYY-MM-DD';
     this.viewFormat = this.viewFormat || 'D MMMM YYYY';
