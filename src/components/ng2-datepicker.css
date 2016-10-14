@@ -187,3 +187,12 @@
       background: #257960; }
     .ui-kit-calendar-container.success .ui-kit-calendar-cal-container .ui-kit-calendar-days span:hover, .ui-kit-calendar-container.success .ui-kit-calendar-cal-container .ui-kit-calendar-days span.is-active {
       color: #3fc59d; }
+
+
+.ui-kit-calendar-cal-container.inverted{
+  left: 0;
+}
+
+.ui-kit-calendar-container.inverted .ui-kit-calendar-cal-container:after{
+  left:28px; 
+}

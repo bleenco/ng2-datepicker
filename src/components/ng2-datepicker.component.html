@@ -4,7 +4,7 @@
     <span [class.opened]="opened || expanded">{{ viewDate }}</span>
     <i class="ion-ios-calendar-outline"></i>
   </div>
-  <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
+  <div class="ui-kit-calendar-cal-container" [class.opened]="opened" [class.inverted]="inverted">
     <div class="ui-kit-calendar-cal-top">
       <i class="ion-arrow-left-b" (click)="prevMonth()"></i>
       <span>{{ date.format('MMMM YYYY') }}</span>
