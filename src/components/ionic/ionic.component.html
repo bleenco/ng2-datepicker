@@ -22,8 +22,7 @@
     <div class="ui-kit-calendar-days">
       <span *ngFor="let d of days"
             (click)="onDateclick($event, d)"
-            [ngClass]="d.state"
-            [class.is-active]="isDateActive(d.date)">
+            [ngClass]="d | dayClasses">
         {{ d.date | momentFormat: 'D' }}
       </span>
     </div>

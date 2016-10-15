@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DatePickerIonicComponent } from './components/ionic/datepickerionic';
 
 import { MomentFormatPipe } from './pipes/momentformat';
+import { DayClassesPipe } from './pipes/dayClasses';
 
 @NgModule({
   imports: [
@@ -13,11 +14,13 @@ import { MomentFormatPipe } from './pipes/momentformat';
   ],
   declarations: [
     DatePickerIonicComponent,
-    MomentFormatPipe
+    MomentFormatPipe,
+    DayClassesPipe
   ],
   exports: [
     DatePickerIonicComponent,
-    MomentFormatPipe
+    MomentFormatPipe,
+    DayClassesPipe
   ]
 })
 export class DatePickerModule { }

@@ -2,14 +2,14 @@ import { Component, Input, ElementRef, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { CalendarDay, DatePickerCore } from '../../datepickercore';
+import { DatePickerCore } from '../../datepickercore';
+import { CalendarDay } from '../../calendarday';
 import { dpProviders } from '../../helpers/providers';
 
 @Component({
-  moduleId: 'module.id',
   selector: 'datepicker-ionic',
-  template: require('./ionic.component.html'),
-  styles: [ require('./ionic.css') ],
+  templateUrl: './ionic.component.html',
+  styleUrls: [ './ionic.css' ],
   providers: dpProviders(DatePickerIonicComponent)
 })
 export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
@@ -58,7 +58,7 @@ export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
   onDatesChanged(dates: moment.Moment[]) { }
 
   buildCalendar() {
-     this.days = this.generateMonthCalendar(this.displayDate.month(), this.displayDate.year());
+     this.days = this.generateCalendarMonth(this.displayDate.month(), this.displayDate.year());
   }
 
   nextMonth() {
