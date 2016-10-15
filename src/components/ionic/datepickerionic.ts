@@ -2,7 +2,7 @@ import { Component, Input, ElementRef, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { DatePickerCore } from '../../datepickercore';
+import { SingleDatePicker } from '../../singledatepicker';
 import { CalendarDay } from '../../calendarday';
 import { dpProviders } from '../../helpers/providers';
 
@@ -12,7 +12,7 @@ import { dpProviders } from '../../helpers/providers';
   styleUrls: [ './ionic.css' ],
   providers: dpProviders(DatePickerIonicComponent)
 })
-export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
+export class DatePickerIonicComponent extends SingleDatePicker implements OnInit {
 
   @Input() class: string;
   @Input() expanded: boolean;
@@ -54,8 +54,6 @@ export class DatePickerIonicComponent extends DatePickerCore implements OnInit {
       this.close();
     }
   }
-
-  onDatesChanged(dates: moment.Moment[]) { }
 
   buildCalendar() {
      this.days = this.generateCalendarMonth(this.displayDate.month(), this.displayDate.year());

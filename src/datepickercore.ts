@@ -13,14 +13,10 @@ export abstract class DatePickerCore implements ControlValueAccessor {
 
   private _minDate: moment.Moment;
   private _maxDate: moment.Moment;
-  private _dates: moment.Moment[] = [];
 
   @Input()
   setMinDate(date: (moment.Moment | string) ) {
     this._minDate = this.getMoment(date);
-
-    //filter out active dates
-    this.dates = this.dates;
   }
 
   get minDate() {
@@ -30,57 +26,23 @@ export abstract class DatePickerCore implements ControlValueAccessor {
   @Input()
   setMaxDate(date: (moment.Moment | string)) {
     this._maxDate = this.getMoment(date);
-
-    //filter out active dates
-    this.dates = this.dates;
   }
 
   get maxDate(): moment.Moment {
     return this._maxDate;
   }
 
-  public get dates(): moment.Moment[] {
-    return this._dates;
-  }
-
-  // looks heavy for just a setter
-  public set dates(dates: moment.Moment[]) {
-    dates = dates || [];
-
-    this._dates = dates
-      .filter( d => this.isDateValid(d) )
-      .sort( (a, b) => <any>a - <any>b );
-    this._onValueChanged(this._dates);
-  }
-
-  //keep a simple api for when we only use 1 date
-  public get date(): moment.Moment {
-    return this._dates[0];
-  }
-
-  public set date(value: moment.Moment) {
-    this.dates = [value];
-  }
-
-  private getMoment( date: (moment.Moment | string) ): moment.Moment {
+  protected getMoment( date: (moment.Moment | string) ): moment.Moment {
     return moment.isMoment(date) ? date : moment(date, this.format);
   }
 
-  reset() {
-    this.dates = [];
-  }
-
+  abstract reset(): void
 
   /* Value accessor stuff */
   public onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  writeValue(value: any) {
-    let values = (value instanceof Array) ? value : [value];
-
-    this.dates = values.map(
-      v => this.getMoment(v) );
-  }
+  abstract writeValue(value: any): void
 
   registerOnChange(fn: any) {
     this.onChangeCallback = fn;
@@ -91,9 +53,8 @@ export abstract class DatePickerCore implements ControlValueAccessor {
   }
   /* */
 
-  private _onValueChanged(value: moment.Moment[]) {
+  onValueChanged(value: (moment.Moment | moment.Moment[]) ) {
     this.onChangeCallback(value);
-    this.onDatesChanged(value);
 
     // we only need to update days state
     // TODO benchmark generateCalendarMonth() with an updateDaysState() function
@@ -101,40 +62,14 @@ export abstract class DatePickerCore implements ControlValueAccessor {
     this.buildCalendar();
   }
 
-  abstract onDatesChanged(date: moment.Moment[])
-
-  addDate(day: CalendarDay) {
-    this.dates = [...this.dates, day.date];
-  }
-
-  removeDate(day: CalendarDay) {
-    let dayDate = day.date;
-
-    this.dates = this.dates.filter( d => !d.isSame(dayDate) );
-  }
-
-  //easy API when using only 1 date
-  setDate(day: CalendarDay) {
-    this.date = day.date;
-  }
-
   /** Returns true when date is between minDate and maxDate */
   isDateValid(date: moment.Moment): boolean {
-    return (!this.minDate || date.isBefore(this.minDate)) &&
-         (!this.maxDate || date.isAfter(this.maxDate));
+    return date &&
+      (!this.minDate || date.isBefore(this.minDate)) &&
+      (!this.maxDate || date.isAfter(this.maxDate));
   }
 
-  private getDayState(date: moment.Moment): DayState {
-
-    if ( !!this.dates.find( d => d.isSame(date) ) )
-      return DayState.active;
-
-    if ( this.dates.length < 2 &&
-          date.isBetween(this.dates[0], this.dates[this.dates.length - 1], 'day', '[]') )
-      return DayState.selected;
-
-    return this.isDateValid(date) ? DayState.enabled : DayState.disabled;
-  }
+  abstract getDayState(date: moment.Moment): DayState
 
   // Once we handle locale refractor using .weekDay() instead of .day()
   // and remove @Output() firstWeekDay
