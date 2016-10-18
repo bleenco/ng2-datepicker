@@ -91,7 +91,7 @@ export abstract class DatePickerCore implements ControlValueAccessor {
     let endDate = moment([year, month]).endOf('month');
     endDate.add( mod(lastWeekDay - endDate.day()), 'd');
 
-    let days = [];
+    let days: CalendarDay[] = [];
     while ( date.isBefore(endDate) ) {
       days.push({
         date: date,
@@ -106,7 +106,7 @@ export abstract class DatePickerCore implements ControlValueAccessor {
     return days;
   }
 
-  abstract buildCalendar()
+  abstract buildCalendar(): void
 
 }
 

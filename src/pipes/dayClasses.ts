@@ -8,7 +8,7 @@ import { CalendarDay, DayState } from '../calendarday';
 export class DayClassesPipe implements PipeTransform {
 
    transform(day: CalendarDay): { [name: string]: boolean} {
-    let classes = {
+    let classes: { [name: string]: boolean } = {
         enabled: false,
         selected: false,
         active: false,
