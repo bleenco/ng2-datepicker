@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 
-export enum DayState {
+export enum DateState {
   disabled,
   enabled,
   selected, //selected is also enabled

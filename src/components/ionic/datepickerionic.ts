@@ -1,9 +1,11 @@
-import { Component, Input, ElementRef, OnInit } from '@angular/core';
+import { Component, Input, ElementRef, OnInit, Renderer } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { SingleDatePicker } from '../../singledatepicker';
-import { CalendarDay } from '../../calendarday';
+import { DatePickerTemplate } from '../datepicker.template';
+import { BaseSelect } from '../../selections/base.select';
+
+import { CalendarDay } from '../../models';
 
 import { extendConfig } from '../../decorators/providers';
 
@@ -15,9 +17,20 @@ export const DEFAULT_CONFIG = {
 @Component( extendConfig(DEFAULT_CONFIG, DatePickerIonicComponent, {
   selector: 'datepicker-ionic'
 }) )
-export class DatePickerIonicComponent extends SingleDatePicker implements OnInit {
+export class DatePickerIonicComponent extends DatePickerTemplate implements OnInit {
 
-  @Input() class: string;
+  static CONTAINER_CLASS = 'ui-kit-calendar-container';
+
+  private _class = DatePickerIonicComponent.CONTAINER_CLASS;
+
+  get class() {
+    return this._class;
+  }
+
+  @Input() set class(classStr: string) {
+    this._class = DatePickerIonicComponent.CONTAINER_CLASS + ' ' + classStr;
+  }
+
   @Input() expanded: boolean;
   @Input() opened = false;
 
@@ -28,32 +41,28 @@ export class DatePickerIonicComponent extends SingleDatePicker implements OnInit
 
   days: CalendarDay[] = [];
 
-  constructor(elRef: ElementRef) {
-    super();
+  constructor(renderer: Renderer, elRef: ElementRef, select: BaseSelect<any>) {
+    super(select);
 
     this.el = elRef.nativeElement;
-  }
 
-  ngOnInit() {
-    this.buildCalendar();
-
-    this.class = `ui-kit-calendar-container ${this.class}`;
-
-    /* TODO use renderer.listenGlobal() */
-    let body = document.querySelector('body');
-    body.addEventListener('click', e => {
+    renderer.listenGlobal('window', 'click', e => {
       if (!this.opened || !e.target) { return; };
       if (this.el !== e.target && !this.el.contains((<any>e.target))) {
         this.close();
       }
-    }, false);
+    });
+  }
+
+  ngOnInit() {
+    this.buildCalendar();
   }
 
   onDateclick(e: MouseEvent, day: CalendarDay) {
     e.preventDefault();
 
     if ( day.date.month() === this.displayDate.month() ) {
-      this.setDate(day);
+      this.select.selectDate(day.date);
       this.close();
     }
   }

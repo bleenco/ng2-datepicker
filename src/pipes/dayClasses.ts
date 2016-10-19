@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { CalendarDay, DayState } from '../calendarday';
+import { CalendarDay, DateState } from '../models';
 
 @Pipe({
   name: 'dayClasses'
@@ -17,8 +17,8 @@ export class DayClassesPipe implements PipeTransform {
         currDisplayMonth: day.isCurrDisplayMonth
     };
 
-    if (day.state > DayState.disabled)
-      classes[ DayState[day.state] ] = true;
+    if (day.state > DateState.disabled)
+      classes[ DateState[day.state] ] = true;
 
     return classes;
   }
