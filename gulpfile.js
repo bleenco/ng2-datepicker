@@ -93,11 +93,11 @@ gulp.task('build:rollup', () => {
     .pipe(sourceMap.init({loadMaps: true}))
     .pipe(rename('ng2-datepicker.umd.js'))
     .pipe(sourceMap.write('.'))
-    .pipe(gulp.dest(DEST))
+    .pipe(gulp.dest(BUNDLE))
     /*
     .pipe(uglify())
     .pipe(rename('ng2-datepicker.umd.min.js'))
-    .pipe(gulp.dest(DEST))
+    .pipe(gulp.dest(BUNDLE))
     */
     ;
 });

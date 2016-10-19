@@ -23,7 +23,7 @@
     ]
   },
   "include": [
-    "index.ts",
+    "ng2-datepicker.ts",
     "src/**/*"
   ],
   "angularCompilerOptions": {
