@@ -8,7 +8,9 @@
     "url": "git+https://github.com/jkuri/ng2-datepicker.git"
   },
   "scripts": {
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "compile": "gulp compile",
+    "build": "gulp build"
   },
   "keywords": [
     "angular",
@@ -18,20 +20,31 @@
     "directive"
   ],
   "author": "Jan Kuri <jkuri88@gmail.com>",
+  "contributors": [
+    "Ghetolay <ghetolay@gmail.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
-    "@angular/common": "^2.0.1",
-    "@angular/compiler": "^2.0.1",
-    "@angular/core": "^2.0.1",
-    "@angular/forms": "^2.0.1",
-    "@angular/platform-browser": "^2.0.1",
-    "@types/moment": "^2.11.29",
-    "@types/node": "^6.0.42",
-    "rxjs": "5.0.0-beta.12",
+    "@angular/compiler": "^2.1.0",
+    "@angular/compiler-cli": "^2.1.0",
+    "gulp": "^3.9.1",
+    "del": "^2.2.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-run": "^1.7.1",
+    "gulp-sequence": "^0.4.6",
+    "gulp-sourcemaps": "^2.1.1",
+    "gulp-typescript": "^3.0.2",
+    "gulp-uglify": "^2.0.0",
+    "merge2": "^1.0.2",
+    "rollup-stream": "^1.14.0",
     "typescript": "^2.0.3",
-    "zone.js": "0.6.25"
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
-  "dependencies": {
-    "moment": "^2.14.1"
+  "peerDependencies": {
+    "@angular/common": "^2.1.0",
+    "@angular/core": "^2.1.0",
+    "@angular/forms": "^2.1.0",
+    "moment": "^2.15.1"
   }
 }

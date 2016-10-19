@@ -4,14 +4,17 @@ import * as moment from 'moment';
 
 import { SingleDatePicker } from '../../singledatepicker';
 import { CalendarDay } from '../../calendarday';
-import { dpProviders } from '../../helpers/providers';
 
-@Component({
-  selector: 'datepicker-ionic',
+import { extendConfig } from '../../decorators/providers';
+
+export const DEFAULT_CONFIG = {
   templateUrl: './ionic.component.html',
-  styleUrls: [ './ionic.css' ],
-  providers: dpProviders(DatePickerIonicComponent)
-})
+  styleUrls: ['ionic.css']
+};
+
+@Component( extendConfig(DEFAULT_CONFIG, DatePickerIonicComponent, {
+  selector: 'datepicker-ionic'
+}) )
 export class DatePickerIonicComponent extends SingleDatePicker implements OnInit {
 
   @Input() class: string;
@@ -21,9 +24,9 @@ export class DatePickerIonicComponent extends SingleDatePicker implements OnInit
   private el: Element;
 
   //only month and year relevant
-  private displayDate = moment();
+  displayDate = moment();
 
-  private days: CalendarDay[] = [];
+  days: CalendarDay[] = [];
 
   constructor(elRef: ElementRef) {
     super();

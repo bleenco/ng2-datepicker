@@ -1,16 +1,34 @@
 {
+  "version": "2.0.0",
   "compilerOptions": {
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "dom"],
-    "rootDir": ".",
-    "module": "commonjs",
+    "noEmitOnError": true,
+    "lib": ["es6", "es2015", "dom"],
+    "mapRoot": "",
+    "module": "es2015",
     "moduleResolution": "node",
+    "outDir": "dist/",
+    "rootDir": ".",
     "sourceMap": true,
     "target": "es5",
+    "inlineSources": true,
+    "stripInternal": true,
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
+      "node"
     ]
+  },
+  "include": [
+    "index.ts",
+    "src/**/*"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "dist/",
+    "skipTemplateCodegen": true,
+    "debug": true
   }
 }
