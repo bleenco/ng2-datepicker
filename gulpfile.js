@@ -24,6 +24,7 @@ var TSCONFIG = "tsconfig.json";
 gulp.task('clean', () => {
   return del([
     DEST,
+    'ng2-datepicker.js',
     BUNDLE
   ]);
 });
