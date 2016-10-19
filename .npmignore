@@ -1,0 +1,4 @@
+.editorconfig
+*.json
+gulpfile.js
+scripts/
