@@ -8,13 +8,19 @@ import { CalendarDay } from '../models';
 
 export abstract class DatePickerTemplate implements ControlValueAccessor {
 
-  @Input() firstWeekDay: number;
-  @Input() viewFormat = 'D MM YYYY';
+  @Input() firstWeekDay = 1;
+  @Input() viewFormat = 'D MMMM YYYY';
 
-  constructor( protected select: BaseSelect<any> ) {
+  constructor( protected select: BaseSelect<moment.Moment | moment.Moment[]> ) {
+    if (!select)
+      throw 'No SelectDirective specified. DatePicker must be coupled with a SelectDirective';
+
     // should we unsubscribe onDestroy since SelectDirective has
     // same lifecycle that this component ?
-    this.select.onChange.subscribe( d => this.buildCalendar() );
+    this.select.onChange.subscribe( d => {
+      this.onChangeCallback(d);
+      this.buildCalendar();
+    });
   }
 
   /* Value accessor stuff */
@@ -23,6 +29,7 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
 
   // TODO should we check that value match SelectDirective's expected value type ?
   // If so how ?
+  // TODO use setValue() ?
   writeValue(value: any) {
     this.select.value = value;
   }

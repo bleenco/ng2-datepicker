@@ -12,34 +12,38 @@ import { DateState } from '../models';
 })
 export class SingleSelectDirective extends BaseSelect<moment.Moment> implements OnChanges {
 
-  private _date: moment.Moment;
-
-  get value(): moment.Moment {
-    return this._date;
-  }
-
-  set value(value: moment.Moment) {
-    if ( !value || this.isDateValid(value) ) {
-      this._date = this.getDay(value);
-      this.onChange.emit(this._date);
-    }
+  setValue(value: moment.Moment) {
+    if ( !value || this.isDateValid(value) )
+      this.value = value;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if ( changes['minDate'] || changes['maxDate'] ) {
+   if ( !this.isDateValid(this.value) )
+      this.value = null;
 
-      if ( !this.isDateValid(this.value) )
-        this.value = null;
-
-      // TODO template must be updated because day state changed
-      // Careful here because this.value = null has already emit a onChange value
-      // which has already produce a template refresh.
-      // We should try to avoid to do it twice.
-    }
+    // TODO template must be updated because day state changed
+    // Careful here because this.value = null has already emit a onChange value
+    // which has most likely already produce a template refresh.
+    // We should try to avoid to do it twice.
   }
 
-  selectDate(date: moment.Moment) {
+  selectDate(date: moment.Moment): boolean {
     this.value = date;
+
+    return true;
+  }
+
+  unselectDate(date: moment.Moment): boolean {
+    if (date && date.isSame(this.value, 'day') ) {
+      this.value = null;
+      return true;
+    }
+
+    return false;
+  }
+
+  isDateSelected(date: moment.Moment): boolean {
+    return date.isSame(this.value, 'day');
   }
 
   getDateState(date: moment.Moment): DateState {

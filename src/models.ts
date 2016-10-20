@@ -10,7 +10,7 @@ export enum DateState {
 export interface CalendarDay {
   date: Moment;
 
-  state: DayState;
+  state: DateState;
 
   isToday:     boolean;
   isCurrDisplayMonth: boolean;

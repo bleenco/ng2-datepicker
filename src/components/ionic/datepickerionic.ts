@@ -7,7 +7,7 @@ import { BaseSelect } from '../../selections/base.select';
 
 import { CalendarDay } from '../../models';
 
-import { extendConfig } from '../../decorators/providers';
+import { extendConfig } from '../../decorators/aot-utils';
 
 export const DEFAULT_CONFIG = {
   templateUrl: './ionic.component.html',
@@ -41,16 +41,17 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
 
   days: CalendarDay[] = [];
 
-  constructor(renderer: Renderer, elRef: ElementRef, select: BaseSelect<any>) {
+  constructor(renderer: Renderer, elRef: ElementRef, select: BaseSelect<moment.Moment | moment.Moment[]>) {
     super(select);
 
     this.el = elRef.nativeElement;
 
     renderer.listenGlobal('window', 'click', e => {
-      if (!this.opened || !e.target) { return; };
-      if (this.el !== e.target && !this.el.contains((<any>e.target))) {
+      if (this.opened &&
+          e.target &&
+          this.el !== e.target &&
+          !this.el.contains((<any>e.target)))
         this.close();
-      }
     });
   }
 
@@ -69,6 +70,8 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
 
   buildCalendar() {
      this.days = this.generateCalendarMonth(this.displayDate.month(), this.displayDate.year());
+
+     //console.log(this.days);
   }
 
   nextMonth() {

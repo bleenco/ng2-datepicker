@@ -6,10 +6,32 @@ import { DateState } from '../models';
 
 export abstract class BaseSelect<T> {
 
+  private _value: T;
+
+  get value(): T {
+    return this._value;
+  }
+
+  /**
+   * Set the value without any check (except null) and emit an onChange event
+   * @param {T} value
+   */
+  set value(value: T) {
+    if (value != this._value)
+      this.onChange.emit(this._value = value);
+  }
+
   @Input() minDate: moment.Moment;
   @Input() maxDate: moment.Moment;
 
   @Output() onChange = new EventEmitter<T>();
+
+  /**
+   * Set value with guards for min/max and limit(multi)
+   * @param {T}
+   * @return {moment.Moment}
+   */
+  abstract setValue(value: T): void
 
   /**
    * Return a date corresponding to the day of the input date.
@@ -21,10 +43,9 @@ export abstract class BaseSelect<T> {
     return date ? moment([ date.year, date.month, date.date]) : null;
   }
 
-  abstract set value(v: T)
-  abstract get value(): T
-
-  abstract selectDate(date: moment.Moment): void
+  abstract selectDate(date: moment.Moment): boolean
+  abstract unselectDate(date: moment.Moment): boolean
+  abstract isDateSelected(date: moment.Moment): boolean
 
   /** Returns true when date is between minDate and maxDate */
   isDateValid(date: moment.Moment): boolean {

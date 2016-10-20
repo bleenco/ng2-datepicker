@@ -1,7 +1,5 @@
 import { Component, Provider, isDevMode } from '@angular/core';
 
-import 'reflect-metadata';
-
 export interface ExtendsComponentMetadata {
   selector?: string;
 

@@ -1,7 +1,7 @@
 <div [class]="class">
-  <input type="hidden" [(ngModel)]="date">
+  <input type="hidden" [(ngModel)]="select.value">
   <div class="ui-kit-calendar-input" [class.opened]="opened || expanded" (click)="toggle()">
-    <span [class.opened]="opened || expanded">{{ date | momentFormat: viewFormat }}</span>
+    <span [class.opened]="opened || expanded">{{ select.value | momentFormat: viewFormat }}</span>
     <i class="ion-ios-calendar-outline"></i>
   </div>
   <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
