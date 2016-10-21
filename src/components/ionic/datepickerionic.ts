@@ -70,8 +70,6 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
 
   buildCalendar() {
      this.days = this.generateCalendarMonth(this.displayDate.month(), this.displayDate.year());
-
-     //console.log(this.days);
   }
 
   nextMonth() {

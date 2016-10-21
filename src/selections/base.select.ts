@@ -6,7 +6,9 @@ import { DateState } from '../models';
 
 export abstract class BaseSelect<T> {
 
-  private _value: T;
+  protected EMPTY_VALUE: T
+
+  private _value = this.EMPTY_VALUE;
 
   get value(): T {
     return this._value;
@@ -18,7 +20,7 @@ export abstract class BaseSelect<T> {
    */
   set value(value: T) {
     if (value != this._value)
-      this.onChange.emit(this._value = value);
+      this.onChange.emit(this._value = value || this.EMPTY_VALUE);
   }
 
   @Input() minDate: moment.Moment;

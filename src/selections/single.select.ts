@@ -2,15 +2,16 @@ import { Directive, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
 import * as moment from 'moment';
 
 import { BaseSelect } from './base.select';
+import { selectProvider } from '../decorators/aot-utils';
 import { DateState } from '../models';
 
 @Directive({
   selector: '[singleSelect]',
-  providers: [{
-    provide: BaseSelect, useExisting: forwardRef(() => SingleSelectDirective)
-  }]
+  providers: [ selectProvider(SingleSelectDirective) ]
 })
 export class SingleSelectDirective extends BaseSelect<moment.Moment> implements OnChanges {
+
+  protected EMPTY_VALUE = null;
 
   setValue(value: moment.Moment) {
     if ( !value || this.isDateValid(value) )

@@ -1,4 +1,4 @@
-import { Component, Provider, forwardRef } from '@angular/core';
+import { Component, Directive, Provider, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export function dpProviders(component: any, providers: Provider[] = []): Provider[] {
@@ -33,5 +33,13 @@ export function extendConfig(defaultConfig: Component, componentClass: Function,
     encapsulation: config.encapsulation,
     interpolation: config.interpolation,
     entryComponents: config.entryComponents
+  };
+}
+
+import { BaseSelect } from '../selections/base.select';
+
+export function selectProvider(directiveClass: Function): Provider {
+  return {
+    provide: BaseSelect, useExisting: forwardRef(() => directiveClass)
   };
 }

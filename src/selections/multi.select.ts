@@ -1,7 +1,8 @@
-import { Directive, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 
 import { BaseSelect } from './base.select';
+import { selectProvider } from '../decorators/aot-utils';
 import { DateState } from '../models';
 
 //helper function
@@ -11,11 +12,13 @@ function eqDay(date: moment.Moment) {
 
 @Directive({
   selector: '[multiSelect]',
-  providers: [{
-    provide: BaseSelect, useExisting: forwardRef(() => MultiSelectDirective)
-  }]
+  providers: [ selectProvider(MultiSelectDirective) ]
 })
 export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements OnChanges {
+
+  protected get EMPTY_VALUE() {
+    return [];
+  }
 
   @Input() limit = Infinity;
 
@@ -74,7 +77,6 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
   }
 
   getDateState(date: moment.Moment): DateState {
-
     if ( !!this.value.find( eqDay(date) ) )
       return DateState.active;
 
