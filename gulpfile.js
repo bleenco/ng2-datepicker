@@ -10,6 +10,8 @@ var gulpRun = require('gulp-run');
 var gulpSeq = require('gulp-sequence');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 
 var rollup = require('rollup-stream');
 var source = require('vinyl-source-stream');
@@ -29,7 +31,7 @@ gulp.task('clean', () => {
   ]);
 });
 
-gulp.task('compile', gulpSeq('clean', ['compile:ts', 'compile:copy'], 'compile:inline'));
+gulp.task('compile', gulpSeq('clean', ['compile:ts', 'compile:sass', 'compile:copy'], 'compile:inline'));
 gulp.task('build', gulpSeq('clean', 'compile', 'build:ngc', 'build:rollup'));
 
 gulp.task('compile:ts', () => {
@@ -43,6 +45,17 @@ gulp.task('compile:ts', () => {
       tsResult.dts,
       tsResult.js.pipe(sourceMap.write('.'))
     ])
+    .pipe(gulp.dest(DEST));
+});
+
+gulp.task('compile:sass', () => {
+  gulp.src('src/**/*.scss', {base: '.'})
+    .pipe(sourceMap.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions']
+    }))
+    .pipe(sourceMap.write('.'))
     .pipe(gulp.dest(DEST));
 });
 
