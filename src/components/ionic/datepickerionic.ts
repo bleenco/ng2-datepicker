@@ -7,17 +7,23 @@ import { BaseSelect } from '../../selections/base.select';
 
 import { CalendarDay } from '../../models';
 
-import { extendConfig } from '../../decorators/aot-utils';
+import { extendConfig, formProvider } from '../../config_helpers';
 
-export const DEFAULT_CONFIG = {
-  templateUrl: './ionic.component.html',
-  styleUrls: ['ionic.css']
-};
-
-@Component( extendConfig(DEFAULT_CONFIG, DatePickerIonicComponent, {
-  selector: 'datepicker-ionic'
-}) )
+@Component( DatePickerIonicComponent.extendConfig({
+  selector: 'datepicker-ionic',
+}, DatePickerIonicComponent))
 export class DatePickerIonicComponent extends DatePickerTemplate implements OnInit {
+
+  static extendConfig(config: Component, componentClass: Function, ...a: any[]) {
+    return extendConfig(
+      super.extendConfig({
+        templateUrl: './ionic.component.html',
+        styleUrls: ['ionic.css'],
+        providers: [ formProvider(componentClass) ]
+      }),
+      config
+    );
+  }
 
   static CONTAINER_CLASS = 'ui-kit-calendar-container';
 
@@ -35,9 +41,6 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
   @Input() opened = false;
 
   private el: Element;
-
-  //only month and year relevant
-  displayDate = moment();
 
   days: CalendarDay[] = [];
 
@@ -92,5 +95,10 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
 
   close() {
     this.opened = false;
+  }
+
+  inputClick() {
+    this.onTouchedCallback();
+    this.toggle();
   }
 }

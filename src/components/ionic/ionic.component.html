@@ -1,23 +1,17 @@
 <div [class]="class">
-  <input type="hidden" [(ngModel)]="select.value">
-  <div class="ui-kit-calendar-input" [class.opened]="opened || expanded" (click)="toggle()">
-    <span [class.opened]="opened || expanded">{{ select.value | momentFormat: viewFormat }}</span>
+  <input type="hidden" [(ngModel)]="value">
+  <div class="ui-kit-calendar-input" [class.opened]="opened || expanded" (click)="inputClick()">
+    <span [class.opened]="opened || expanded">{{ value | momentFormat: viewFormat:locale }}</span>
     <i class="ion-ios-calendar-outline"></i>
   </div>
   <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
     <div class="ui-kit-calendar-cal-top">
       <i class="ion-arrow-left-b" (click)="prevMonth()"></i>
-      <span>{{ displayDate | momentFormat: 'MMMM YYYY' }}</span>
+      <span>{{ displayDate | momentFormat: 'MMMM YYYY':locale }}</span>
       <i class="ion-arrow-right-b" (click)="nextMonth()"></i>
     </div>
     <div class="ui-kit-calendar-day-names">
-      <span>Mon</span>
-      <span>Tue</span>
-      <span>Wed</span>
-      <span>Thu</span>
-      <span>Fri</span>
-      <span>Sat</span>
-      <span>Sun</span>
+      <span *ngFor="let wd of weekDaysName">{{ wd }}</span>
     </div>
     <div class="ui-kit-calendar-days">
       <span *ngFor="let d of days"

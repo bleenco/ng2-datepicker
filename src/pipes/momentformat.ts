@@ -7,7 +7,7 @@ import * as moment from 'moment';
 })
 export class MomentFormatPipe implements PipeTransform {
 
-   transform(date: (moment.Moment | moment.Moment[]), format = 'D MMMM YYYY'): string {
+   transform(date: (moment.Moment | moment.Moment[]), format = 'LL', locale?: string): string {
     //this short version cause trouble to typescript
     //let d = (date && date instanceof moment.Moment[]) ? date[0] : date
 
@@ -19,6 +19,11 @@ export class MomentFormatPipe implements PipeTransform {
 
     if (!d)
       return '';
+
+    if(locale){
+      d = moment(d);
+      d.locale(locale);
+    }
 
     return d.format(format);
   }

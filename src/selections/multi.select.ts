@@ -2,7 +2,7 @@ import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 
 import { BaseSelect } from './base.select';
-import { selectProvider } from '../decorators/aot-utils';
+import { selectProvider } from '../config_helpers';
 import { DateState } from '../models';
 
 //helper function
