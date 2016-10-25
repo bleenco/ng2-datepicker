@@ -10,7 +10,7 @@
     "module": "es2015",
     "moduleResolution": "node",
     "outDir": "dist/",
-    "rootDir": ".",
+    "rootDir": "src/",
     "sourceMap": true,
     "target": "es5",
     "inlineSources": true,
@@ -23,7 +23,6 @@
     ]
   },
   "include": [
-    "ng2-datepicker.ts",
     "src/**/*"
   ],
   "angularCompilerOptions": {

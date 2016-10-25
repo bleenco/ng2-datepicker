@@ -5,7 +5,8 @@ var del = require('del');
 var merge = require('merge2');
 
 var sourceMap = require('gulp-sourcemaps');
-var ts = require('gulp-typescript');
+var filter = require('gulp-filter');
+var gulpTs = require('gulp-typescript');
 var gulpRun = require('gulp-run');
 var gulpSeq = require('gulp-sequence');
 var rename = require('gulp-rename');
@@ -14,6 +15,7 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
 var rollup = require('rollup-stream');
+var rollupTs = require('rollup-plugin-typescript');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
@@ -35,7 +37,7 @@ gulp.task('compile', gulpSeq('clean', ['compile:ts', 'compile:sass', 'compile:co
 gulp.task('build', gulpSeq('clean', 'compile', 'build:ngc', 'build:rollup'));
 
 gulp.task('compile:ts', () => {
-  var tsProject = ts.createProject(TSCONFIG);
+  var tsProject = gulpTs.createProject(TSCONFIG);
 
   var tsResult = tsProject.src()
     .pipe(sourceMap.init())
@@ -49,7 +51,7 @@ gulp.task('compile:ts', () => {
 });
 
 gulp.task('compile:sass', () => {
-  gulp.src('src/**/*.scss', {base: '.'})
+  gulp.src('src/**/*.scss', {base: 'src/'})
     .pipe(sourceMap.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({
@@ -60,7 +62,7 @@ gulp.task('compile:sass', () => {
 });
 
 gulp.task('compile:copy', () => {
-  gulp.src(['src/**/*.css', 'src/**/*.html'], {base: '.'})
+  gulp.src(['src/**/*.css', 'src/**/*.html'], {base: 'src/'})
     .pipe(gulp.dest(DEST));
 });
 
@@ -72,14 +74,7 @@ gulp.task('build:ngc', () => {
   return gulpRun('./node_modules/.bin/ngc -p ' + TSCONFIG).exec();
 });
 
-/* don't work yet see :
-  https://github.com/rollup/rollup-plugin-typescript/issues/68
-  http://stackoverflow.com/questions/39519823/using-rollup-for-angular-2s-aot-compiler-and-importing-moment-js
-*/
 gulp.task('build:rollup', () => {
-
-  return;
-
   var globals = {
     // Angular dependencies
     '@angular/core': 'ng.core',
@@ -93,24 +88,41 @@ gulp.task('build:rollup', () => {
   };
 
   return rollup({
-      entry: path.join(DEST, 'index.js'),
+      entry: 'src/ng2-datepicker.ts',
       context: 'this',
       globals: globals,
       external: Object.keys(globals),
       sourceMap: true,
       format: 'umd',
       moduleName:'ng2-datepicker',
+      plugins: [
+        /* Problem with rollup on moment imports
+          https://github.com/rollup/rollup-plugin-typescript/issues/68
+          http://stackoverflow.com/questions/39519823/using-rollup-for-angular-2s-aot-compiler-and-importing-moment-js
+        */
+        {
+          name: 'replace moment imports',
+          transform: code =>
+            ({
+              code: code.replace(/import\s*\*\s*as\s*moment/g, 'import moment'),
+              map: { mappings: '' }
+            })
+        },
+        rollupTs({
+          typescript: require('typescript')
+        })
+      ]
     })
-    .pipe(source('index.js', DEST))
+    .pipe(source('ng2-datepicker.ts', 'src'))
     .pipe(buffer())
     .pipe(sourceMap.init({loadMaps: true}))
     .pipe(rename('ng2-datepicker.umd.js'))
     .pipe(sourceMap.write('.'))
     .pipe(gulp.dest(BUNDLE))
-    /*
+
+    //min version
+    .pipe(filter(['**/*', '!**/*.map']))
     .pipe(uglify())
     .pipe(rename('ng2-datepicker.umd.min.js'))
-    .pipe(gulp.dest(BUNDLE))
-    */
-    ;
+    .pipe(gulp.dest(BUNDLE));
 });
