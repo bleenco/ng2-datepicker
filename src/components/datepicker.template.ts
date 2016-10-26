@@ -9,6 +9,12 @@ import { extendConfig } from '../config_helpers';
 
 export abstract class DatePickerTemplate implements ControlValueAccessor {
 
+   /**
+   * Extend the base configuration needed by @Component
+   * @param {Component} config           subclass configuration
+   * @param {any[]}     ...a             useless just to please compiler if subclass wants to add parameter
+   */
+  //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
   static extendConfig(config, ...a: any[]) {
     return extendConfig({
       //we could auto-generated it using gulp or something
@@ -51,13 +57,6 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
       this.onChangeCallback(d);
       this.buildCalendar();
     });
-  }
-
-  private localeDate(date: moment.Moment): moment.Moment {
-    if(this.locale)
-      return date.clone().locale(this.locale);
-
-    return date;
   }
 
   /* Value accessor stuff */

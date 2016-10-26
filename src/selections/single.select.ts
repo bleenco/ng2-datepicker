@@ -2,13 +2,11 @@ import { Directive, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
 import * as moment from 'moment';
 
 import { BaseSelect } from './base.select';
-import { selectProvider } from '../config_helpers';
 import { DateState } from '../models';
 
-@Directive({
-  selector: '[singleSelect]',
-  providers: [ selectProvider(SingleSelectDirective) ]
-})
+@Directive(BaseSelect.extendConfig({
+  selector: '[singleSelect]'
+}, SingleSelectDirective))
 export class SingleSelectDirective extends BaseSelect<moment.Moment> implements OnChanges {
 
   protected EMPTY_VALUE = null;

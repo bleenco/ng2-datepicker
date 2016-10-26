@@ -2,7 +2,6 @@ import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 
 import { BaseSelect } from './base.select';
-import { selectProvider } from '../config_helpers';
 import { DateState } from '../models';
 
 //helper function
@@ -10,17 +9,16 @@ function eqDay(date: moment.Moment) {
   return d => d.isSame(date, 'day');
 }
 
-@Directive({
-  selector: '[multiSelect]',
-  providers: [ selectProvider(MultiSelectDirective) ]
-})
+@Directive(BaseSelect.extendConfig({
+  selector: '[multiSelect]'
+}, MultiSelectDirective))
 export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements OnChanges {
 
   protected get EMPTY_VALUE() {
     return [];
   }
 
-  @Input() limit = Infinity;
+  @Input('multiSelect') limit = Infinity;
 
   public setValue(dates: moment.Moment[]) {
     if (dates != this.value) {

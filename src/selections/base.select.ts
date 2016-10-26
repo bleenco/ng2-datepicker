@@ -1,10 +1,26 @@
-import { Input, Output, EventEmitter } from '@angular/core';
+import { Directive, Component, Input, Output, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment';
 
 import { DateState } from '../models';
+import { extendConfig, selectProvider } from '../config_helpers';
 
 export abstract class BaseSelect<T> {
+
+  /**
+   * Extend the base configuration needed by @Directive
+   * @param {Directive} config           subclass configuration
+   * @param {Function}  directiveClasses subclass
+   * @param {any[]}     ...a             useless just to please compiler if subclass wants to add parameter
+   */
+  //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
+  static extendConfig(config: Directive, directiveClasses: Function, ...a: any[]) {
+    return extendConfig({
+      //we could auto-generated it using gulp or something
+      inputs: ['minDate', 'maxDate', 'onChange'],
+      providers: [selectProvider(directiveClasses)]
+    }, config);
+  }
 
   protected EMPTY_VALUE: T
 
