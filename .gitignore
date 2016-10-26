@@ -1,9 +1,7 @@
-**/*.js
+src/**/*.js
 **/*.js.map
 **/*.d.ts
 **/*.ngfactory.js
-
-!gulpfile.js
 
 npm-debug.log/
 
