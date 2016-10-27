@@ -1,11 +1,11 @@
-import { Directive, Component, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, Component, Input, Output, EventEmitter, DoCheck, ChangeDetectionStrategy } from '@angular/core';
 
 import * as moment from 'moment';
 
 import { DateState } from '../models';
 import { extendConfig, selectProvider } from '../config_helpers';
 
-export abstract class BaseSelect<T> {
+export abstract class BaseSelect<T> implements DoCheck {
 
   /**
    * Extend the base configuration needed by @Directive
@@ -16,13 +16,15 @@ export abstract class BaseSelect<T> {
   //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
   static extendConfig(config: Directive, directiveClasses: Function, ...a: any[]) {
     return extendConfig({
-      //we could auto-generated it using gulp or something
-      inputs: ['minDate', 'maxDate', 'onChange'],
-      providers: [selectProvider(directiveClasses)]
+      //we could auto-generate it using gulp or something
+      inputs: ['minDate', 'maxDate'],
+      outputs: ['onDateChange'],
+      providers: [selectProvider(directiveClasses)],
+      changeDetection: ChangeDetectionStrategy.OnPush
     }, config);
   }
 
-  protected EMPTY_VALUE: T
+  protected abstract get EMPTY_VALUE(): T
 
   private _value = this.EMPTY_VALUE;
 
@@ -31,18 +33,62 @@ export abstract class BaseSelect<T> {
   }
 
   /**
-   * Set the value without any check (except null) and emit an onChange event
+   * Set the value without any check (except null) and emit an onDateChange event
    * @param {T} value
    */
   set value(value: T) {
-    if (value != this._value)
-      this.onChange.emit(this._value = value || this.EMPTY_VALUE);
+    if (value !== this._value) {
+      this.onDateChange.emit( this._value = value || this.EMPTY_VALUE );
+      this.hasStateChanged = true;
+    }
   }
 
-  @Input() minDate: moment.Moment;
-  @Input() maxDate: moment.Moment;
+  private _minDate: moment.Moment;
 
-  @Output() onChange = new EventEmitter<T>();
+  /*@Input()*/
+  get minDate(): moment.Moment {
+    return this._minDate;
+  }
+  set minDate(date: moment.Moment) {
+    this._minDate = date;
+    this.hasStateChanged = true;
+  }
+
+  private _maxDate: moment.Moment;
+
+  /*@Input()*/
+  get maxDate(): moment.Moment {
+    return this._maxDate;
+  }
+  set maxDate(date: moment.Moment) {
+    this._maxDate = date;
+    this.hasStateChanged = true;
+  }
+
+  /*@Output()*/
+  onDateChange = new EventEmitter<T>();
+
+  private onStateChange: () => void = () => {};
+
+  registerOnStateChange(fn: () => void) {
+    this.onStateChange = fn;
+  }
+
+  /* we're kinda doing our own change detection because some inputs
+   * may be changed directly by template and not through property binding.
+   * Such change are not covered by Angular change detection.
+   *
+   * We just want to know if something has changed not what has changed so
+   * a boolean flag is enough
+   */
+  public hasStateChanged = false;
+
+  ngDoCheck() {
+    if (this.hasStateChanged)
+      this.onStateChange();
+
+    this.hasStateChanged = false;
+  }
 
   /**
    * Set value with guards for min/max and limit(multi)
@@ -68,8 +114,8 @@ export abstract class BaseSelect<T> {
   /** Returns true when date is between minDate and maxDate */
   isDateValid(date: moment.Moment): boolean {
     return date &&
-      (!this.minDate || date.isBefore(this.minDate)) &&
-      (!this.maxDate || date.isAfter(this.maxDate));
+      (!this.minDate || date.isSameOrAfter(this.minDate)) &&
+      (!this.maxDate || date.isSameOrBefore(this.maxDate));
   }
 
   abstract getDateState(date: moment.Moment): DateState

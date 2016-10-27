@@ -10,7 +10,7 @@ import { CalendarDay } from '../../models';
 import { extendConfig, formProvider } from '../../config_helpers';
 
 @Component( DatePickerIonicComponent.extendConfig({
-  selector: 'datepicker-ionic',
+  selector: 'datepicker-ionic'
 }, DatePickerIonicComponent))
 export class DatePickerIonicComponent extends DatePickerTemplate implements OnInit {
 
@@ -19,8 +19,8 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
       super.extendConfig({
         templateUrl: './ionic.component.html',
         styleUrls: ['ionic.css'],
-        providers: [ formProvider(componentClass) ]
-      }),
+        inputs: ['class', 'expanded', 'opened', 'displayDate']
+      }, componentClass),
       config
     );
   }
@@ -29,20 +29,18 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
 
   private _class = DatePickerIonicComponent.CONTAINER_CLASS;
 
+  /*@Input()*/
   get class() {
     return this._class;
   }
-
-  @Input() set class(classStr: string) {
+  set class(classStr: string) {
     this._class = DatePickerIonicComponent.CONTAINER_CLASS + ' ' + classStr;
   }
 
-  @Input() expanded: boolean;
-  @Input() opened = false;
+  /*@Input()*/ expanded: boolean;
+  /*@Input()*/ opened = false;
 
   private el: Element;
-
-  days: CalendarDay[] = [];
 
   constructor(renderer: Renderer, elRef: ElementRef, select: BaseSelect<moment.Moment | moment.Moment[]>) {
     super(select);
@@ -59,30 +57,25 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
   }
 
   ngOnInit() {
-    this.buildCalendar();
+    this.initMonths(moment());
   }
 
   onDateclick(e: MouseEvent, day: CalendarDay) {
     e.preventDefault();
 
-    if ( day.date.month() === this.displayDate.month() ) {
+    if ( day.date.isSame(this.month.date, 'M') ) {
       this.select.selectDate(day.date);
       this.close();
     }
   }
 
-  buildCalendar() {
-     this.days = this.generateCalendarMonth(this.displayDate.month(), this.displayDate.year());
-  }
 
   nextMonth() {
-    this.displayDate = this.displayDate.clone().add(1, 'month');
-    this.buildCalendar();
+    this.setMonth( this.month.date.add(1, 'M') );
   }
 
   prevMonth() {
-    this.displayDate = this.displayDate.clone().subtract(1, 'month');
-    this.buildCalendar();
+    this.setMonth( this.month.date.subtract(1, 'M') );
   }
 
   toggle() {

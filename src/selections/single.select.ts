@@ -9,7 +9,7 @@ import { DateState } from '../models';
 }, SingleSelectDirective))
 export class SingleSelectDirective extends BaseSelect<moment.Moment> implements OnChanges {
 
-  protected EMPTY_VALUE = null;
+  protected get EMPTY_VALUE(){ return null; };
 
   setValue(value: moment.Moment) {
     if ( !value || this.isDateValid(value) )
@@ -19,11 +19,6 @@ export class SingleSelectDirective extends BaseSelect<moment.Moment> implements 
   ngOnChanges(changes: SimpleChanges) {
    if ( !this.isDateValid(this.value) )
       this.value = null;
-
-    // TODO template must be updated because day state changed
-    // Careful here because this.value = null has already emit a onChange value
-    // which has most likely already produce a template refresh.
-    // We should try to avoid to do it twice.
   }
 
   selectDate(date: moment.Moment): boolean {

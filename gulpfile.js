@@ -50,6 +50,9 @@ gulp.task('compile:ts', () => {
     .pipe(gulp.dest(DEST));
 });
 
+/* TODO sass compilation should be done during inline-resource
+ * we should use styleUrl: ['icon.scss'] not icon.css
+ */
 gulp.task('compile:sass', () => {
   gulp.src('src/**/*.scss', {base: 'src/'})
     .pipe(sourceMap.init())

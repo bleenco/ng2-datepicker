@@ -7,14 +7,14 @@
   <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
     <div class="ui-kit-calendar-cal-top">
       <i class="ion-arrow-left-b" (click)="prevMonth()"></i>
-      <span>{{ displayDate | momentFormat: 'MMMM YYYY':locale }}</span>
+      <span>{{ month.date | momentFormat: 'MMMM YYYY':locale }}</span>
       <i class="ion-arrow-right-b" (click)="nextMonth()"></i>
     </div>
     <div class="ui-kit-calendar-day-names">
       <span *ngFor="let wd of weekDaysName">{{ wd }}</span>
     </div>
     <div class="ui-kit-calendar-days">
-      <span *ngFor="let d of days"
+      <span *ngFor="let d of month.days"
             (click)="onDateclick($event, d)"
             [ngClass]="d | dayClasses">
         {{ d.date | momentFormat: 'D' }}

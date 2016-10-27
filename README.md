@@ -90,12 +90,12 @@ Options can be passed through property bindings :
 
 `singleSelect` will return a *Moment* object while `multiSelect` will return an *array of Moment* Object.
 
-Beside form binding, it's also possible to listen for changes through event binding on the `onchange` event.
+Beside form binding, it's also possible to listen for changes through event binding on the `onDateChange` event.
 ```ts
 import * as moment from 'moment';
 
 @Component({
-  template: '<datepicker-ionic multiSelect (onChange)="valueChanged($event)"><datepicker-ionic>
+  template: '<datepicker-ionic multiSelect (onDateChange)="valueChanged($event)"><datepicker-ionic>
 })
 export class AppComponent {
   valueChanged(value: moment.Moment[]) {
@@ -134,7 +134,8 @@ export class CustomDatePickerComponent extends DatePickerIonicComponent {
 You can also create your own date picker component while taking advantage of already defined core functionalities. A datepicker component is composed of 2 elements *template component* and *select directive*. A template is responsible of UI stuff (display, interaction...) while a select directive is responsible of date selection. Ideally all template should be compatible with all select directive but a template can be tied to a specific select directive.
 
 ### Creating a template
-This work closely like customizing a datepicker component, except you will extend from `DatePickerTemplate` and have to add a form provider :
+This starts exactly like customizing a datepicker component except you will extend from `DatePickerTemplate`. Then like for any extended class you must call the super constructor. And to finish you must initialise the months to be display (on `ngOnInit()` not `constructor()` !).
+Here is the template :
 
 ```ts
 import { DatePickerTemplate, formProvider } from 'ng2-datepicker';
@@ -144,10 +145,16 @@ import { DatePickerTemplate, formProvider } from 'ng2-datepicker';
   selector: 'datepicker-custom',
   template: '...',
   styles: ['...'],
-  provider: [ formProvider(CustomDatePickerComponent) ]
 }))
-export class CustomDatePickerComponent extends DatePickerTemplate {
-  //use API to work with dates
+export class CustomDatePickerComponent extends DatePickerTemplate implements OnInit {
+
+  constructor(select: BaseSelect<moment.Moment | moment.Moment[]>) {
+    super(select);
+  }
+
+  ngOnInit() {
+    this.initMonths( moment() );
+  }
 }
 ```
 #### DatePickerTemplate API
@@ -156,14 +163,15 @@ export class CustomDatePickerComponent extends DatePickerTemplate {
 |:--- |:--- |:--- |
 |locale|@Input: string \| false|set the locale locally for this component|
 |viewFormat|@Input: string|Format to use when displaying dates.
-|displayDate|@Input: Moment|Current date to display, only month and year are relevant here.
 |weekDaysName|string[]|List of week day's name according to the locale. TODO: Currently returns short name, make it configurable.
 |select|BaseSelect|The directive used for selection. [see public API below](#baseselect-api).
-|value|Moment \| Moment[]| Return current active dates. This is short for `this.select.value`. 
+|value|Moment \| Moment[]| Return current active dates. This is short for `this.select.value`.
 |applyLocale|function(Moment): Moment|Apply(in-place) the current locale to the date passed as argument.
-|onTouchedCallback|function()|Callback to call once the component has been touched. For [form track change](https://angular.io/docs/ts/latest/guide/forms.html#!#track-change-state-and-validity-with-ngmodel-).
-|generateCalendarMonth|function(month: number, year: number, showSixweek?: boolean): CalendarDay[]| Return an array of CalendarDay representing a calendar month including overlapping days of previous and next month to keep weeks complete.If `showSixWeek` is true will always return an array with a length of 42 (6 * 7days).
-|buildCalendar|abstract function()|Abstract function called when calendar should be rendered (when value, displayDate or select date change). **will probably be deprecated**
+|onTouchedCallback|function()|Callback to call once the component has been touched. For [form track change](https://angular.io/docs/ts/latest/guide/forms.html#!#track-change-state-and-validity-with-ngmodel-).|
+|months|Month[]|List of month to display. Use it as a read-only property unless you know what you're doing. To manipule it use helpers functions.|
+|month|Month|Helper function when you only display 1 month it returns `months[0]`.|
+|initMonths|function(...date: Moment[])|Initialise the months list|
+|setMonth|function(date: Moment, index = 0)|Change the date of the month at specified index (default 0 if not specified).|
 
 #### CalendarDay properties
 ```ts
@@ -204,16 +212,13 @@ export class CustomSelectDirective extends BaseSelect<some_type> {
 |value|T|date(s) selected|
 |minDate|@Input: Moment|minimum date boundary|
 |maxDate|@Input: Moment|maximum date boundary|
-|onChange|@Ouput: eventEmitter&lt;T&gt;|Observable emitting value on change|
+|onDateChange|@Ouput: eventEmitter&lt;T&gt;|Observable emitting value on change|
 |setValue| function(T)|Set a value if it pass all constraint (min,max, limit). Doing `value= ...` will set the value directly.|
 |selectDate|function(Moment): boolean|Select a date and return true if succeed|
 |unselectDate|function(Moment): boolean|Unselected a date and return true if date was previously selected|
 |isDateSelected|function(Moment): boolean|return true if a date is part of the selection|
 |isDateValid|function(Moment): boolean|return true if date is between boundaries (min & max)|
-|getDateState|function(Moment): DateState|return states of a date. Meant for internal use of `DatePickerTemplate`.
-|***Protected API for extends***|
-|EMPTY_VALUE|T|Value to set for an empty selection. **/!\ must be overridden**|
-|getDay|function(Moment): Moment|return a new Moment of the same date with all time values set to 0: return a date representing *a day*.
+|getDateState|function(Moment): DateState|return states of a date. Meant for internal use of `DatePickerTemplate`.|
 
 ## Pipes
 
@@ -259,6 +264,7 @@ Options can be passed to `<datepicker-ionic>` component via property bindings.
 |`expanded`|boolean|No|`false`|If set to `true`, calendar always displays the selected date|
 |`opened`|boolean|No|`false`|Set to `true` to open the calendar by default|
 |`viewFormat`|string|No|`D MMMM YYYY`|Date format to display in the view.|
+[`displayDate`|Moment|No|today|The date to display on the calendar. *Only month and year are relevant*|
 
 ## Licence
 

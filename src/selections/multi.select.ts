@@ -18,7 +18,16 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
     return [];
   }
 
-  @Input('multiSelect') limit = Infinity;
+  private _limit = Infinity;
+
+  @Input('multiSelect')
+  get limit() {
+    return this._limit;
+  }
+
+  set limit(limit: number) {
+    this._limit = limit;
+  }
 
   public setValue(dates: moment.Moment[]) {
     if (dates != this.value) {
@@ -45,10 +54,10 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
       value = value.slice(0, this.limit);
 
     this.value = value;
-    //@see SingleSelectDirective's ngOnchanges comment
   }
 
   selectDate(date: moment.Moment): boolean {
+    console.log('select date ', date);
     if ( !this.isDateSelected(date) &&
           this.isDateValid(date) &&
           this.value.length < this.limit ) {

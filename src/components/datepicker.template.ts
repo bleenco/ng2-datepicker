@@ -1,11 +1,16 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
 import * as moment from 'moment';
 
 import { BaseSelect } from '../selections/base.select';
 import { CalendarDay } from '../models';
-import { extendConfig } from '../config_helpers';
+import { extendConfig, formProvider } from '../config_helpers';
+
+export interface Month {
+  date: moment.Moment;
+  days: CalendarDay[];
+}
 
 export abstract class DatePickerTemplate implements ControlValueAccessor {
 
@@ -15,16 +20,18 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
    * @param {any[]}     ...a             useless just to please compiler if subclass wants to add parameter
    */
   //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
-  static extendConfig(config, ...a: any[]) {
+  static extendConfig(config: Component, componentClass: Function, ...a: any[]) {
     return extendConfig({
-      //we could auto-generated it using gulp or something
-      inputs: ['locale', 'viewFormat', 'displayDate']
+      //we could auto-generate it using gulp or something
+      inputs: ['locale', 'viewFormat', 'showSixWeek'],
+      providers: [ formProvider(componentClass) ],
+      changeDetection: ChangeDetectionStrategy.OnPush
     }, config);
   }
 
   private _locale: string | false;
 
-  @Input() set locale(locale: (string | false)) {
+  /*@Input()*/ set locale(locale: (string | false)) {
     this._locale = (!locale || locale.length == 0) ? false : locale;
 
     //with global locale we can call weekdaysShort() with a boolean to get array in locale order
@@ -39,23 +46,27 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
     return this._locale;
   }
 
-  @Input() viewFormat = 'LL';
+  /*@Input()*/ viewFormat = 'LL';
+  /*@Input()*/ showSixWeek = false;
 
-    //only month and year relevant
-  @Input() displayDate = moment();
+  protected weekDaysName = moment().localeData().weekdaysShort();
+  protected months: Month[] = [];
 
-  // use displayDate just to avoid recreating a moment object
-  protected weekDaysName = this.displayDate.localeData().weekdaysShort();
+  //helper
+  get month(): Month {
+    return this.months[0];
+  }
 
   constructor( protected select: BaseSelect<any> ) {
     if (!select)
       throw 'No SelectDirective specified. DatePicker must be coupled with a SelectDirective';
 
+    this.select.registerOnStateChange( () => { this.updateCalendarDays(); } );
+
     // should we unsubscribe onDestroy since SelectDirective has
     // same lifecycle that this component ?
-    this.select.onChange.subscribe( d => {
+    this.select.onDateChange.subscribe( d => {
       this.onChangeCallback(d);
-      this.buildCalendar();
     });
   }
 
@@ -104,48 +115,70 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
    * this will avoid calendar to change size depending on month displayed.
    * @return {CalendarDay[]}             Array of CalendarDay representing a month to display
    */
-  generateCalendarMonth(month: number, year: number, showSixWeek?: boolean): CalendarDay[] {
+  private generateCalendarDays(date: moment.Moment): CalendarDay[] {
     let today = moment();
 
-    if (month < 0 || month > 11)
-      month = today.month();
-
-    if (!year)
-      year = today.year();
-
     //start date
-    let date = this.applyLocale( moment([year, month]) );
-    date.subtract( date.weekday(), 'd');
+    let itDate = this.applyLocale( date.clone() );
+    itDate.subtract( itDate.weekday(), 'd');
 
     //end date
-    let endDate = this.applyLocale( moment([year, month]).endOf('month') );
+    let endDate = this.applyLocale( date.clone().endOf('month') );
     endDate.add( 6 - endDate.weekday(), 'd');
 
-    if (showSixWeek) {
-      let nbWeeks = endDate.diff(date, 'weeks');
+    if (this.showSixWeek) {
+      let nbWeeks = endDate.diff(itDate, 'weeks');
       if ( nbWeeks < 5 )
         endDate.add( 5 - nbWeeks, 'weeks');
     }
 
     let days: CalendarDay[] = [];
-    while ( date.isBefore(endDate) ) {
+    while ( itDate.isBefore(endDate) ) {
       days.push({
-        date: date,
-        state: this.select.getDateState(date),
-        isToday: today.isSame(date, 'day'),
-        isCurrDisplayMonth: date.month() == month
+        date: itDate.clone(),
+        state: this.select.getDateState(itDate),
+        isToday: today.isSame(itDate, 'day'),
+        isCurrDisplayMonth: itDate.month() == date.month()
       });
 
-      date = date.clone().add(1, 'd');
+      itDate = itDate.add(1, 'd');
     }
 
     return days;
   }
 
-  abstract buildCalendar();
-}
+  private updateCalendarDays() {
+    console.log('days update');
+    for (let m of this.months) {
+      let days = m.days;
+      for (let i = 0, l = days.length; i < l; i ++) {
+        let day = days[i],
+          state = this.select.getDateState(day.date);
 
+        if (day.state != state)
+          days[i] = {
+            date: day.date,
+            isToday: day.isToday,
+            isCurrDisplayMonth: day.isCurrDisplayMonth,
+            state: state
+          };
+      }
+    }
+  }
 
-function mod(n: number): number {
-  return ((n % 7) + 7) % 7;
+  private newMonth(date: moment.Moment): Month {
+    let monthDate = moment([date.year(), date.month()]);
+    return {
+      date: monthDate,
+      days: this.generateCalendarDays(monthDate)
+    };
+  }
+
+  initMonths(...dates: moment.Moment[]) {
+    this.months = dates.map( d => this.newMonth(d) );
+  }
+
+  setMonth(date: moment.Moment, idx = 0) {
+    this.months[idx] = this.newMonth(date);
+  }
 }
