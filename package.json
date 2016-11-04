@@ -8,7 +8,7 @@
     "url": "git+https://github.com/jkuri/ng2-datepicker.git"
   },
   "scripts": {
-    "prepublish": "tsc"
+    "prepublishOnly": "tsc"
   },
   "keywords": [
     "angular",
