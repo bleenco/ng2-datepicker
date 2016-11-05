@@ -91,13 +91,13 @@ gulp.task('build:rollup', () => {
   };
 
   return rollup({
-      entry: 'src/ng2-datepicker.ts',
+      entry: 'dist/ng2-datepicker.js',
       context: 'this',
       globals: globals,
       external: Object.keys(globals),
       sourceMap: true,
       format: 'umd',
-      moduleName:'ng2-datepicker',
+      moduleName:'ng2.datepicker',
       plugins: [
         /* Problem with rollup on moment imports
           https://github.com/rollup/rollup-plugin-typescript/issues/68
@@ -108,6 +108,18 @@ gulp.task('build:rollup', () => {
           transform: code =>
             ({
               code: code.replace(/import\s*\*\s*as\s*moment/g, 'import moment'),
+              map: { mappings: '' }
+            })
+        },
+        /*
+          export of interface cause errors to rollup
+          https://github.com/rollup/rollup-plugin-typescript/issues/65
+         */
+        {
+          name: 'replace interface export',
+          transform: code =>
+            ({
+              code: code.replace(/export\s*{\s*RangeSelectDirective,\s*RangeDate\s*}/g, 'export { RangeSelectDirective }'),
               map: { mappings: '' }
             })
         },

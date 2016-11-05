@@ -4,7 +4,8 @@ Angular2 Datepicker Component
 ***ng2-datepicker*** is a datepicker component for Angular2.
 
 ## Demo
-No demo available yet
+
+https://plnkr.co/edit/MgvFblLHi4N3tyLVCWYD?p=preview
 
 ## Installation:
 Datepicker relies on [momentjs](http://momentjs.com/) so you must first install it :

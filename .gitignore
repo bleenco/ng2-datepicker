@@ -6,6 +6,8 @@ src/**/*.js
 npm-debug.log/
 
 node_modules/
+bundle/
+dist/
 
 #IDE
 *.sublime-workspace
