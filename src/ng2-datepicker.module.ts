@@ -7,6 +7,7 @@ import { DatePickerIonicComponent } from './components/ionic/datepickerionic';
 
 import { SingleSelectDirective } from './selections/single.select';
 import { MultiSelectDirective } from './selections/multi.select';
+import { RangeSelectDirective } from './selections/range.select';
 
 import { MomentFormatPipe } from './pipes/momentformat';
 import { DayClassesPipe } from './pipes/dayClasses';
@@ -16,6 +17,7 @@ const decl_exports = [
 
   SingleSelectDirective,
   MultiSelectDirective,
+  RangeSelectDirective,
 
   MomentFormatPipe,
   DayClassesPipe

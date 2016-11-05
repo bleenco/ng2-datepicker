@@ -22,7 +22,7 @@ npm install ng2-datepicker@2.0.0-dev
 
  1. Import the `DatePickerModule`.
  2. Choose the datepicker you want to use and insert it into your template e.g. `<datepicker-ionic></datepicker-ionic>` (for the moment ionic is the only datepicker available, planning into creating a minimal, bootstrap and material datepickers).
- 3. Choose one of the 2 select directive `singleSelect` or `multipleSelect`, you can get more information about select directive [here](#select-directive) but at this point you can see it just as a mandatory parameter for all datepicker. For a range date picker use `multiSelect="2"`.
+ 3. Choose one of the 3 select directive `singleSelect`, `multipleSelect` or `rangeSelect`, you can get more information about select directive [here](#select-directive) but at this point you can see it just as a mandatory parameter for all datepicker.
  4. Bind the date returned by the date picker using template-driven (ngModel) or model-driven (react). /!\ ***ng2-datepicker*** uses moment so all date are Moment object and not javascript Date.
  5. Enjoy :)
 
@@ -47,7 +47,7 @@ Range date picker using reactive forms:
 @Component({
     template: `
        <form [formGroup]="dataForm">
-        <datepicker-ionic formControlName="date" multiSelect></datepicker-ionic>
+        <datepicker-ionic formControlName="date" multiSelect="4"></datepicker-ionic>
       </form>
     `,
     ...
@@ -79,7 +79,7 @@ or locally just for a specific datepicker through property binding :
 In both case locale is only used for display purpose, locale won't be apply to any `Moment` objects.
 
 ## Select Directive
-Select directive are responsible for the behavior of date selection. There is 2 select directive available : `singleSelect` and `multipleSelect`respectively for single date selection and multiple date selection.
+Select directive are responsible for the behavior of date selection. There is 3 select directive available : `singleSelect`, `multiSelect` and `rangeSelect` respectively for single date selection, multiple date selection and range date selection.
 
 Options can be passed through property bindings :
 
@@ -88,7 +88,7 @@ Options can be passed through property bindings :
 |minDate| Set a minimum date boundary|
 |maxDate| Set a maximum date boundary|
 
-`singleSelect` will return a *Moment* object while `multiSelect` will return an *array of Moment* Object.
+`singleSelect` will return a *Moment* object, `multiSelect` will return an *array of Moment* Object and `rangeSelect` will return an object with 2 property `start` and `end` both being a *Moment* object.
 
 Beside form binding, it's also possible to listen for changes through event binding on the `onDateChange` event.
 ```ts
@@ -104,7 +104,14 @@ export class AppComponent {
 }
 ```
 
-You can set a number to `multiSelect` in order to define how much date can be selected. e.g. for a date range :  `multiSelect="2"`.
+You can set a number to `multiSelect` in order to define how much date can be selected.
+
+You can use both `multiSelect=2` and `rangeSelect` for range selection :
+
+|name|return|select behavior|
+|:---|:-----|:--------------|
+|`multiSelect=2`|An array of 2 *Moment* sorted|If 2 dates are already selected, reset the selection and add the new date.|
+|`rangeSelect`|A object with a start and end *Moment*|If start and end dates are already set, replace the closest with the new date.|
 
 
 ## Customize a datepicker
@@ -135,7 +142,9 @@ You can also create your own date picker component while taking advantage of alr
 
 ### Creating a template
 This starts exactly like customizing a datepicker component except you will extend from `DatePickerTemplate`. Then like for any extended class you must call the super constructor. And to finish you must initialise the months to be display (on `ngOnInit()` not `constructor()` !).
-Here is the template :
+
+A template might be compatible with all select directive, in this case we will use generic type : `DatePickerTemplate<any, BaseSelect<any>>`.
+Or a template might be compatible with just a specific select directive, in this case we will use the directive type e.g: `DatePickerTemplate<moment.Moment[], MultiSelectDirective<moment.Moment[]>>`.
 
 ```ts
 import { DatePickerTemplate, formProvider } from 'ng2-datepicker';
@@ -146,9 +155,9 @@ import { DatePickerTemplate, formProvider } from 'ng2-datepicker';
   template: '...',
   styles: ['...'],
 }))
-export class CustomDatePickerComponent extends DatePickerTemplate implements OnInit {
+export class CustomDatePickerComponent extends DatePickerTemplate<any, BaseSelect<any>> implements OnInit {
 
-  constructor(select: BaseSelect<moment.Moment | moment.Moment[]>) {
+  constructor(select: BaseSelect<any>) {
     super(select);
   }
 
@@ -185,8 +194,8 @@ isCurrDisplayMonth: boolean;
 ```js
 disabled
 enabled
-selected //selected is also enabled
-active    //active is also selected and enabled
+inRange   //inRange is also enabled
+active    //active is also inRange and enabled
 ```
 see [DayClassesPipe](#dayclasses) to transform a `CalendarDay` into css classes according to it's sate.
 

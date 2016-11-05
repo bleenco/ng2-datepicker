@@ -1,13 +1,8 @@
 import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 
-import { BaseSelect } from './base.select';
+import { BaseSelect, isSameDay } from './base.select';
 import { DateState } from '../models';
-
-//helper function
-function eqDay(date: moment.Moment) {
-  return d => d.isSame(date, 'day');
-}
 
 @Directive(BaseSelect.extendConfig({
   selector: '[multiSelect]'
@@ -57,20 +52,18 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
   }
 
   selectDate(date: moment.Moment): boolean {
-    console.log('select date ', date);
-    if ( !this.isDateSelected(date) &&
-          this.isDateValid(date) &&
-          this.value.length < this.limit ) {
+    if( !this.isDateSelectable(date) )
+      return false;
 
-      this.value = [...this.value, date];
-      return true;
-    }
-
-    return false;
+    if( this.value.length < this.limit )
+      this.value = [...this.value, date]
+        .sort( (a,b) => <any>a - <any>b);
+    else
+      this.value = [date];
   }
 
   unselectDate(date: moment.Moment): boolean {
-    let newValue = this.value.filter( eqDay(date) );
+    let newValue = this.value.filter( d => !isSameDay(d, date) );
     if (newValue.length < this.value.length) {
       this.value = newValue;
       return true;
@@ -80,17 +73,11 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
   }
 
   isDateSelected(date: moment.Moment): boolean {
-    return !!this.value.find( eqDay(date) );
+    return !!this.value.find( d => isSameDay(d, date) );
   }
 
-  getDateState(date: moment.Moment): DateState {
-    if ( !!this.value.find( eqDay(date) ) )
-      return DateState.active;
-
-    if ( this.value.length > 1 &&
-          date.isBetween(this.value[0], this.value[this.value.length - 1], 'day', '[]') )
-      return DateState.selected;
-
-    return this.isDateValid(date) ? DateState.enabled : DateState.disabled;
+  isDateInSelectRange(date: moment.Moment): boolean {
+    return this.value.length > 1 &&
+          date.isBetween(this.value[0], this.value[this.value.length - 1], 'day', '[]');
   }
 }

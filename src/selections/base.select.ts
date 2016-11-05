@@ -1,9 +1,9 @@
-import { Directive, Component, Input, Output, EventEmitter, DoCheck, ChangeDetectionStrategy } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, DoCheck, ChangeDetectionStrategy } from '@angular/core';
 
 import * as moment from 'moment';
 
 import { DateState } from '../models';
-import { extendConfig, selectProvider } from '../config_helpers';
+import { extendDirConfig, selectProvider } from '../config_helpers';
 
 export abstract class BaseSelect<T> implements DoCheck {
 
@@ -15,12 +15,11 @@ export abstract class BaseSelect<T> implements DoCheck {
    */
   //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
   static extendConfig(config: Directive, directiveClasses: Function, ...a: any[]) {
-    return extendConfig({
+    return extendDirConfig({
       //we could auto-generate it using gulp or something
       inputs: ['minDate', 'maxDate'],
       outputs: ['onDateChange'],
       providers: [selectProvider(directiveClasses)],
-      changeDetection: ChangeDetectionStrategy.OnPush
     }, config);
   }
 
@@ -107,9 +106,19 @@ export abstract class BaseSelect<T> implements DoCheck {
     return date ? moment([ date.year, date.month, date.date]) : null;
   }
 
+  /**
+   * Should probably always start as :
+   *
+   * if( !this.isDateSelectable(date) )
+   *   return false
+   *
+   * @param  {moment.Moment} date [description]
+   * @return {boolean}            [description]
+   */
   abstract selectDate(date: moment.Moment): boolean
   abstract unselectDate(date: moment.Moment): boolean
   abstract isDateSelected(date: moment.Moment): boolean
+  abstract isDateInSelectRange(date: moment.Moment): boolean
 
   /** Returns true when date is between minDate and maxDate */
   isDateValid(date: moment.Moment): boolean {
@@ -118,7 +127,38 @@ export abstract class BaseSelect<T> implements DoCheck {
       (!this.maxDate || date.isSameOrBefore(this.maxDate));
   }
 
-  abstract getDateState(date: moment.Moment): DateState
+  /**
+   * return true if date is selectable meaning :
+   *  - not null
+   *  - valid
+   *  - not already selected
+   * Primarly meant to be used by selectDate() of subclass
+   * @param  {moment.Moment} date [description]
+   * @return {boolean}            [description]
+   */
+  protected isDateSelectable(date: moment.Moment): boolean {
+    return date && this.isDateValid(date) && !this.isDateSelected(date);
+  }
+
+  getDateState(date: moment.Moment): DateState {
+    if(!date)
+      return DateState.disabled;
+
+    if(this.isDateSelected(date))
+      return DateState.selected;
+
+    if(this.isDateInSelectRange(date))
+      return DateState.inRange;
+
+    if(this.isDateValid(date))
+      return DateState.enabled;
+  }
 }
 
+//helper
+export function isSameDay(date1: moment.Moment, date2: moment.Moment) {
+  if (date1 && date2)
+    return date1.isSame(date2, 'd');
 
+  return false;
+}

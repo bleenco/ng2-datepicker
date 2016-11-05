@@ -1,7 +1,7 @@
 import { Directive, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
 import * as moment from 'moment';
 
-import { BaseSelect } from './base.select';
+import { BaseSelect, isSameDay } from './base.select';
 import { DateState } from '../models';
 
 @Directive(BaseSelect.extendConfig({
@@ -22,13 +22,15 @@ export class SingleSelectDirective extends BaseSelect<moment.Moment> implements 
   }
 
   selectDate(date: moment.Moment): boolean {
-    this.value = date;
+    if( !this.isDateSelectable(date) )
+      return false;
 
+    this.value = date;
     return true;
   }
 
   unselectDate(date: moment.Moment): boolean {
-    if (date && date.isSame(this.value, 'day') ) {
+    if (this.isDateSelected(date) ) {
       this.value = null;
       return true;
     }
@@ -37,12 +39,11 @@ export class SingleSelectDirective extends BaseSelect<moment.Moment> implements 
   }
 
   isDateSelected(date: moment.Moment): boolean {
-    return date.isSame(this.value, 'day');
+    return isSameDay(date, this.value);
   }
 
-  getDateState(date: moment.Moment): DateState {
-    return date.isSame(this.value, 'day') ? DateState.active :
-      this.isDateValid(date) ? DateState.enabled : DateState.disabled;
+  isDateInSelectRange(date: moment.Moment): boolean {
+    return this.isDateSelected(date);
   }
 }
 

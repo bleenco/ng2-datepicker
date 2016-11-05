@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, OnInit, Renderer } from '@angular/core';
+import { Component, Input, ElementRef, OnInit, Renderer, ChangeDetectorRef } from '@angular/core';
 
 import * as moment from 'moment';
 
@@ -12,14 +12,14 @@ import { extendConfig, formProvider } from '../../config_helpers';
 @Component( DatePickerIonicComponent.extendConfig({
   selector: 'datepicker-ionic'
 }, DatePickerIonicComponent))
-export class DatePickerIonicComponent extends DatePickerTemplate implements OnInit {
+export class DatePickerIonicComponent extends DatePickerTemplate<BaseSelect<any>, any> implements OnInit {
 
   static extendConfig(config: Component, componentClass: Function, ...a: any[]) {
     return extendConfig(
       super.extendConfig({
         templateUrl: './ionic.component.html',
-        styleUrls: ['ionic.css'],
-        inputs: ['class', 'expanded', 'opened', 'displayDate']
+        styleUrls: ['ionic.scss'],
+        inputs: ['class', 'expanded', 'opened', 'viewFormat']
       }, componentClass),
       config
     );
@@ -40,10 +40,12 @@ export class DatePickerIonicComponent extends DatePickerTemplate implements OnIn
   /*@Input()*/ expanded: boolean;
   /*@Input()*/ opened = false;
 
+   /*@Input()*/ viewFormat = 'LL';
+
   private el: Element;
 
-  constructor(renderer: Renderer, elRef: ElementRef, select: BaseSelect<moment.Moment | moment.Moment[]>) {
-    super(select);
+  constructor(renderer: Renderer, elRef: ElementRef, cd: ChangeDetectorRef, select: BaseSelect<any>) {
+    super(cd, select);
 
     this.el = elRef.nativeElement;
 

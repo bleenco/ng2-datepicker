@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, SimpleChanges, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ export interface Month {
   days: CalendarDay[];
 }
 
-export abstract class DatePickerTemplate implements ControlValueAccessor {
+export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements ControlValueAccessor {
 
    /**
    * Extend the base configuration needed by @Component
@@ -23,7 +23,7 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
   static extendConfig(config: Component, componentClass: Function, ...a: any[]) {
     return extendConfig({
       //we could auto-generate it using gulp or something
-      inputs: ['locale', 'viewFormat', 'showSixWeek'],
+      inputs: ['locale', 'showSixWeek'],
       providers: [ formProvider(componentClass) ],
       changeDetection: ChangeDetectionStrategy.OnPush
     }, config);
@@ -46,7 +46,7 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
     return this._locale;
   }
 
-  /*@Input()*/ viewFormat = 'LL';
+
   /*@Input()*/ showSixWeek = false;
 
   protected weekDaysName = moment().localeData().weekdaysShort();
@@ -57,7 +57,7 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
     return this.months[0];
   }
 
-  constructor( protected select: BaseSelect<any> ) {
+  constructor( protected cd: ChangeDetectorRef, protected select: T ) {
     if (!select)
       throw 'No SelectDirective specified. DatePicker must be coupled with a SelectDirective';
 
@@ -91,11 +91,11 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
   /* */
 
   //helper
-  get value(): any {
+  get value(): V {
     return this.select.value;
   }
 
-  set value(v: any) {
+  set value(v: V) {
     this.select.value = v;
   }
 
@@ -148,22 +148,24 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
   }
 
   private updateCalendarDays() {
-    console.log('days update');
     for (let m of this.months) {
       let days = m.days;
       for (let i = 0, l = days.length; i < l; i ++) {
         let day = days[i],
           state = this.select.getDateState(day.date);
 
-        if (day.state != state)
+        if (day.state != state) {
           days[i] = {
             date: day.date,
             isToday: day.isToday,
             isCurrDisplayMonth: day.isCurrDisplayMonth,
             state: state
           };
+        }
       }
     }
+
+    this.cd.markForCheck();
   }
 
   private newMonth(date: moment.Moment): Month {
@@ -176,9 +178,11 @@ export abstract class DatePickerTemplate implements ControlValueAccessor {
 
   initMonths(...dates: moment.Moment[]) {
     this.months = dates.map( d => this.newMonth(d) );
+    this.cd.markForCheck();
   }
 
   setMonth(date: moment.Moment, idx = 0) {
     this.months[idx] = this.newMonth(date);
+    this.cd.markForCheck();
   }
 }
