@@ -47,28 +47,38 @@ class RangeDateImpl implements RangeDate {
 export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnChanges {
 
   protected get EMPTY_VALUE(): RangeDate {
-    return {
-      start: null,
-      end: null
-    };
+    return new RangeDateImpl({
+        start: null,
+        end: null
+      }, v => {
+        this.onDateChange.emit(v);
+        this.hasStateChanged = true;
+      }
+    );
   };
 
   constructor(private momentPipe: MomentPipe) {
     super();
   }
 
+  protected _setValue(value: RangeDate) {
+     super._setValue( value ? new RangeDateImpl(value, v => {
+        this.onDateChange.emit(v);
+        this.hasStateChanged = true;
+    }): null);
+  }
+
   setValue(value: RangeDate) {
-    if ( value !== this.value) {
+    if(!value)
+      this.value = null;
+    else if ( value !== this.value) {
       if ( !this.isDateValid(value.start) )
         value.start = null;
 
       if ( !this.isDateValid(value.end) )
         value.end = null;
 
-      this.value = new RangeDateImpl(value, v => {
-        this.onDateChange.emit(v);
-        this.hasStateChanged = true;
-      });
+      this.value = value;
     }
   }
 
@@ -139,7 +149,14 @@ export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnCha
          date.isSameOrBefore(end, 'd');
   }
 
+  isComplete(): boolean {
+    return !!this.value.start && !!this.value.end;
+  }
+
   toString(format = 'LL', locale: string) {
+    if (!this.value || (!this.value.start && !this.value.end) )
+      return '';
+
     return this.momentPipe.transform(this.value.start, format, locale) +
            ' - ' +
            this.momentPipe.transform(this.value.end, format, locale);

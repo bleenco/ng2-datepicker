@@ -9,6 +9,7 @@ export class DayClassesPipe implements PipeTransform {
 
    transform(day: CalendarDay): { [name: string]: boolean} {
     let classes: { [name: string]: boolean } = {
+        disabled: false,
         enabled: false,
         inRange: false,
         selected: false,
@@ -17,7 +18,7 @@ export class DayClassesPipe implements PipeTransform {
         currDisplayMonth: day.isCurrDisplayMonth
     };
 
-    if (day.state > DateState.disabled)
+    if(day.state !== undefined && day.state !== null)
       classes[ DateState[day.state] ] = true;
 
     return classes;

@@ -36,6 +36,11 @@ export abstract class BaseSelect<T> implements DoCheck {
    * @param {T} value
    */
   set value(value: T) {
+     /* Use of a function so it can be override */
+    this._setValue(value);
+  }
+
+  protected _setValue(value: T) {
     if (value !== this._value) {
       this.onDateChange.emit( this._value = value || this.EMPTY_VALUE );
       this.hasStateChanged = true;
@@ -123,8 +128,8 @@ export abstract class BaseSelect<T> implements DoCheck {
   /** Returns true when date is between minDate and maxDate */
   isDateValid(date: moment.Moment): boolean {
     return date &&
-      (!this.minDate || date.isSameOrAfter(this.minDate)) &&
-      (!this.maxDate || date.isSameOrBefore(this.maxDate));
+      (!this.minDate || date.isSameOrAfter(this.minDate, 'd')) &&
+      (!this.maxDate || date.isSameOrBefore(this.maxDate, 'd'));
   }
 
   /**
@@ -141,9 +146,6 @@ export abstract class BaseSelect<T> implements DoCheck {
   }
 
   getDateState(date: moment.Moment): DateState {
-    if(!date)
-      return DateState.disabled;
-
     if(this.isDateSelected(date))
       return DateState.selected;
 
@@ -152,7 +154,11 @@ export abstract class BaseSelect<T> implements DoCheck {
 
     if(this.isDateValid(date))
       return DateState.enabled;
+
+    return DateState.disabled;
   }
+
+  abstract isComplete(): boolean;
 
   /**
    * return a string representation of the selected values.

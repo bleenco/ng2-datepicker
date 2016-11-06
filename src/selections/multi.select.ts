@@ -86,6 +86,10 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
           date.isBetween(this.value[0], this.value[this.value.length - 1], 'day', '[]');
   }
 
+  isComplete(): boolean {
+    return this.value && this.value.length == this.limit;
+  }
+
   toString(format = 'LL', locale: string) {
     return this.value.reduce<string>( (prev, date, idx) =>
          prev + (idx == 0 ? '' : ' - ') + this.momentPipe.transform(date, format, locale)

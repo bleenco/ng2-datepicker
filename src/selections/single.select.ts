@@ -18,25 +18,25 @@ export class SingleSelectDirective extends BaseSelect<moment.Moment> implements 
 
   setValue(value: moment.Moment) {
     if ( !value || this.isDateValid(value) )
-      this.value = value;
+      this._setValue(value);
   }
 
   ngOnChanges(changes: SimpleChanges) {
    if ( !this.isDateValid(this.value) )
-      this.value = null;
+      this._setValue(null);
   }
 
   selectDate(date: moment.Moment): boolean {
     if( !this.isDateSelectable(date) )
       return false;
 
-    this.value = date;
+    this._setValue(date);
     return true;
   }
 
   unselectDate(date: moment.Moment): boolean {
     if (this.isDateSelected(date) ) {
-      this.value = null;
+      this._setValue(null);
       return true;
     }
 
@@ -49,6 +49,10 @@ export class SingleSelectDirective extends BaseSelect<moment.Moment> implements 
 
   isDateInSelectRange(date: moment.Moment): boolean {
     return this.isDateSelected(date);
+  }
+
+  isComplete(): boolean {
+    return !!this.value;
   }
 
   toString(format = 'LL', locale: string) {
