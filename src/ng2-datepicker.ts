@@ -3,7 +3,7 @@ export { DatePickerModule } from './ng2-datepicker.module';
 export * from './models';
 export * from './config_helpers';
 
-export { BaseSelect } from './selections/base.select';
+export { BaseSelect, isSameDay } from './selections/base.select';
 
 export { SingleSelectDirective } from './selections/single.select';
 export { MultiSelectDirective } from './selections/multi.select';
