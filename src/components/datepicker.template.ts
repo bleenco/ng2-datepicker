@@ -61,7 +61,12 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     if (!select)
       throw 'No SelectDirective specified. DatePicker must be coupled with a SelectDirective';
 
-    this.select.registerOnStateChange( () => { this.updateCalendarDays(); } );
+    this.select.registerOnStateChange( () => {
+      //Do it on next tick to avoid detached element to be processed
+      setTimeout( () => {
+        this.updateCalendarDays();
+      })
+    });
 
     // should we unsubscribe onDestroy since SelectDirective has
     // same lifecycle that this component ?
