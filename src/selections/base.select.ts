@@ -153,6 +153,16 @@ export abstract class BaseSelect<T> implements DoCheck {
     if(this.isDateValid(date))
       return DateState.enabled;
   }
+
+  /**
+   * return a string representation of the selected values.
+   * All arguments must have a default value or be optional to keep a good behavior
+   * when toString() is called without arguments.
+   * @param  {string} format
+   * @param  {string} locale
+   * @return {string}
+   */
+  abstract toString(format: string, locale?: string): string;
 }
 
 //helper

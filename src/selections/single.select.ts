@@ -3,6 +3,7 @@ import * as moment from 'moment';
 
 import { BaseSelect, isSameDay } from './base.select';
 import { DateState } from '../models';
+import { MomentPipe } from '../pipes/moment';
 
 @Directive(BaseSelect.extendConfig({
   selector: '[singleSelect]'
@@ -10,6 +11,10 @@ import { DateState } from '../models';
 export class SingleSelectDirective extends BaseSelect<moment.Moment> implements OnChanges {
 
   protected get EMPTY_VALUE(){ return null; };
+
+  constructor(private momentPipe: MomentPipe) {
+    super();
+  }
 
   setValue(value: moment.Moment) {
     if ( !value || this.isDateValid(value) )
@@ -44,6 +49,10 @@ export class SingleSelectDirective extends BaseSelect<moment.Moment> implements 
 
   isDateInSelectRange(date: moment.Moment): boolean {
     return this.isDateSelected(date);
+  }
+
+  toString(format = 'LL', locale: string) {
+    return this.momentPipe.transform(this.value, format, locale);
   }
 }
 

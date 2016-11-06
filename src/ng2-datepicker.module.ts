@@ -9,7 +9,7 @@ import { SingleSelectDirective } from './selections/single.select';
 import { MultiSelectDirective } from './selections/multi.select';
 import { RangeSelectDirective } from './selections/range.select';
 
-import { MomentFormatPipe } from './pipes/momentformat';
+import { MomentPipe } from './pipes/moment';
 import { DayClassesPipe } from './pipes/dayClasses';
 
 const decl_exports = [
@@ -19,7 +19,7 @@ const decl_exports = [
   MultiSelectDirective,
   RangeSelectDirective,
 
-  MomentFormatPipe,
+  MomentPipe,
   DayClassesPipe
 ];
 
@@ -30,6 +30,10 @@ const decl_exports = [
     FormsModule
   ],
   declarations: decl_exports,
-  exports: decl_exports
+  exports: decl_exports,
+  providers: [{
+    provide: MomentPipe,
+    useClass: MomentPipe
+  }]
 })
 export class DatePickerModule { }

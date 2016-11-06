@@ -3,6 +3,7 @@ import * as moment from 'moment';
 
 import { BaseSelect, isSameDay } from './base.select';
 import { DateState } from '../models';
+import { MomentPipe } from '../pipes/moment';
 
 export interface RangeDate {
   start: moment.Moment;
@@ -51,6 +52,10 @@ export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnCha
       end: null
     };
   };
+
+  constructor(private momentPipe: MomentPipe) {
+    super();
+  }
 
   setValue(value: RangeDate) {
     if ( value !== this.value) {
@@ -132,6 +137,12 @@ export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnCha
     return start && end &&
          date.isSameOrAfter(start, 'd') &&
          date.isSameOrBefore(end, 'd');
+  }
+
+  toString(format = 'LL', locale: string) {
+    return this.momentPipe.transform(this.value.start, format, locale) +
+           ' - ' +
+           this.momentPipe.transform(this.value.end, format, locale);
   }
 }
 

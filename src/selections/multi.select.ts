@@ -3,6 +3,7 @@ import * as moment from 'moment';
 
 import { BaseSelect, isSameDay } from './base.select';
 import { DateState } from '../models';
+import { MomentPipe } from '../pipes/moment';
 
 @Directive(BaseSelect.extendConfig({
   selector: '[multiSelect]'
@@ -22,6 +23,10 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
 
   set limit(limit: number) {
     this._limit = limit;
+  }
+
+  constructor(private momentPipe: MomentPipe) {
+    super();
   }
 
   public setValue(dates: moment.Moment[]) {
@@ -79,5 +84,11 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
   isDateInSelectRange(date: moment.Moment): boolean {
     return this.value.length > 1 &&
           date.isBetween(this.value[0], this.value[this.value.length - 1], 'day', '[]');
+  }
+
+  toString(format = 'LL', locale: string) {
+    return this.value.reduce<string>( (prev, date, idx) =>
+         prev + (idx == 0 ? '' : ' - ') + this.momentPipe.transform(date, format, locale)
+      , '');
   }
 }
