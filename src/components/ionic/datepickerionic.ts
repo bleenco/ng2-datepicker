@@ -4,6 +4,8 @@ import * as moment from 'moment';
 
 import { DatePickerTemplate } from '../datepicker.template';
 import { BaseSelect } from '../../selections/base.select';
+import { MultiSelectDirective } from '../../selections/multi.select';
+import { RangeSelectDirective } from '../../selections/range.select';
 
 import { CalendarDay } from '../../models';
 
@@ -55,7 +57,7 @@ export class DatePickerIonicComponent extends DatePickerTemplate<BaseSelect<any>
 
   private el: Element;
 
-  constructor(renderer: Renderer, elRef: ElementRef, cd: ChangeDetectorRef, @Optional() select: BaseSelect<any>) {
+  constructor(private renderer: Renderer, elRef: ElementRef, cd: ChangeDetectorRef, @Optional() select: BaseSelect<any>) {
     super(cd, select);
 
     this.el = elRef.nativeElement;
@@ -78,7 +80,9 @@ export class DatePickerIonicComponent extends DatePickerTemplate<BaseSelect<any>
 
     if ( day.date.isSame(this.month.date, 'M') ) {
       this.select.selectDate(day.date);
-      this.close();
+
+      if (this.select.isComplete())
+        this.close();
     }
   }
 

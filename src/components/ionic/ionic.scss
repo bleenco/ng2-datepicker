@@ -27,7 +27,7 @@
     }
 
     &.opened {
-      width: 170px;
+      width: 100%;
       border: 1px solid #44c8f9;
       color: #44c8f9;
       background: rgba(68, 200, 249, 0.15);
@@ -40,6 +40,10 @@
 
     span {
       display: none;
+
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 
       &.opened {
         display: inline;
@@ -143,11 +147,17 @@
         }
 
         &:not(.currDisplayMonth) {
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        &.disabled {
           opacity: 0.5;
           pointer-events: none;
         }
 
-        &.currDisplayMonth:hover,
+        &.enabled:hover,
+        &.inRange:hover,
         &.selected {
           background: #fff;
           color: #44c8f9;
