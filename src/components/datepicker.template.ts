@@ -181,7 +181,7 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     this.cd.markForCheck();
   }
 
-  protected newMonth(date = moment()): Month {
+  private newMonth(date = moment()): Month {
     let monthDate = moment([date.year(), date.month()]);
     return {
       date: monthDate,
@@ -194,9 +194,29 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     this.cd.markForCheck();
   }
 
-  setMonth(date: moment.Moment, idx = 0) {
+  addMonth(date = moment()): number {
     if(date) {
-      this.months[idx] = this.newMonth(date);
+      this.months.push( this.newMonth(date) );
+      this.cd.markForCheck();
+
+      return this.months.length-1;
+    }
+
+    return -1;
+  }
+
+  removeMonth(idx: number) {
+    this.months.splice(idx, 1);
+    this.cd.markForCheck();
+  }
+
+  changeMonth(date: moment.Moment, idx = 0) {
+    if(date) {
+      let month = this.months[idx],
+        monthDate = moment([date.year(), date.month()]);
+      month.date = monthDate;
+      month.days = this.generateCalendarDays(monthDate);
+
       this.cd.markForCheck();
     }
   }
