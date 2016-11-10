@@ -81,10 +81,12 @@ export class MultiSelectDirective extends BaseSelect<moment.Moment[]> implements
     return !!this.value.find( d => isSameDay(d, date) );
   }
 
+  /*
   isDateInSelectRange(date: moment.Moment): boolean {
     return this.value.length > 1 &&
           date.isBetween(this.value[0], this.value[this.value.length - 1], 'day', '[]');
   }
+  */
 
   isComplete(): boolean {
     return this.value && this.value.length == this.limit;

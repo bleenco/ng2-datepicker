@@ -40,6 +40,7 @@ export abstract class BaseSelect<T> implements DoCheck {
     this._setValue(value);
   }
 
+  // TODO add an emitEvent parameter ? We would have to delete the setter
   protected _setValue(value: T) {
     if (value !== this._value) {
       this.onDateChange.emit( this._value = value || this.EMPTY_VALUE );
@@ -123,7 +124,10 @@ export abstract class BaseSelect<T> implements DoCheck {
   abstract selectDate(date: moment.Moment): boolean
   abstract unselectDate(date: moment.Moment): boolean
   abstract isDateSelected(date: moment.Moment): boolean
-  abstract isDateInSelectRange(date: moment.Moment): boolean
+
+  isDateInSelectRange(date: moment.Moment): boolean {
+    return this.isDateSelected(date);
+  }
 
   /** Returns true when date is between minDate and maxDate */
   isDateValid(date: moment.Moment): boolean {

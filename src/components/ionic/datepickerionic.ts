@@ -78,12 +78,10 @@ export class DatePickerIonicComponent extends DatePickerTemplate<BaseSelect<any>
   onDateclick(e: MouseEvent, day: CalendarDay) {
     e.preventDefault();
 
-    if ( day.date.isSame(this.month.date, 'M') ) {
-      this.select.selectDate(day.date);
+    this.select.selectDate(day.date);
 
-      if (this.select.isComplete())
-        this.close();
-    }
+    if (this.select.isComplete())
+      this.close();
   }
 
 

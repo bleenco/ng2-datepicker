@@ -47,10 +47,6 @@ export class SingleSelectDirective extends BaseSelect<moment.Moment> implements 
     return isSameDay(date, this.value);
   }
 
-  isDateInSelectRange(date: moment.Moment): boolean {
-    return this.isDateSelected(date);
-  }
-
   isComplete(): boolean {
     return !!this.value;
   }

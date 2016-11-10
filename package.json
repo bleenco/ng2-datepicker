@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "2.0.0-dev5",
+  "version": "2.0.0-dev6",
   "description": "Angular2 Datepicker",
   "main": "bundle/ng2-datepicker.umd.js",
   "typings": "dist/ng2-datepicker.d.ts",
@@ -10,7 +10,6 @@
     "url": "git+https://github.com/jkuri/ng2-datepicker.git"
   },
   "scripts": {
-    "prepublish": "gulp build",
     "compile": "gulp compile",
     "build": "gulp build"
   },

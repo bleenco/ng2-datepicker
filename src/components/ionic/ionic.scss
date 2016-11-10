@@ -156,6 +156,11 @@
           pointer-events: none;
         }
 
+        &.inRange {
+          background: rgba(#fff,0.5);
+          color: #44c8f9;
+        }
+
         &.enabled:hover,
         &.inRange:hover,
         &.selected {

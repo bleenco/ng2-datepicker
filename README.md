@@ -14,9 +14,8 @@ Datepicker relies on [momentjs](http://momentjs.com/) so you must first install 
 npm install moment -save
 ```
 
-TODO publish flex branch on npm as prerelease
 ```shell
-npm install ng2-datepicker@2.0.0-dev
+npm install ng2-datepicker@2.0.0-dev5
 ```
 
 ## Usage
@@ -106,13 +105,6 @@ export class AppComponent {
 ```
 
 You can set a number to `multiSelect` in order to define how much date can be selected.
-
-You can use both `multiSelect=2` and `rangeSelect` for range selection :
-
-|name|return|select behavior|
-|:---|:-----|:--------------|
-|`multiSelect=2`|An array of 2 *Moment* sorted|If 2 dates are already selected, reset the selection and add the new date.|
-|`rangeSelect`|A object with a start and end *Moment*|If start and end dates are already set, replace the closest with the new date.|
 
 
 ## Customize a datepicker

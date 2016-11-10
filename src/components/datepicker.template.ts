@@ -49,8 +49,16 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
 
   /*@Input()*/ showSixWeek = false;
 
-  protected weekDaysName = moment().localeData().weekdaysShort();
-  protected months: Month[] = [];
+  weekDaysName = moment.weekdaysShort(true);
+
+  /**
+   * Months representing calendar to display.
+   * There are 2 helpers function to manipulate it : `initMonth()` and `setMonth()`.
+   * Only manipulate it directly if you know what you are doing. Probably wise
+   * to call `thicd.markforCheck()` after manipulating it.
+   * @type {Month[]}
+   */
+  months: Month[] = [];
 
   //helper
   get month(): Month {
@@ -77,20 +85,20 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
 
   /* Value accessor stuff */
   public onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+  private onChangeCallback: (_: V) => void = () => { };
 
   // TODO should we check that value match SelectDirective's expected value type ?
   // If so how ?
   // TODO use setValue() ?
-  writeValue(value: any) {
+  writeValue(value: V) {
     this.select.value = value;
   }
 
-  registerOnChange(fn: any) {
+  registerOnChange(fn: (_: V) => void) {
     this.onChangeCallback = fn;
   }
 
-  registerOnTouched(fn: any) {
+  registerOnTouched(fn: () => void) {
     this.onTouchedCallback = fn;
   }
   /* */
@@ -173,7 +181,7 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     this.cd.markForCheck();
   }
 
-  private newMonth(date: moment.Moment): Month {
+  protected newMonth(date = moment()): Month {
     let monthDate = moment([date.year(), date.month()]);
     return {
       date: monthDate,
@@ -187,7 +195,9 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
   }
 
   setMonth(date: moment.Moment, idx = 0) {
-    this.months[idx] = this.newMonth(date);
-    this.cd.markForCheck();
+    if(date) {
+      this.months[idx] = this.newMonth(date);
+      this.cd.markForCheck();
+    }
   }
 }

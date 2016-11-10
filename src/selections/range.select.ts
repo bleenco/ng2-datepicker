@@ -100,22 +100,42 @@ export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnCha
   }
 
   selectDate(date: moment.Moment): boolean {
-    if( !this.isDateSelectable(date) )
+    if( !date || !this.isDateValid(date) )
       return false;
 
-    if(!this.value.start)
-      this.value.start = date;
-    else if(!this.value.end)
-      this.value.end = date;
+    if(this.isDateSelected(date))
+      return !this.unselectDate(date);
+
+    let start = this.value.start,
+        end = this.value.end;
+
+    if(!start)
+      start = date;
+    else if(!end)
+      end = date;
     else {
-      let diffStart = Math.abs(date.diff(this.value.start))
-      let diffEnd = Math.abs(date.diff(this.value.end))
+      let diffStart = Math.abs(date.diff(start))
+      let diffEnd = Math.abs(date.diff(end))
 
       if(diffStart < diffEnd)
         this.value.start = date;
       else
         this.value.end = date;
+
+      return true;
     }
+
+    if( start && end && start.isAfter(end)) {
+      this.value = {
+        start: end,
+        end: start
+      };
+    }
+    else
+      this.value = {
+        start: start,
+        end: end
+      }
 
     return true;
   }
