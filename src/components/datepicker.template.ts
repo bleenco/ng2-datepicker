@@ -52,9 +52,10 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
   weekDaysName = moment.weekdaysShort(true);
 
   /**
-   * Months representing calendar to display.
-   * There are 2 helpers function to manipulate it : `initMonth()` and `setMonth()`.
-   * Only manipulate it directly if you know what you are doing. Probably wise
+   * Months representing calendar to display. This property is public only cause of aot.
+   * There are helpers function to manipulate it : `initMonth()`, add/removeMonth() and `changeMonth()`.
+   *
+   * /!\ Only manipulate it directly if you know what you are doing. Probably wise
    * to call `thicd.markforCheck()` after manipulating it.
    * @type {Month[]}
    */
