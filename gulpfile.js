@@ -99,18 +99,6 @@ gulp.task('build:rollup', () => {
       format: 'umd',
       moduleName:'ng2.datepicker',
       plugins: [
-        /* Problem with rollup on moment imports
-          https://github.com/rollup/rollup-plugin-typescript/issues/68
-          http://stackoverflow.com/questions/39519823/using-rollup-for-angular-2s-aot-compiler-and-importing-moment-js
-        */
-        {
-          name: 'replace moment imports',
-          transform: code =>
-            ({
-              code: code.replace(/import\s*\*\s*as\s*moment/g, 'import moment'),
-              map: { mappings: '' }
-            })
-        },
         /*
           export of interface cause errors to rollup
           https://github.com/rollup/rollup-plugin-typescript/issues/65

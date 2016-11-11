@@ -1,6 +1,6 @@
 import { Directive, Input, Output, EventEmitter, DoCheck, ChangeDetectionStrategy } from '@angular/core';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 import { DateState } from '../models';
 import { extendDirConfig, selectProvider } from '../config_helpers';

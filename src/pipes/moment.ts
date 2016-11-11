@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform, Injectable } from '@angular/core';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Pipe({
   name: 'moment'

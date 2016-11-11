@@ -1,5 +1,5 @@
 import { Directive, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 
 import { BaseSelect, isSameDay } from './base.select';
 import { DateState } from '../models';
