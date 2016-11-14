@@ -212,11 +212,11 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
   }
 
   changeMonth(date: moment.Moment, idx = 0) {
-    if(date) {
-      let month = this.months[idx],
-        monthDate = moment([date.year(), date.month()]);
-      month.date = monthDate;
-      month.days = this.generateCalendarDays(monthDate);
+    let current_month = this.months[idx];
+    if(date && !date.isSame(current_month.date), 'm') {
+      let monthDate = moment([date.year(), date.month()]);
+      current_month.date = monthDate;
+      current_month.days = this.generateCalendarDays(monthDate);
 
       this.cd.markForCheck();
     }

@@ -100,7 +100,7 @@ gulp.task('build:rollup', () => {
       moduleName:'ng2.datepicker',
       plugins: [
         /*
-          export of interface cause errors to rollup
+          export of interface causes errors to rollup
           https://github.com/rollup/rollup-plugin-typescript/issues/65
          */
         {
