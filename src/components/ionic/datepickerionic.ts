@@ -84,13 +84,12 @@ export class DatePickerIonicComponent extends DatePickerTemplate<BaseSelect<any>
       this.close();
   }
 
-
   nextMonth() {
-    this.changeMonth( this.month.date.add(1, 'M') );
+    this.changeMonth( this.getMonthDate().add(1, 'M') );
   }
 
   prevMonth() {
-    this.changeMonth( this.month.date.subtract(1, 'M') );
+    this.changeMonth( this.getMonthDate().subtract(1, 'M') );
   }
 
   toggle() {

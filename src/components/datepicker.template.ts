@@ -52,16 +52,17 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
   weekDaysName = moment.weekdaysShort(true);
 
   /**
-   * Months representing calendar to display. This property is public only cause of aot.
-   * There are helpers function to manipulate it : `initMonth()`, add/removeMonth() and `changeMonth()`.
-   *
-   * /!\ Only manipulate it directly if you know what you are doing. Probably wise
-   * to call `thicd.markforCheck()` after manipulating it.
+   * /!\ Only use it on template or as a READONLY property. Should never be mutated, use helpers functions instead.
+   * It's public because of aot.
    * @type {Month[]}
    */
   months: Month[] = [];
 
-  //helper
+  /**
+   * helper function when displaying only 1 month.
+   * /!\ Like {@link #months} it's meant for use on template only. Never mutate this property.
+   * @return {Month} [description]
+   */
   get month(): Month {
     return this.months[0];
   }
@@ -195,6 +196,14 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     this.cd.markForCheck();
   }
 
+  getMonthDate(idx = 0): moment.Moment {
+    let month = this.months[idx];
+    if( month )
+       return month.date.clone();
+
+    return null;
+  }
+
   addMonth(date = moment()): number {
     if(date) {
       this.months.push( this.newMonth(date) );
@@ -213,7 +222,7 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
 
   changeMonth(date: moment.Moment, idx = 0) {
     let current_month = this.months[idx];
-    if(date && !date.isSame(current_month.date), 'm') {
+    if(date && !date.isSame(current_month.date, 'M') ) {
       let monthDate = moment([date.year(), date.month()]);
       current_month.date = monthDate;
       current_month.days = this.generateCalendarDays(monthDate);
