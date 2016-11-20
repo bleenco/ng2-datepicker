@@ -10,62 +10,20 @@ export interface RangeDate {
   end: moment.Moment;
 }
 
-class RangeDateImpl implements RangeDate {
-  private onChange = (v: RangeDate) => {};
-
-  private _start: moment.Moment;
-  get start() {
-    return this._start;
-  }
-  set start(date: moment.Moment) {
-    this._start = date;
-
-    this.onChange(this);
-  }
-
-  private _end: moment.Moment;
-  get end() {
-    return this._end;
-  }
-  set end(date: moment.Moment) {
-    this._end = date;
-
-    this.onChange(this);
-  }
-
-  constructor(rangeDate: RangeDate, onchange: (v: RangeDate) => void) {
-    this.start = rangeDate.start;
-    this.end = rangeDate.end;
-
-    this.onChange = onchange;
-  }
-}
-
 @Directive(BaseSelect.extendConfig({
   selector: '[rangeSelect]'
 }, RangeSelectDirective))
 export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnChanges {
 
   protected get EMPTY_VALUE(): RangeDate {
-    return new RangeDateImpl({
+    return {
         start: null,
         end: null
-      }, v => {
-        this.onDateChange.emit(v);
-        this.hasStateChanged = true;
-      }
-    );
+      };
   };
 
   constructor(private momentPipe: MomentPipe) {
     super();
-  }
-
-  protected _setValue(value: RangeDate) {
-     super._setValue( value ? new RangeDateImpl(value, v => {
-        this.onDateChange.emit(v);
-        this.hasStateChanged = true;
-    }): null);
   }
 
   setValue(value: RangeDate) {
@@ -80,6 +38,20 @@ export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnCha
 
       this.value = value;
     }
+  }
+
+  setStartDate(date: moment.Moment) {
+    this.value = {
+      start: date,
+      end: this.value.end
+    };
+  }
+
+  setEndDate(date: moment.Moment) {
+    this.value = {
+      start: this.value.start,
+      end: date
+    };
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -114,13 +86,10 @@ export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnCha
     else if(!end)
       end = date;
     else {
-      let diffStart = Math.abs(date.diff(start))
-      let diffEnd = Math.abs(date.diff(end))
-
-      if(diffStart < diffEnd)
-        this.value.start = date;
+      if(Math.abs(date.diff(start)) <= Math.abs(date.diff(end)))
+        this.setStartDate(date);
       else
-        this.value.end = date;
+        this.setEndDate(date);
 
       return true;
     }
@@ -144,12 +113,12 @@ export class RangeSelectDirective extends BaseSelect<RangeDate> implements OnCha
     if (date) {
 
       if (isSameDay(date, this.value.start)){
-        this.value.start = null;
+        this.setStartDate(null);
         return true;
       }
 
       if(isSameDay(date, this.value.end)){
-        this.value.end = null;
+        this.setEndDate(null);
         return true;
       }
     }
