@@ -1,0 +1,14 @@
+npm-debug.log/
+
+node_modules/
+
+#IDE
+*.sublime-workspace
+*.sublime-project
+.editorconfig
+.vscode
+
+tsconfig.json
+tslint.json
+gulpfile.js
+scripts/

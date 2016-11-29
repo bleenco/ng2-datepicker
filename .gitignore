@@ -1,8 +1,14 @@
-**/*.js
+src/**/*.js
 **/*.js.map
 **/*.d.ts
+**/*.ngfactory.js
 
 npm-debug.log/
 
 node_modules/
-typings/
+bundle/
+dist/
+
+#IDE
+*.sublime-workspace
+*.sublime-project

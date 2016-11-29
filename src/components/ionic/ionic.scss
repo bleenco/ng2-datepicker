@@ -1,0 +1,173 @@
+.ui-kit-calendar-container {
+  position: relative;
+  width: 170px;
+  margin: 0 10px 0 0;
+  display: block;
+  float: left;
+  position: relative;
+  z-index: 99;
+
+ .ui-kit-calendar-input {
+    border: 1px solid #aec9de;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 40px;
+    background: #fcfcff;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0;
+    transition: all 300ms ease;
+
+    i {
+      color: #505b71;
+      font-size: 20px;
+    }
+
+    &.opened {
+      width: 100%;
+      border: 1px solid #44c8f9;
+      color: #44c8f9;
+      background: rgba(68, 200, 249, 0.15);
+      font-size: 12px;
+
+      i {
+        color: #44c8f9;
+      }
+    }
+
+    span {
+      display: none;
+
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+
+      &.opened {
+        display: inline;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .ui-kit-calendar-cal-container {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    color: #fff;
+    background: #44c8f9;
+    display: inline-block;
+    width: 300px;
+    border-radius: 3px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 300ms linear 300ms;
+
+    &.opened {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    &:after {
+      position: absolute;
+      top: -15px;
+      right: 28px;
+      content: "";
+      width: 0;
+      height: 0;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-left: 15px solid #44c8f9;
+      transform: rotate(-90deg);
+    }
+
+    .ui-kit-calendar-cal-top {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+
+      i {
+        display: block;
+        float: left;
+        font-size: 16px;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        cursor: pointer;
+        vertical-align: baseline;
+      }
+
+      span {
+        display: block;
+        float: left;
+        width: 220px;
+        height: 40px;
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+
+    .ui-kit-calendar-day-names {
+      width: 100%;
+      height: 23px;
+      background: #35b1e2;
+
+      span {
+        font-size: 10px;
+        line-height: 23px;
+        text-align: center;
+        display: block;
+        float: left;
+        width: calc(100% / 7);
+        height: 23px;
+      }
+    }
+
+    .ui-kit-calendar-days {
+      width: 100%;
+      padding: 5px 0;
+      margin-bottom: 15px;
+
+      span {
+        font-size: 12px;
+        display: block;
+        float: left;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        width: calc(100% / 7);
+        cursor: pointer;
+        border-radius: 50%;
+
+        &.today {
+          border: 1px solid #fff;
+          box-sizing: border-box;
+        }
+
+        &:not(.currDisplayMonth) {
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        &.disabled {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+
+        &.inRange {
+          background: rgba(#fff,0.5);
+          color: #44c8f9;
+        }
+
+        &.enabled:hover,
+        &.inRange:hover,
+        &.selected {
+          background: #fff;
+          color: #44c8f9;
+        }
+      }
+    }
+  }
+}
