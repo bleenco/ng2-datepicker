@@ -45,7 +45,7 @@ gulp.task('compile:ts', () => {
 
   return merge([
       tsResult.dts,
-      tsResult.js.pipe(sourceMap.write('.'))
+      tsResult.pipe(sourceMap.write('.'))
     ])
     .pipe(gulp.dest(DEST));
 });
