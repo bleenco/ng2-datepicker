@@ -1,31 +1,54 @@
-<div [class]="class">
-  <input type="hidden" [(ngModel)]="viewDate">
-  <div class="ui-kit-calendar-input" [class.opened]="opened || expanded" (click)="toggle()">
-    <span [class.opened]="opened || expanded">{{ viewDate }}</span>
-    <i class="ion-ios-calendar-outline"></i>
+<div class="datepicker-container u-is-unselectable">
+  <div class="datepicker-input-container">
+    <input type="text" class="datepicker-input" [(ngModel)]="date.formatted">
+    <div class="datepicker-input-icon" (click)="toggle()">
+      <i class="ion-ios-calendar-outline"></i>
+    </div>
   </div>
-  <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
-    <div class="ui-kit-calendar-cal-top">
-      <i class="ion-arrow-left-b" (click)="prevMonth()"></i>
-      <span>{{ date.format('MMMM YYYY') }}</span>
-      <i class="ion-arrow-right-b" (click)="nextMonth()"></i>
+  <div class="datepicker-calendar" *ngIf="opened">
+    <div class="datepicker-calendar-top">
+      <span class="year-title">{{ currentDate.format('YYYY') }}</span>
+      <button type="button" (click)="openYearPicker()" *ngIf="!yearPicker">
+        <i class="ion-arrow-right-c"></i>
+        Select Year
+      </button>
+      <i class="close ion-android-close" (click)="close()"></i>
     </div>
-    <div class="ui-kit-calendar-day-names">
-      <span>Mon</span>
-      <span>Tue</span>
-      <span>Wed</span>
-      <span>Thu</span>
-      <span>Fri</span>
-      <span>Sat</span>
-      <span>Sun</span>
-    </div>
-    <div class="ui-kit-calendar-days">
-      <span *ngFor="let d of days; let i = index;" 
-            (click)="selectDate($event, i)"
-            [class.today]="d.today"
-            [class.is-active]="d.selected">
-        {{ d.day }}
-      </span>
+    <div class="datepicker-calendar-container">
+      <div *ngIf="!yearPicker">
+        <div class="datepicker-calendar-month-section">
+          <i class="ion-ios-arrow-back" (click)="prevMonth()"></i>
+          <span class="month-title">{{ currentDate.format('MMMM') }}</span>
+          <i class="ion-ios-arrow-forward" (click)="nextMonth()"></i>
+        </div>
+        <div class="datepicker-calendar-day-names">
+          <span>S</span>
+          <span>M</span>
+          <span>T</span>
+          <span>W</span>
+          <span>T</span>
+          <span>F</span>
+          <span>S</span>
+        </div>
+        <div class="datepicker-calendar-days-container">
+          <span class="day" *ngFor="let d of days; let i = index" 
+                            (click)="selectDate($event, d.momentObj)"
+                            [ngClass]="{ 'disabled': !d.enabled, 'today': d.today, 'selected': d.selected }">
+            {{ d.day }}
+          </span>
+        </div>
+        <div class="datepicker-buttons">
+          <button type="button" class="a-button u-is-secondary u-is-small" (click)="today()">Today</button>
+          <button type="button" class="a-button u-is-primary u-is-small" (click)="close()">Apply</button>
+        </div>
+      </div>
+      <div *ngIf="yearPicker">
+        <div class="datepicker-calendar-years-container" slimScroll [options]="scrollOptions">
+          <span class="year" *ngFor="let y of years; let i = index" (click)="selectYear($event, y)">
+            {{ y }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

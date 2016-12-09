@@ -1,0 +1,194 @@
+$teal: #099268
+$black: #000000
+$white: #FFFFFF
+$gray: #ced4da
+$gray-dark: #343a40
+$red: #fa5252
+
+=unselectable
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+.datepicker-container
+  display: inline-block
+  position: relative
+
+  .datepicker-input-container
+    display: inline-block
+
+    .datepicker-input
+      display: inline-block
+      width: 160px
+      margin-right: 15px
+      border: none
+      outline: none
+      border-bottom: 1px solid $gray
+      font-size: 14px
+      color: $black
+      text-align: center
+      &::-webkit-input-placeholder
+        color: $gray-dark
+      &::-moz-placeholder
+        color: $gray-dark
+      &:-ms-input-placeholder
+        color: $gray-dark
+      &:-moz-placeholder
+        color: $gray-dark
+
+    .datepicker-input-icon
+      display: inline-block
+      i
+        font-size: 20px
+        cursor: pointer
+
+  .datepicker-calendar
+    +unselectable
+    width: 250px
+    top: 40px
+    position: absolute
+    z-index: 99
+    background: $white
+    border-bottom-left-radius: 4px
+    border-bottom-right-radius: 4px
+    box-shadow: 0 2px 5px rgba($black, 0.5)
+
+    .datepicker-calendar-top
+      width: 100%
+      height: 80px
+      background: $teal
+      display: inline-block
+      position: relative
+
+      .year-title
+        display: block
+        margin-top: 12px
+        color: $white
+        font-size: 28px
+        text-align: center
+
+      button
+        width: 150px
+        display: block
+        margin: 0 auto
+        color: $white
+        text-transform: uppercase
+        background: transparent
+        border: none
+        outline: none
+        font-size: 12px
+        cursor: pointer
+
+      .close
+        position: absolute
+        top: 5px
+        right: 10px
+        font-size: 20px
+        color: $white
+        cursor: pointer
+
+    .datepicker-calendar-container
+      display: inline-block
+      width: 100%
+      padding: 10px
+
+      .datepicker-calendar-month-section
+        width: 100%
+        display: flex
+        justify-content: space-between
+        font-size: 14px
+        color: $black
+        text-transform: uppercase 
+        i
+          cursor: pointer
+          &:first-child
+            margin-left: 12px
+          &:last-child
+            margin-right: 12px
+
+      .datepicker-calendar-day-names
+        width: 230px
+        margin-top: 10px
+        display: inline-block
+        border: 1px solid transparent
+
+        span
+          font-size: 12px
+          display: block
+          float: left
+          width: calc(100% / 7)
+          text-align: center
+
+      .datepicker-calendar-days-container
+        width: 230px
+        margin-top: 5px
+        display: inline-block
+        border: 1px solid transparent
+
+        .day
+          display: flex
+          justify-content: center
+          align-items: center
+          float: left
+          font-size: 14px
+          color: $black
+          width: calc(100% / 7)
+          height: 33px
+          text-align: center
+          border-radius: 50%
+          cursor: pointer
+          &:hover:not(.disabled), &.selected
+            background: $teal
+            color: $white !important
+          &.disabled
+            pointer-events: none
+          &.today
+            color: $red
+
+      .datepicker-calendar-years-container
+        width: 100%
+        height: 240px
+
+        .year
+          display: flex
+          justify-content: center
+          align-items: center
+          float: left
+          font-size: 14px
+          color: $black
+          width: calc(100% / 4)
+          height: 50px
+          text-align: center
+          border-radius: 50%
+          cursor: pointer
+          &:hover, &.selected
+            background: $teal
+            color: $white !important
+
+      .datepicker-buttons
+        width: 235px
+        display: flex
+        justify-content: center
+
+        button
+          width: 100%
+          outline: none
+          display: inline-block
+          border: 1px solid $teal
+          background: $teal
+          color: $white
+          margin-right: 5px
+          border-radius: 5px
+          cursor: pointer
+          text-align: center
+          padding: 5px 10px
+          
+          &.u-is-secondary
+            background: $white
+            color: $teal
+            &:hover
+              color: $teal
+
+
