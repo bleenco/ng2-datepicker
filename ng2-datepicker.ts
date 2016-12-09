@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SlimScrollModule } from 'ng2-slimscroll/ng2-slimscroll';
@@ -12,7 +11,6 @@ export * from './src/classes/';
     DatePickerComponent
   ],
   imports: [
-    BrowserModule,
     CommonModule,
     FormsModule,
     SlimScrollModule
