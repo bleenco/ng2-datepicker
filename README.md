@@ -27,26 +27,26 @@ _Usage examples are based on a project created with [Angular CLI](https://github
 
 **Option A:** Using ng2-datepicker with `ngModel`
 
-1. Import `DatePicker` component in `app.module.ts`
+1. Import `DatePickerModule` in `app.module.ts`
   ```ts
   import { BrowserModule } from '@angular/platform-browser';
   import { NgModule } from '@angular/core';
   import { FormsModule } from '@angular/forms';
   import { HttpModule } from '@angular/http';
   
-  import { DatePicker } from 'ng2-datepicker/ng2-datepicker';
+  import { DatePickerModule } from 'ng2-datepicker';
 
   import { AppComponent } from './app.component';
   
   @NgModule({
     declarations: [
-      Appcomponent,
-      DatePicker
+      Appcomponent
     ],
     imports: [
       BrowserModule,
       FormsModule,
-      HttpModule
+      HttpModule,
+      DatePickerModule
     ],
     providers: [],
     bootstrap: [AppComponent]
@@ -54,35 +54,35 @@ _Usage examples are based on a project created with [Angular CLI](https://github
   export class AppModule {}
   ```
 
-2. Use `<datepicker>` in `app.component.html`
+2. Use `<ng2-datepicker>` in `app.component.html`
   ```html
-  <datepicker [(ngModel)]="date" [expanded]="true"></datepicker>
+  <ng2-datepicker [(ngModel)]="date" [expanded]="true"></datepicker>
   
   Selected date is: {{ date }}
   ```
 
 **Option B:** Using ng2-datepicker with `FormBuilder` (ReactiveFormsModule)
 
-1. Import `DatePicker` component and `ReactiveFormsModule` in `app.module.ts`
+1. Import `DatePickerModule` and `ReactiveFormsModule` in `app.module.ts`
   ```ts
   import { BrowserModule } from '@angular/platform-browser';
   import { NgModule } from '@angular/core';
   import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   import { HttpModule } from '@angular/http';
-  import { DatePicker } from 'ng2-datepicker/ng2-datepicker';
+  import { DatePickerModule } from 'ng2-datepicker';
 
   import { AppComponent } from './app.component';
   
   @NgModule({
     declarations: [
-      Appcomponent,
-      DatePicker
+      Appcomponent
     ],
     imports: [
       BrowserModule,
       FormsModule,
       HttpModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      DatePickerModule
     ],
     providers: [],
     bootstrap: [AppComponent]
@@ -116,11 +116,11 @@ _Usage examples are based on a project created with [Angular CLI](https://github
   }
   ```
   
-3. Use `<datepicker>` with `formControlName` in `app.component.html`
+3. Use `<ng2-datepicker>` with `formControlName` in `app.component.html`
   
   ```html
   <form [formGroup]="dataForm">
-    <datepicker formControlName="date" [expanded]="true"></datepicker>
+    <ng2-datepicker formControlName="date" [expanded]="true"></ng2-datepicker>
   </form>
   ```
 
@@ -141,11 +141,11 @@ Options can be passed to `<datepicker>` component via property bindings.
 ## Example from demo:
 
 ```html
-<datepicker [(ngModel)]="data.date" [expanded]="true"></datepicker>
-<datepicker [(ngModel)]="data2.date" [expanded]="true" class="danger"></datepicker>
-<datepicker [(ngModel)]="data3.date" [expanded]="true" class="success"></datepicker>
-<datepicker [(ngModel)]="data4.date" [expanded]="true" class="warning"></datepicker>
-<datepicker [(ngModel)]="data5.date"></datepicker>
+<ng2-datepicker [(ngModel)]="data.date" [expanded]="true"></ng2-datepicker>
+<ng2-datepicker [(ngModel)]="data2.date" [expanded]="true" class="danger"></ng2-datepicker>
+<ng2-datepicker [(ngModel)]="data3.date" [expanded]="true" class="success"></ng2-datepicker>
+<ng2-datepicker [(ngModel)]="data4.date" [expanded]="true" class="warning"></ng2-datepicker>
+<ng2-datepicker [(ngModel)]="data5.date"></ng2-datepicker>
 ```
 
 ## Licence
