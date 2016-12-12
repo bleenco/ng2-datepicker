@@ -169,6 +169,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       };
       this.generateCalendar();
     });
+
+    if (this.options.autoApply === true && this.opened === true) {
+      this.opened = false;
+    }
   }
 
   selectYear(e: MouseEvent, year: number) {
