@@ -23,13 +23,14 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() inputEvents: EventEmitter<{ type: string, data: string }>;
   @Output() outputEvents: EventEmitter<{ type: string, data: string }>;
 
-  date: DateModel;
-  opened: boolean;
-  currentDate: moment.Moment;
-  days: CalendarDate[];
-  years: number[];
-  yearPicker: boolean;
-  scrollOptions: SlimScrollOptions;
+  public date: DateModel;
+
+  private opened: boolean;
+  private currentDate: moment.Moment;
+  private days: CalendarDate[];
+  private years: number[];
+  private yearPicker: boolean;
+  private scrollOptions: SlimScrollOptions;
 
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
@@ -71,6 +72,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       gridBackground: '#C9C9C9',
       gridWidth: '2'
     };
+
+    if (this.options.initialDate) {
+      this.currentDate = Moment(this.options.initialDate);
+      this.selectDate(null, this.currentDate);
+    }
 
     this.generateCalendar();
 
