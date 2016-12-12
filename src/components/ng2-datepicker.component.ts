@@ -76,7 +76,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       gridWidth: '2'
     };
 
-    if (this.options.initialDate) {
+    if (this.options.initialDate instanceof Date) {
       this.currentDate = Moment(this.options.initialDate);
       this.selectDate(null, this.currentDate);
     }
