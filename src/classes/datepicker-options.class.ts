@@ -1,4 +1,5 @@
 export interface IDatePickerOptions {
+  autoApply?: boolean;
   style?: 'normal' | 'big' | 'bold';
   locale?: string;
   minDate?: Date;
@@ -9,6 +10,7 @@ export interface IDatePickerOptions {
 }
 
 export class DatePickerOptions {
+  autoApply?: boolean;
   style?: 'normal' | 'big' | 'bold';
   locale?: string;
   minDate?: Date;
@@ -18,6 +20,7 @@ export class DatePickerOptions {
   format?: string;
 
   constructor(obj?: IDatePickerOptions) {
+    this.autoApply = (obj && obj.autoApply === true) ? true : false;
     this.style = obj && obj.style ? obj.style : 'normal';
     this.locale = obj && obj.locale ? obj.locale : 'en';
     this.minDate = obj && obj.minDate ? obj.minDate : null;

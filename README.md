@@ -56,7 +56,7 @@ _Usage examples are based on a project created with [Angular CLI](https://github
 
 2. Use `<ng2-datepicker>` in `app.component.html`
   ```html
-  <ng2-datepicker [(ngModel)]="date"></datepicker>
+  <ng2-datepicker [(ngModel)]="date"></ng2-datepicker>
   
   Selected date is: {{ date }}
   ```

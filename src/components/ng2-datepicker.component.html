@@ -31,13 +31,13 @@
           <span>S</span>
         </div>
         <div class="datepicker-calendar-days-container">
-          <span class="day" *ngFor="let d of days; let i = index" 
+          <span class="day" *ngFor="let d of days; let i = index"
                             (click)="selectDate($event, d.momentObj)"
                             [ngClass]="{ 'disabled': !d.enabled, 'today': d.today, 'selected': d.selected }">
             {{ d.day }}
           </span>
         </div>
-        <div class="datepicker-buttons">
+        <div class="datepicker-buttons" *ngIf="!options.autoApply">
           <button type="button" class="a-button u-is-secondary u-is-small" (click)="today()">Today</button>
           <button type="button" class="a-button u-is-primary u-is-small" (click)="close()">Apply</button>
         </div>

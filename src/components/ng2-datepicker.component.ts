@@ -16,25 +16,29 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   selector: 'ng2-datepicker',
   templateUrl: 'ng2-datepicker.component.html',
   styleUrls: ['ng2-datepicker.css'],
-  providers: [ CALENDAR_VALUE_ACCESSOR ]
+  providers: [CALENDAR_VALUE_ACCESSOR]
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() options: DatePickerOptions;
   @Input() inputEvents: EventEmitter<{ type: string, data: string }>;
   @Output() outputEvents: EventEmitter<{ type: string, data: string }>;
 
-  date: DateModel;
-  opened: boolean;
-  currentDate: moment.Moment;
-  days: CalendarDate[];
-  years: number[];
-  yearPicker: boolean;
-  scrollOptions: SlimScrollOptions;
+  public date: DateModel;
+
+  private opened: boolean;
+  private currentDate: moment.Moment;
+  private days: CalendarDate[];
+  private years: number[];
+  private yearPicker: boolean;
+  private scrollOptions: SlimScrollOptions;
+
+  private minDate: moment.Moment | any;
+  private maxDate: moment.Moment | any;
 
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  constructor(@Inject(ElementRef) private el: ElementRef) {
+  constructor( @Inject(ElementRef) private el: ElementRef) {
     this.opened = false;
     this.currentDate = Moment();
     this.options = this.options || {};
@@ -71,6 +75,23 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       gridBackground: '#C9C9C9',
       gridWidth: '2'
     };
+
+    if (this.options.initialDate instanceof Date) {
+      this.currentDate = Moment(this.options.initialDate);
+      this.selectDate(null, this.currentDate);
+    }
+
+    if (this.options.minDate instanceof Date) {
+      this.minDate = Moment(this.options.minDate);
+    } else {
+      this.minDate = null;
+    }
+
+    if (this.options.maxDate instanceof Date) {
+      this.maxDate = Moment(this.options.maxDate);
+    } else {
+      this.maxDate = null;
+    }
 
     this.generateCalendar();
 
@@ -135,12 +156,25 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       let currentDate: moment.Moment = Moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
       let today: boolean = (Moment().isSame(currentDate, 'day') && Moment().isSame(currentDate, 'month')) ? true : false;
       let selected: boolean = (selectedDate && selectedDate.isSame(currentDate, 'day')) ? true : false;
+      let enabled: boolean = true;
+
+      if (this.minDate !== null) {
+        if (this.maxDate !== null) {
+          enabled = currentDate.isBetween(this.minDate, this.maxDate, 'day', '[]') ? true : false;
+        } else {
+          enabled = currentDate.isBefore(this.minDate, 'day') ? false : true;
+        }
+      } else {
+        if (this.maxDate !== null) {
+          enabled = currentDate.isAfter(this.maxDate, 'day') ? false : true;
+        }
+      }
 
       let day: CalendarDate = {
         day: i > 0 ? i : null,
         month: i > 0 ? month : null,
         year: i > 0 ? year : null,
-        enabled: i > 0 ? true : false,
+        enabled: enabled,
         today: i > 0 && today ? true : false,
         selected: i > 0 && selected ? true : false,
         momentObj: currentDate
@@ -163,6 +197,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       };
       this.generateCalendar();
     });
+
+    if (this.options.autoApply === true && this.opened === true) {
+      this.opened = false;
+    }
   }
 
   selectYear(e: MouseEvent, year: number) {
