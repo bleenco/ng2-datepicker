@@ -76,17 +76,18 @@
       padding: 10px; }
       .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
         font-size: 14px;
         color: #000000;
-        text-transform: uppercase; }
+        text-transform: uppercase;
+        text-align: center; }
         .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section i {
           cursor: pointer; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section i:first-child {
-            margin-left: 12px; }
+            margin-left: 12px;
+            float: left; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section i:last-child {
-            margin-right: 12px; }
+            margin-right: 12px;
+            float: right; }
       .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-day-names {
         width: 230px;
         margin-top: 10px;

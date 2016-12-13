@@ -1,7 +1,7 @@
 <div class="datepicker-container u-is-unselectable">
   <div class="datepicker-input-container">
-    <input type="text" class="datepicker-input" [(ngModel)]="date.formatted">
-    <div class="datepicker-input-icon" (click)="toggle()">
+    <input type="text" [readonly]="options.isReadOnly" class="datepicker-input" (focus)="inputFocused()" [(ngModel)]="date.formatted">
+    <div *ngIf="options.showPicker === 'manual'" class="datepicker-input-icon" (click)="toggle()">
       <i class="ion-ios-calendar-outline"></i>
     </div>
   </div>
@@ -17,9 +17,9 @@
     <div class="datepicker-calendar-container">
       <div *ngIf="!yearPicker">
         <div class="datepicker-calendar-month-section">
-          <i class="ion-ios-arrow-back" (click)="prevMonth()"></i>
+          <i class="ion-ios-arrow-back" (click)="prevMonth()" *ngIf="isPrevMonth"></i>
           <span class="month-title">{{ currentDate.format('MMMM') }}</span>
-          <i class="ion-ios-arrow-forward" (click)="nextMonth()"></i>
+          <i class="ion-ios-arrow-forward" (click)="nextMonth()" *ngIf="isNextMonth"></i>
         </div>
         <div class="datepicker-calendar-day-names">
           <span>S</span>

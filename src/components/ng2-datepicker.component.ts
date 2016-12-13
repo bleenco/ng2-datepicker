@@ -25,6 +25,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   public date: DateModel;
 
+  private isPrevMonth: boolean;
+  private isNextMonth: boolean;
   private opened: boolean;
   private currentDate: moment.Moment;
   private days: CalendarDate[];
@@ -52,8 +54,6 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       momentObj: null
     });
 
-    this.generateYears();
-
     this.outputEvents = new EventEmitter<{ type: string, data: string }>();
   }
 
@@ -69,6 +69,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
     this.options = new DatePickerOptions(this.options);
+    this.isPrevMonth = true;
+    this.isNextMonth = true;
     this.scrollOptions = {
       barBackground: '#C9C9C9',
       barWidth: '7',
@@ -94,12 +96,14 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     }
 
     this.generateCalendar();
+    this.generateYears();
 
     if (typeof window !== 'undefined') {
       let body = document.querySelector('body');
       body.addEventListener('click', e => {
-        if (!this.opened || !e.target) { return; };
-        if (this.el.nativeElement !== e.target && !this.el.nativeElement.contains((<any>e.target))) {
+        if (!this.opened || !e.target) { return;  };
+        if (this.el.nativeElement !== e.target && !this.el.nativeElement.contains((<any>e.target))
+          && this.isNextMonth && this.isPrevMonth) {
           this.close();
         }
       }, false);
@@ -151,7 +155,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     }
 
     this.days = [];
+    this.isPrevMonth = true;
+    this.isNextMonth = true;
     let selectedDate: moment.Moment = this.date.momentObj;
+
     for (let i = n; i <= date.endOf('month').date(); i += 1) {
       let currentDate: moment.Moment = Moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
       let today: boolean = (Moment().isSame(currentDate, 'day') && Moment().isSame(currentDate, 'month')) ? true : false;
@@ -161,12 +168,21 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       if (this.minDate !== null) {
         if (this.maxDate !== null) {
           enabled = currentDate.isBetween(this.minDate, this.maxDate, 'day', '[]') ? true : false;
+          if (this.isNextMonth === true) {
+            this.isNextMonth = currentDate.isAfter(this.maxDate, 'day') ? false : true;
+          }
         } else {
           enabled = currentDate.isBefore(this.minDate, 'day') ? false : true;
+        }
+        if (this.isPrevMonth === true) {
+          this.isPrevMonth = currentDate.isBefore(this.minDate, 'day') ? false : true;
         }
       } else {
         if (this.maxDate !== null) {
           enabled = currentDate.isAfter(this.maxDate, 'day') ? false : true;
+          if (this.isNextMonth === true) {
+            this.isNextMonth = !enabled ? false : true;
+          }
         }
       }
 
@@ -174,7 +190,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
         day: i > 0 ? i : null,
         month: i > 0 ? month : null,
         year: i > 0 ? year : null,
-        enabled: enabled,
+        enabled: enabled && i > 0 ? enabled : false,
         today: i > 0 && today ? true : false,
         selected: i > 0 && selected ? true : false,
         momentObj: currentDate
@@ -221,8 +237,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   generateYears() {
-    let date: moment.Moment = this.options.minDate || Moment().year(Moment().year() - 40);
-    let toDate: moment.Moment = this.options.maxDate || Moment().year(Moment().year() + 40);
+    let date: moment.Moment = this.minDate || Moment().year(Moment().year() - 40);
+    let toDate: moment.Moment = this.maxDate || Moment().year(Moment().year() + 40);
     let years = toDate.year() - date.year();
 
     for (let i = 0; i < years; i++) {
@@ -283,4 +299,9 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     setTimeout(() => this.yearPicker = true);
   }
 
+  private inputFocused() {
+    if (this.options.showPicker === 'focus' && !this.opened) {
+      this.open();
+    }
+  }
 }
