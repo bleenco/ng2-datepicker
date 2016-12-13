@@ -7,6 +7,8 @@ export interface IDatePickerOptions {
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
   format?: string;
+  isReadOnly?: boolean;
+  showPicker?: 'focus' | 'manual';
 }
 
 export class DatePickerOptions {
@@ -18,6 +20,8 @@ export class DatePickerOptions {
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
   format?: string;
+  isReadOnly?: boolean;
+  showPicker?: 'focus' | 'manual';
 
   constructor(obj?: IDatePickerOptions) {
     this.autoApply = (obj && obj.autoApply === true) ? true : false;
@@ -28,5 +32,7 @@ export class DatePickerOptions {
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
     this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
+    this.isReadOnly = (obj && obj.isReadOnly === true) ? true : false;
+    this.showPicker = ( obj && obj.showPicker === 'focus' ) ? 'focus' : 'manual';
   }
 }

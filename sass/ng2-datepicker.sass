@@ -96,17 +96,18 @@ $red: #fa5252
 
       .datepicker-calendar-month-section
         width: 100%
-        display: flex
-        justify-content: space-between
         font-size: 14px
         color: $black
-        text-transform: uppercase 
+        text-transform: uppercase
+        text-align: center
         i
           cursor: pointer
           &:first-child
             margin-left: 12px
+            float: left
           &:last-child
             margin-right: 12px
+            float: right
 
       .datepicker-calendar-day-names
         width: 230px
@@ -184,7 +185,7 @@ $red: #fa5252
           cursor: pointer
           text-align: center
           padding: 5px 10px
-          
+
           &.u-is-secondary
             background: $white
             color: $teal
