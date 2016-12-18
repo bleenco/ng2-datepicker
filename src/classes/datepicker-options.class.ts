@@ -26,7 +26,7 @@ export class DatePickerOptions {
     this.minDate = obj && obj.minDate ? obj.minDate : null;
     this.maxDate = obj && obj.maxDate ? obj.maxDate : null;
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
-    this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
+    this.firstWeekdaySunday = obj && obj.firstWeekdaySunday === true ? true : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
   }
 }

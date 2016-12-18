@@ -22,13 +22,14 @@
           <i class="ion-ios-arrow-forward" (click)="nextMonth()"></i>
         </div>
         <div class="datepicker-calendar-day-names">
-          <span>S</span>
+          <span *ngIf="options.firstWeekdaySunday">S</span>
           <span>M</span>
           <span>T</span>
           <span>W</span>
           <span>T</span>
           <span>F</span>
           <span>S</span>
+          <span *ngIf="!options.firstWeekdaySunday">S</span>
         </div>
         <div class="datepicker-calendar-days-container">
           <span class="day" *ngFor="let d of days; let i = index"
