@@ -1,10 +1,76 @@
 import { Component, ElementRef, Inject, OnInit, forwardRef, Input, Output, EventEmitter, Provider } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll/ng2-slimscroll';
-import { DatePickerOptions, DateModel, CalendarDate } from '../classes/';
 import * as moment from 'moment';
 
 const Moment: any = (<any>moment).default || moment;
+
+export interface IDateModel {
+  day: string;
+  month: string;
+  year: string;
+  formatted: string;
+  momentObj: moment.Moment;
+}
+
+export class DateModel {
+  day: string;
+  month: string;
+  year: string;
+  formatted: string;
+  momentObj: moment.Moment;
+
+  constructor(obj?: IDateModel) {
+    this.day = obj && obj.day ? obj.day : null;
+    this.month = obj && obj.month ? obj.month : null;
+    this.year = obj && obj.year ? obj.year : null;
+    this.formatted = obj && obj.formatted ? obj.formatted : null;
+    this.momentObj = obj && obj.momentObj ? obj.momentObj : null;
+  }
+}
+
+export interface IDatePickerOptions {
+  autoApply?: boolean;
+  style?: 'normal' | 'big' | 'bold';
+  locale?: string;
+  minDate?: Date;
+  maxDate?: Date;
+  initialDate?: Date;
+  firstWeekdaySunday?: boolean;
+  format?: string;
+}
+
+export class DatePickerOptions {
+  autoApply?: boolean;
+  style?: 'normal' | 'big' | 'bold';
+  locale?: string;
+  minDate?: Date;
+  maxDate?: Date;
+  initialDate?: Date;
+  firstWeekdaySunday?: boolean;
+  format?: string;
+
+  constructor(obj?: IDatePickerOptions) {
+    this.autoApply = (obj && obj.autoApply === true) ? true : false;
+    this.style = obj && obj.style ? obj.style : 'normal';
+    this.locale = obj && obj.locale ? obj.locale : 'en';
+    this.minDate = obj && obj.minDate ? obj.minDate : null;
+    this.maxDate = obj && obj.maxDate ? obj.maxDate : null;
+    this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
+    this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
+    this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
+  }
+}
+
+export interface CalendarDate {
+  day: number;
+  month: number;
+  year: number;
+  enabled: boolean;
+  today: boolean;
+  selected: boolean;
+  momentObj: moment.Moment;
+}
 
 export const CALENDAR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -14,8 +80,230 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: 'ng2-datepicker',
-  templateUrl: 'ng2-datepicker.component.html',
-  styleUrls: ['ng2-datepicker.css'],
+  template: `
+  <div class="datepicker-container u-is-unselectable">
+    <div class="datepicker-input-container">
+      <input type="text" class="datepicker-input" [(ngModel)]="date.formatted">
+      <div class="datepicker-input-icon" (click)="toggle()">
+        <i class="ion-ios-calendar-outline"></i>
+      </div>
+    </div>
+    <div class="datepicker-calendar" *ngIf="opened">
+      <div class="datepicker-calendar-top">
+        <span class="year-title">{{ currentDate.format('YYYY') }}</span>
+        <button type="button" (click)="openYearPicker()" *ngIf="!yearPicker">
+          <i class="ion-arrow-right-c"></i>
+          Select Year
+        </button>
+        <i class="close ion-android-close" (click)="close()"></i>
+      </div>
+      <div class="datepicker-calendar-container">
+        <div *ngIf="!yearPicker">
+          <div class="datepicker-calendar-month-section">
+            <i class="ion-ios-arrow-back" (click)="prevMonth()"></i>
+            <span class="month-title">{{ currentDate.format('MMMM') }}</span>
+            <i class="ion-ios-arrow-forward" (click)="nextMonth()"></i>
+          </div>
+          <div class="datepicker-calendar-day-names">
+            <span>S</span>
+            <span>M</span>
+            <span>T</span>
+            <span>W</span>
+            <span>T</span>
+            <span>F</span>
+            <span>S</span>
+          </div>
+          <div class="datepicker-calendar-days-container">
+            <span class="day" *ngFor="let d of days; let i = index"
+                              (click)="selectDate($event, d.momentObj)"
+                              [ngClass]="{ 'disabled': !d.enabled, 'today': d.today, 'selected': d.selected }">
+              {{ d.day }}
+            </span>
+          </div>
+          <div class="datepicker-buttons" *ngIf="!options.autoApply">
+            <button type="button" class="a-button u-is-secondary u-is-small" (click)="today()">Today</button>
+            <button type="button" class="a-button u-is-primary u-is-small" (click)="close()">Apply</button>
+          </div>
+        </div>
+        <div *ngIf="yearPicker">
+          <div class="datepicker-calendar-years-container" slimScroll [options]="scrollOptions">
+            <span class="year" *ngFor="let y of years; let i = index" (click)="selectYear($event, y)">
+              {{ y }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  `,
+  styles: [`
+  .datepicker-container {
+  display: inline-block;
+  position: relative; }
+  .datepicker-container .datepicker-input-container {
+    display: inline-block; }
+    .datepicker-container .datepicker-input-container .datepicker-input {
+      display: inline-block;
+      width: 160px;
+      margin-right: 15px;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid #ced4da;
+      font-size: 14px;
+      color: #000000;
+      text-align: center; }
+      .datepicker-container .datepicker-input-container .datepicker-input::-webkit-input-placeholder {
+        color: #343a40; }
+      .datepicker-container .datepicker-input-container .datepicker-input::-moz-placeholder {
+        color: #343a40; }
+      .datepicker-container .datepicker-input-container .datepicker-input:-ms-input-placeholder {
+        color: #343a40; }
+      .datepicker-container .datepicker-input-container .datepicker-input:-moz-placeholder {
+        color: #343a40; }
+    .datepicker-container .datepicker-input-container .datepicker-input-icon {
+      display: inline-block; }
+      .datepicker-container .datepicker-input-container .datepicker-input-icon i {
+        font-size: 20px;
+        cursor: pointer; }
+  .datepicker-container .datepicker-calendar {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 250px;
+    top: 40px;
+    position: absolute;
+    z-index: 99;
+    background: #FFFFFF;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
+    .datepicker-container .datepicker-calendar .datepicker-calendar-top {
+      width: 100%;
+      height: 80px;
+      background: #099268;
+      display: inline-block;
+      position: relative; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-top .year-title {
+        display: block;
+        margin-top: 12px;
+        color: #FFFFFF;
+        font-size: 28px;
+        text-align: center; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-top button {
+        width: 150px;
+        display: block;
+        margin: 0 auto;
+        color: #FFFFFF;
+        text-transform: uppercase;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 12px;
+        cursor: pointer; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-top .close {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 20px;
+        color: #FFFFFF;
+        cursor: pointer; }
+    .datepicker-container .datepicker-calendar .datepicker-calendar-container {
+      display: inline-block;
+      width: 100%;
+      padding: 10px; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #000000;
+        text-transform: uppercase; }
+        .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section i {
+          cursor: pointer; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section i:first-child {
+            margin-left: 12px; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section i:last-child {
+            margin-right: 12px; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-day-names {
+        width: 230px;
+        margin-top: 10px;
+        display: inline-block;
+        border: 1px solid transparent; }
+        .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-day-names span {
+          font-size: 12px;
+          display: block;
+          float: left;
+          width: calc(100% / 7);
+          text-align: center; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container {
+        width: 230px;
+        margin-top: 5px;
+        display: inline-block;
+        border: 1px solid transparent; }
+        .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          float: left;
+          font-size: 14px;
+          color: #000000;
+          width: calc(100% / 7);
+          height: 33px;
+          text-align: center;
+          border-radius: 50%;
+          cursor: pointer; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day:hover:not(.disabled), .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.selected {
+            background: #099268;
+            color: #FFFFFF !important; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.disabled {
+            pointer-events: none; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.today {
+            color: #fa5252; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-years-container {
+        width: 100%;
+        height: 240px; }
+        .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-years-container .year {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          float: left;
+          font-size: 14px;
+          color: #000000;
+          width: calc(100% / 4);
+          height: 50px;
+          text-align: center;
+          border-radius: 50%;
+          cursor: pointer; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container
+          .datepicker-calendar-years-container .year:hover, .datepicker-container .datepicker-calendar .datepicker-calendar-container
+          .datepicker-calendar-years-container .year.selected {
+            background: #099268;
+            color: #FFFFFF !important; }
+      .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons {
+        width: 235px;
+        display: flex;
+        justify-content: center; }
+        .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button {
+          width: 100%;
+          outline: none;
+          display: inline-block;
+          border: 1px solid #099268;
+          background: #099268;
+          color: #FFFFFF;
+          margin-right: 5px;
+          border-radius: 5px;
+          cursor: pointer;
+          text-align: center;
+          padding: 5px 10px; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button.u-is-secondary {
+            background: #FFFFFF;
+            color: #099268; }
+            .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button.u-is-secondary:hover {
+              color: #099268; }
+
+  `],
   providers: [CALENDAR_VALUE_ACCESSOR]
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
