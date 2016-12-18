@@ -7,7 +7,7 @@ Angular2 Datepicker Component
 
 [http://ng2-datepicker.jankuri.com](http://ng2-datepicker.jankuri.com)
 
-## Installation: 
+## Installation:
 
 Install ng2-datepicker via `npm`
 
@@ -33,11 +33,11 @@ _Usage examples are based on a project created with [Angular CLI](https://github
   import { NgModule } from '@angular/core';
   import { FormsModule } from '@angular/forms';
   import { HttpModule } from '@angular/http';
-  
+
   import { DatePickerModule } from 'ng2-datepicker';
 
   import { AppComponent } from './app.component';
-  
+
   @NgModule({
     declarations: [
       Appcomponent
@@ -57,7 +57,7 @@ _Usage examples are based on a project created with [Angular CLI](https://github
 2. Use `<ng2-datepicker>` in `app.component.html`
   ```html
   <ng2-datepicker [(ngModel)]="date"></ng2-datepicker>
-  
+
   Selected date is: {{ date }}
   ```
 
@@ -72,7 +72,7 @@ _Usage examples are based on a project created with [Angular CLI](https://github
   import { DatePickerModule } from 'ng2-datepicker';
 
   import { AppComponent } from './app.component';
-  
+
   @NgModule({
     declarations: [
       Appcomponent
@@ -91,33 +91,33 @@ _Usage examples are based on a project created with [Angular CLI](https://github
   ```
 
 2. Create FormControl for date field in `app.component.ts`
-  
+
   ```ts
   import { Component, OnInit } from '@angular/core';
   import { FormGroup, FormBuilder } from '@angular/forms';
-  
+
   @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
   })
   export class AppComponent implements OnInit {
-  
+
     dataForm: FormGroup;
-  
+
     constructor(private formBuilder: FormBuilder) {
     }
-  
+
     ngOnInit() {
       this.dataForm = this.formBuilder.group({
         date: ''
-      });  
+      });
     }
   }
   ```
-  
+
 3. Use `<ng2-datepicker>` with `formControlName` in `app.component.html`
-  
+
   ```html
   <form [formGroup]="dataForm">
     <ng2-datepicker formControlName="date"></ng2-datepicker>
@@ -128,22 +128,19 @@ _Usage examples are based on a project created with [Angular CLI](https://github
 
 Options can be passed to `<ng2-datepicker>` component via property bindings.
 
-|Property|Type|Required|Default|Description|
-|:--- |:--- |:--- |:--- |:--- |
-|`class`|string|No|`''`|CSS class name(s) to apply to datepicker's container|
-|`opened`|boolean|No|`false`|Set to `true` to open the calendar by default|
-|`format`|string|No|`YYYY-MM-DD`|Date format of the calendar. This will be bound to the model as the date's value.|
-|`viewFormat`|string|No|`D MMMM YYYY`|Date format to display in the view.|
-|`firstWeekdaySunday`|boolean|No|`false`|Set to `true` to set first day of the week in calendar to Sunday instead of Monday.|
+For input `[options]` please see [this](https://github.com/jkuri/ng2-datepicker/blob/master/src/classes/datepicker-options.class.ts).
 
+## Events
+
+You can subscribe to `(outputEvents)` or pass event to the datepicker component via `[inputEvents]`.
 
 ## Example from demo:
 
 ```html
 <ng2-datepicker [(ngModel)]="data.date"></ng2-datepicker>
-<ng2-datepicker [(ngModel)]="data2.date" class="danger"></ng2-datepicker>
-<ng2-datepicker [(ngModel)]="data3.date" class="success"></ng2-datepicker>
-<ng2-datepicker [(ngModel)]="data4.date" class="warning"></ng2-datepicker>
+<ng2-datepicker [(ngModel)]="data2.date"></ng2-datepicker>
+<ng2-datepicker [(ngModel)]="data3.date"></ng2-datepicker>
+<ng2-datepicker [(ngModel)]="data4.date"></ng2-datepicker>
 ```
 
 ## Licence

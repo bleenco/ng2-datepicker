@@ -20,25 +20,25 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() options: DatePickerOptions;
-  @Input() inputEvents: EventEmitter<{ type: string, data: string }>;
-  @Output() outputEvents: EventEmitter<{ type: string, data: string }>;
+  @Input() inputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
+  @Output() outputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
 
-  public date: DateModel;
+  date: DateModel;
 
-  private opened: boolean;
-  private currentDate: moment.Moment;
-  private days: CalendarDate[];
-  private years: number[];
-  private yearPicker: boolean;
-  private scrollOptions: SlimScrollOptions;
+  opened: boolean;
+  currentDate: moment.Moment;
+  days: CalendarDate[];
+  years: number[];
+  yearPicker: boolean;
+  scrollOptions: SlimScrollOptions;
 
-  private minDate: moment.Moment | any;
-  private maxDate: moment.Moment | any;
+  minDate: moment.Moment | any;
+  maxDate: moment.Moment | any;
 
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  constructor( @Inject(ElementRef) private el: ElementRef) {
+  constructor( @Inject(ElementRef) public el: ElementRef) {
     this.opened = false;
     this.currentDate = Moment();
     this.options = this.options || {};
@@ -54,7 +54,19 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
     this.generateYears();
 
-    this.outputEvents = new EventEmitter<{ type: string, data: string }>();
+    this.outputEvents = new EventEmitter<{ type: string, data: string | DateModel }>();
+
+    this.inputEvents.subscribe((event: { type: string, data: string | DateModel }) => {
+      if (event.type === 'setDate') {
+        this.value = event.data as DateModel;
+      } else if (event.type === 'default') {
+        if (event.data === 'open') {
+          this.open();
+        } else if (event.data === 'close') {
+          this.close();
+        }
+      }
+    });
   }
 
   get value(): DateModel {
@@ -94,6 +106,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     }
 
     this.generateCalendar();
+    this.outputEvents.emit({ type: 'default', data: 'init' });
 
     if (typeof window !== 'undefined') {
       let body = document.querySelector('body');
@@ -156,7 +169,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       let currentDate: moment.Moment = Moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
       let today: boolean = (Moment().isSame(currentDate, 'day') && Moment().isSame(currentDate, 'month')) ? true : false;
       let selected: boolean = (selectedDate && selectedDate.isSame(currentDate, 'day')) ? true : false;
-      let enabled: boolean = true;
+      let enabled = true;
 
       if (this.minDate !== null) {
         if (this.maxDate !== null) {
@@ -196,6 +209,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
         momentObj: date
       };
       this.generateCalendar();
+
+      this.outputEvents.emit({ type: 'dateChanged', data: this.value });
     });
 
     if (this.options.autoApply === true && this.opened === true) {
@@ -264,6 +279,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     if (this.opened) {
       this.onOpen();
     }
+
+    this.outputEvents.emit({ type: 'default', data: 'opened' });
   }
 
   open() {
@@ -273,6 +290,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   close() {
     this.opened = false;
+    this.outputEvents.emit({ type: 'default', data: 'closed' });
   }
 
   onOpen() {
