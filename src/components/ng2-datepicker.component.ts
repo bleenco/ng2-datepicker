@@ -78,6 +78,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+
 @Component({
   selector: 'ng2-datepicker',
   template: `
@@ -343,6 +344,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     this.generateYears();
 
     this.outputEvents = new EventEmitter<{ type: string, data: string | DateModel }>();
+
+    if (!this.inputEvents) {
+      return;
+    }
 
     this.inputEvents.subscribe((event: { type: string, data: string | DateModel }) => {
       if (event.type === 'setDate') {

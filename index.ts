@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SlimScrollModule } from 'ng2-slimscroll/ng2-slimscroll';
 import { DatePickerComponent } from './src/components/ng2-datepicker.component';
 
-export { CalendarDate, DatePickerOptions, DateModel } from './src/components/ng2-datepicker.component';
+export { DatePickerOptions, DateModel } from './src/components/ng2-datepicker.component';
 
 @NgModule({
   declarations: [
