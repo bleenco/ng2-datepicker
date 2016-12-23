@@ -128,7 +128,7 @@ _Usage examples are based on a project created with [Angular CLI](https://github
 
 Options can be passed to `<ng2-datepicker>` component via property bindings.
 
-For input `[options]` please see [this](https://github.com/jkuri/ng2-datepicker/blob/master/src/classes/datepicker-options.class.ts).
+For input `[options]` please see [this](https://github.com/jkuri/ng2-datepicker/blob/master/src/components/ng2-datepicker.component.ts#L33-L40).
 
 ## Events
 
