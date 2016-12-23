@@ -462,17 +462,17 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       let currentDate: moment.Moment = Moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
       let today: boolean = (Moment().isSame(currentDate, 'day') && Moment().isSame(currentDate, 'month')) ? true : false;
       let selected: boolean = (selectedDate && selectedDate.isSame(currentDate, 'day')) ? true : false;
-      let enabled = true;
+      let betweenMinMax = true;
 
       if (this.minDate !== null) {
         if (this.maxDate !== null) {
-          enabled = currentDate.isBetween(this.minDate, this.maxDate, 'day', '[]') ? true : false;
+          betweenMinMax = currentDate.isBetween(this.minDate, this.maxDate, 'day', '[]') ? true : false;
         } else {
-          enabled = currentDate.isBefore(this.minDate, 'day') ? false : true;
+          betweenMinMax = currentDate.isBefore(this.minDate, 'day') ? false : true;
         }
       } else {
         if (this.maxDate !== null) {
-          enabled = currentDate.isAfter(this.maxDate, 'day') ? false : true;
+          betweenMinMax = currentDate.isAfter(this.maxDate, 'day') ? false : true;
         }
       }
 
@@ -480,7 +480,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
         day: i > 0 ? i : null,
         month: i > 0 ? month : null,
         year: i > 0 ? year : null,
-        enabled: enabled,
+        enabled: i > 0 ? betweenMinMax : false,
         today: i > 0 && today ? true : false,
         selected: i > 0 && selected ? true : false,
         momentObj: currentDate
