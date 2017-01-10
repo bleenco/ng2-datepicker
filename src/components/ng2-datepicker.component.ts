@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, forwardRef, Input, Output, EventEmitter, Provider } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll/ng2-slimscroll';
 import * as moment from 'moment';
