@@ -83,9 +83,9 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   selector: 'ng2-datepicker',
   template: `
   <div class="datepicker-container u-is-unselectable">
-    <div class="datepicker-input-container">
-      <input type="text" class="datepicker-input" [(ngModel)]="date.formatted">
-      <div class="datepicker-input-icon" (click)="toggle()">
+    <div (click)="toggle()" class="datepicker-input-container">
+      <input disabled type="text" class="datepicker-input" [value]="date.formatted">
+      <div class="datepicker-input-icon">
         <i class="ion-ios-calendar-outline"></i>
       </div>
     </div>
