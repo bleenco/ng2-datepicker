@@ -43,6 +43,5 @@
   },
   "dependencies": {
     "moment": "^2.14.1",
-    "ng2-slimscroll": "^1.0.1"
   }
 }
