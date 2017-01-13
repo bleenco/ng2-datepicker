@@ -1,6 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SlimScrollOptions } from 'ng2-slimscroll/ng2-slimscroll';
 import * as moment from 'moment';
 
 const Moment: any = (<any>moment).default || moment;
@@ -83,9 +82,9 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   selector: 'ng2-datepicker',
   template: `
   <div class="datepicker-container u-is-unselectable">
-    <div class="datepicker-input-container">
-      <input type="text" class="datepicker-input" [(ngModel)]="date.formatted">
-      <div class="datepicker-input-icon" (click)="toggle()">
+    <div (click)="toggle()" class="datepicker-input-container">
+      <input disabled type="text" class="datepicker-input" [(ngModel)]="date.formatted">
+      <div class="datepicker-input-icon">
         <i class="ion-ios-calendar-outline"></i>
       </div>
     </div>
@@ -98,14 +97,14 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
         </button>
         <i class="close ion-android-close" (click)="close()"></i>
       </div>
-      <div class="datepicker-calendar-container">
+      <div class="datepicker-calendar-container" style="padding-right: 10px;">
         <div *ngIf="!yearPicker">
-          <div class="datepicker-calendar-month-section">
+          <div class="datepicker-calendar-month-section" style="padding-right: 10px;">
             <i class="ion-ios-arrow-back" (click)="prevMonth()"></i>
             <span class="month-title">{{ currentDate.format('MMMM') }}</span>
             <i class="ion-ios-arrow-forward" (click)="nextMonth()"></i>
           </div>
-          <div class="datepicker-calendar-day-names">
+          <div class="datepicker-calendar-day-names" style="padding-right: 10px;">
             <span>S</span>
             <span>M</span>
             <span>T</span>
@@ -114,7 +113,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
             <span>F</span>
             <span>S</span>
           </div>
-          <div class="datepicker-calendar-days-container">
+          <div class="datepicker-calendar-days-container" style="padding-right: 10px;">
             <span class="day" *ngFor="let d of days; let i = index"
                               (click)="selectDate($event, d.momentObj)"
                               [ngClass]="{ 'disabled': !d.enabled, 'today': d.today, 'selected': d.selected }">
@@ -127,7 +126,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
           </div>
         </div>
         <div *ngIf="yearPicker">
-          <div class="datepicker-calendar-years-container" slimScroll [options]="scrollOptions">
+          <div class="datepicker-calendar-years-container" style="height: 200px; overflow-y: scroll; padding-right: 10px;">
             <span class="year" *ngFor="let y of years; let i = index" (click)="selectYear($event, y)">
               {{ y }}
             </span>
@@ -319,7 +318,6 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   days: CalendarDate[];
   years: number[];
   yearPicker: boolean;
-  scrollOptions: SlimScrollOptions;
 
   minDate: moment.Moment | any;
   maxDate: moment.Moment | any;
@@ -374,12 +372,6 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
     this.options = new DatePickerOptions(this.options);
-    this.scrollOptions = {
-      barBackground: '#C9C9C9',
-      barWidth: '7',
-      gridBackground: '#C9C9C9',
-      gridWidth: '2'
-    };
 
     if (this.options.initialDate instanceof Date) {
       this.currentDate = Moment(this.options.initialDate);
