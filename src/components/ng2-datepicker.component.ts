@@ -49,6 +49,7 @@ export class DatePickerOptions {
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
   format?: string;
+  weekdaysMins?: Array<string>;            
 
   constructor(obj?: IDatePickerOptions) {
     this.autoApply = (obj && obj.autoApply === true) ? true : false;
@@ -59,6 +60,7 @@ export class DatePickerOptions {
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
     this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
+    this.weekdaysMins = moment.weekdaysMin();
   }
 }
 
@@ -106,13 +108,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
             <i class="ion-ios-arrow-forward" (click)="nextMonth()"></i>
           </div>
           <div class="datepicker-calendar-day-names">
-            <span>S</span>
-            <span>M</span>
-            <span>T</span>
-            <span>W</span>
-            <span>T</span>
-            <span>F</span>
-            <span>S</span>
+            <span *ngFor="let wday of options.weekdaysMins">{{wday}}</span>
           </div>
           <div class="datepicker-calendar-days-container">
             <span class="day" *ngFor="let d of days; let i = index"
