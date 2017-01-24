@@ -257,7 +257,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
           cursor: pointer; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day:hover:not(.disabled), .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.selected {
             background: #099268;
-            color: #FFFFFF !important; }
+            color: #FFFFFF; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.disabled {
             pointer-events: none; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.today {
@@ -281,7 +281,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
           .datepicker-calendar-years-container .year:hover, .datepicker-container .datepicker-calendar .datepicker-calendar-container
           .datepicker-calendar-years-container .year.selected {
             background: #099268;
-            color: #FFFFFF !important; }
+            color: #FFFFFF; }
       .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons {
         width: 235px;
         display: flex;
