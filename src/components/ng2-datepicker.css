@@ -43,7 +43,7 @@
     .datepicker-container .datepicker-calendar .datepicker-calendar-top {
       width: 100%;
       height: 80px;
-      background: #099268;
+      background: #000000;
       display: inline-block;
       position: relative; }
       .datepicker-container .datepicker-calendar .datepicker-calendar-top .year-title {
@@ -73,13 +73,14 @@
     .datepicker-container .datepicker-calendar .datepicker-calendar-container {
       display: inline-block;
       width: 100%;
-      padding: 10px; }
+      padding: 10px;
+      background: #222628; }
       .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section {
         width: 100%;
         display: flex;
         justify-content: space-between;
         font-size: 14px;
-        color: #000000;
+        color: #DDDDDD;
         text-transform: uppercase; }
         .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-month-section i {
           cursor: pointer; }
@@ -109,19 +110,20 @@
           align-items: center;
           float: left;
           font-size: 14px;
-          color: #000000;
+          color: #8E8E8E;
           width: calc(100% / 7);
           height: 33px;
           text-align: center;
-          border-radius: 50%;
           cursor: pointer; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day:hover:not(.disabled), .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.selected {
-            background: #099268;
+            background: #222628;
+            border: 1px solid #366AAB;
+            border-radius: 4px;
             color: #FFFFFF !important; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.disabled {
             pointer-events: none; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-days-container .day.today {
-            color: #fa5252; }
+            color: #366AAB; }
       .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-years-container {
         width: 100%;
         height: 240px; }
@@ -131,14 +133,18 @@
           align-items: center;
           float: left;
           font-size: 14px;
-          color: #000000;
+          color: #8E8E8E;
           width: calc(100% / 4);
           height: 50px;
           text-align: center;
           border-radius: 50%;
           cursor: pointer; }
-          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-years-container .year:hover, .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-calendar-years-container .year.selected {
-            background: #099268;
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container
+          .datepicker-calendar-years-container .year:hover, .datepicker-container .datepicker-calendar .datepicker-calendar-container
+          .datepicker-calendar-years-container .year.selected {
+            background: #222628;
+            border: 1px solid #366AAB;
+            border-radius: 4px;
             color: #FFFFFF !important; }
       .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons {
         width: 235px;
@@ -148,16 +154,24 @@
           width: 100%;
           outline: none;
           display: inline-block;
-          border: 1px solid #099268;
           background: #099268;
           color: #FFFFFF;
           margin-right: 5px;
           border-radius: 5px;
           cursor: pointer;
           text-align: center;
+          border: 1px solid #366AAB;
+          border-radius: 4px;
           padding: 5px 10px; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button.u-is-primary {
+            background: #366AAB; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button.u-is-primary:active {
+            background: #222628; }
           .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button.u-is-secondary {
-            background: #FFFFFF;
-            color: #099268; }
+            background: #222628;
+            color: #FFFFFF; }
+          .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button.u-is-secondary:active {
+            background: #366AAB;
+            color: #DDDDDD; }
             .datepicker-container .datepicker-calendar .datepicker-calendar-container .datepicker-buttons button.u-is-secondary:hover {
-              color: #099268; }
+              color: #FFFFFF; }
