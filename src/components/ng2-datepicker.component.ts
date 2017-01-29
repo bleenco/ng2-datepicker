@@ -38,6 +38,9 @@ export interface IDatePickerOptions {
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
   format?: string;
+  selectYearText?: string;
+  todayText?: string;
+  applyText?: string;
 }
 
 export class DatePickerOptions {
@@ -49,6 +52,9 @@ export class DatePickerOptions {
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
   format?: string;
+  selectYearText?: string;
+  todayText?: string;
+  applyText?: string;            
 
   constructor(obj?: IDatePickerOptions) {
     this.autoApply = (obj && obj.autoApply === true) ? true : false;
@@ -59,6 +65,9 @@ export class DatePickerOptions {
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
     this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
+    this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : 'Select Year';
+    this.todayText = obj && obj.todayText ? obj.todayText : 'Today';
+    this.applyText = obj && obj.applyText ? obj.applyText : 'Apply';
   }
 }
 
@@ -94,7 +103,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
         <span class="year-title">{{ currentDate.format('YYYY') }}</span>
         <button type="button" (click)="openYearPicker()" *ngIf="!yearPicker">
           <i class="ion-arrow-right-c"></i>
-          Select Year
+          {{options.selectYearText}}
         </button>
         <i class="close ion-android-close" (click)="close()"></i>
       </div>
@@ -122,8 +131,8 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
             </span>
           </div>
           <div class="datepicker-buttons" *ngIf="!options.autoApply">
-            <button type="button" class="a-button u-is-secondary u-is-small" (click)="today()">Today</button>
-            <button type="button" class="a-button u-is-primary u-is-small" (click)="close()">Apply</button>
+            <button type="button" class="a-button u-is-secondary u-is-small" (click)="today()">{{options.todayText}}</button>
+            <button type="button" class="a-button u-is-primary u-is-small" (click)="close()">{{options.applyText}}</button>
           </div>
         </div>
         <div *ngIf="yearPicker">
