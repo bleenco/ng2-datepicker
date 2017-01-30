@@ -1,4 +1,4 @@
-$teal: #099268
+$blue: #366AAB
 $black: #000000
 $white: #FFFFFF
 $gray: #ced4da
@@ -18,6 +18,7 @@ $red: #fa5252
 
   .datepicker-input-container
     display: inline-block
+    background: transparent
 
     .datepicker-input
       display: inline-block
@@ -43,6 +44,7 @@ $red: #fa5252
       i
         font-size: 20px
         cursor: pointer
+        color: $black
 
   .datepicker-calendar
     +unselectable
@@ -58,7 +60,7 @@ $red: #fa5252
     .datepicker-calendar-top
       width: 100%
       height: 80px
-      background: $teal
+      background: $black
       display: inline-block
       position: relative
 
@@ -93,14 +95,15 @@ $red: #fa5252
       display: inline-block
       width: 100%
       padding: 10px
+      background: #222628
 
       .datepicker-calendar-month-section
         width: 100%
         display: flex
         justify-content: space-between
         font-size: 14px
-        color: $black
-        text-transform: uppercase 
+        color: #DDDDDD
+        text-transform: uppercase
         i
           cursor: pointer
           &:first-child
@@ -133,19 +136,20 @@ $red: #fa5252
           align-items: center
           float: left
           font-size: 14px
-          color: $black
+          color: #8E8E8E
           width: calc(100% / 7)
           height: 33px
           text-align: center
           border-radius: 50%
           cursor: pointer
           &:hover:not(.disabled), &.selected
-            background: $teal
-            color: $white !important
+            background: #222628
+            border: 1px solid #366AAB
+            border-radius: 4px
           &.disabled
             pointer-events: none
           &.today
-            color: $red
+            color: #366AAB
 
       .datepicker-calendar-years-container
         width: 100%
@@ -157,15 +161,16 @@ $red: #fa5252
           align-items: center
           float: left
           font-size: 14px
-          color: $black
+          color: #8E8E8E
           width: calc(100% / 4)
           height: 50px
           text-align: center
           border-radius: 50%
           cursor: pointer
           &:hover, &.selected
-            background: $teal
-            color: $white !important
+            background: #222628
+            border: 1px solid #366AAB
+            border-radius: 4px
 
       .datepicker-buttons
         width: 235px
@@ -176,19 +181,29 @@ $red: #fa5252
           width: 100%
           outline: none
           display: inline-block
-          border: 1px solid $teal
-          background: $teal
+          border: 1px solid $blue
+          background: #099268
           color: $white
           margin-right: 5px
           border-radius: 5px
           cursor: pointer
           text-align: center
           padding: 5px 10px
-          
+          border: 1px solid #366AAB
+          border-radius: 4px
+
+          &.u-is-primary
+            background: #366AAB
+            &:active
+              background: #222628
+
           &.u-is-secondary
-            background: $white
-            color: $teal
+            background: #222628
+            color: #099268
+            &:active
+              background: #366AAB
+              color: #DDDDDD
             &:hover
-              color: $teal
+              color: #FFFFFF
 
 

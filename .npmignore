@@ -1,2 +1,5 @@
 aot/
 .DS_Store
+scripts/
+src/
+!src/ng2-datepicker/**/*

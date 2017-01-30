@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SlimScrollModule } from 'ng2-slimscroll/ng2-slimscroll';
-import { DatePickerComponent } from './src/components/ng2-datepicker.component';
+import { DatePickerComponent } from './src/ng2-datepicker/ng2-datepicker.component';
 
-export { DatePickerOptions, DateModel } from './src/components/ng2-datepicker.component';
+export { DatePickerOptions, DateModel } from './src/ng2-datepicker/ng2-datepicker.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ export { DatePickerOptions, DateModel } from './src/components/ng2-datepicker.co
   ],
   exports: [
     DatePickerComponent,
-    SlimScrollModule
+    SlimScrollModule,
+    FormsModule
   ]
 })
 export class DatePickerModule { }
