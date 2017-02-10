@@ -38,6 +38,8 @@ export interface IDatePickerOptions {
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
   format?: string;
+  showClear?: boolean;
+  isReadOnly?: boolean;
 }
 
 export class DatePickerOptions {
@@ -49,6 +51,8 @@ export class DatePickerOptions {
   initialDate?: Date;
   firstWeekdaySunday?: boolean;
   format?: string;
+  showClear?: boolean;
+  isReadOnly?: boolean;
 
   constructor(obj?: IDatePickerOptions) {
     this.autoApply = (obj && obj.autoApply === true) ? true : false;
@@ -59,6 +63,8 @@ export class DatePickerOptions {
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
     this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
+    this.showClear = obj && obj.showClear ? obj.showClear : false;
+    this.isReadOnly = obj && obj.isReadOnly ? obj.isReadOnly : false;
   }
 }
 
@@ -370,6 +376,18 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   openYearPicker() {
     setTimeout(() => this.yearPicker = true);
+  }
+
+  clear(){
+    this.date = new DateModel({
+      day: null,
+      month: null,
+      year: null,
+      formatted: null,
+      momentObj: null
+    });
+
+    this.value = this.date;    
   }
 
 }

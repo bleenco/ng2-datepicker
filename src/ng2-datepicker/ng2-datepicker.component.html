@@ -1,9 +1,12 @@
 <div class="datepicker-container u-is-unselectable">
   <div class="datepicker-input-container">
-    <input type="text" class="datepicker-input" [(ngModel)]="date.formatted">
+    <input [readonly]="options.isReadOnly ? true : null" type="text" class="datepicker-input" [(ngModel)]="date.formatted">
+    <div *ngIf="options.showClear && value.formatted" class="datepicker-input-icon" style="padding-right: 5px;" (click)="clear()">
+      <i class="ion-ios-close-circle"></i>
+    </div>
     <div class="datepicker-input-icon" (click)="toggle()">
       <i class="ion-ios-calendar"></i>
-    </div>
+    </div>    
   </div>
   <div class="datepicker-calendar" *ngIf="opened">
     <div class="datepicker-calendar-top">
