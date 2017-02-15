@@ -2,6 +2,8 @@
 **/*.js.map
 **/*.d.ts
 
+!scripts/index.js
+
 .DS_Store/
 
 npm-debug.log
