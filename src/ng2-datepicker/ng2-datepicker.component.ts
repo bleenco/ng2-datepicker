@@ -119,8 +119,6 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       momentObj: null
     });
 
-    this.generateYears();
-
     this.outputEvents = new EventEmitter<{ type: string, data: string | DateModel }>();
 
     if (!this.inputEvents) {
@@ -176,6 +174,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       this.maxDate = null;
     }
 
+    this.generateYears();
     this.generateCalendar();
     this.outputEvents.emit({ type: 'default', data: 'init' });
 
@@ -307,8 +306,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   generateYears() {
-    let date: moment.Moment = this.options.minDate || Moment().year(Moment().year() - 40);
-    let toDate: moment.Moment = this.options.maxDate || Moment().year(Moment().year() + 40);
+    let date: moment.Moment = this.minDate || Moment().year(Moment().year() - 40);
+    let toDate: moment.Moment = this.maxDate || Moment().year(Moment().year() + 40);
     let years = toDate.year() - date.year();
 
     for (let i = 0; i < years; i++) {
