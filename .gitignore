@@ -3,7 +3,7 @@
 **/*.d.ts
 
 !scripts/index.js
-!scripts/plugins
+!scripts/plugins/**/*
 
 .DS_Store/
 
