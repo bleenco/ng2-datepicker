@@ -150,7 +150,7 @@ export class Build {
         Observable.fromPromise(bundle.write({
           format: 'iife',
           dest: path.resolve(__dirname, '../../dist/app.js'),
-          sourceMap: true,
+          sourceMap: false,
           moduleName: 'app'
         })).subscribe(resp => {
           let time: number = new Date().getTime() - start.getTime();

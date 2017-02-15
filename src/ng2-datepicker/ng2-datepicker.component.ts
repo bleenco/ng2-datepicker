@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SlimScrollOptions } from 'ng2-slimscroll/ng2-slimscroll';
+import { SlimScrollOptions } from 'ng2-slimscroll';
 import * as moment from 'moment';
 
 const Moment: any = (<any>moment).default || moment;
@@ -81,8 +81,8 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: 'ng2-datepicker',
-  templateUrl: './ng2-datepicker.component.html',
-  styleUrls: ['./ng2-datepicker.sass'],
+  templateUrl: 'ng2-datepicker.component.html',
+  styleUrls: ['ng2-datepicker.css'],
   providers: [CALENDAR_VALUE_ACCESSOR]
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
@@ -284,9 +284,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       this.outputEvents.emit({ type: 'dateChanged', data: this.value });
     });
 
-    if (this.options.autoApply === true && this.opened === true) {
-      this.opened = false;
-    }
+    this.opened = false;
   }
 
   selectYear(e: MouseEvent, year: number) {
@@ -370,6 +368,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   openYearPicker() {
     setTimeout(() => this.yearPicker = true);
+  }
+
+  clear() {
+    this.value = { day: null, month: null, year: null, momentObj: null, formatted: null };
+    this.close();
   }
 
 }
