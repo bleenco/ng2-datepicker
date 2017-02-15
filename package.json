@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "ng2-datepicker",
   "scripts": {
     "serve": "node ./scripts/index.js --serve",
