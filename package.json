@@ -1,7 +1,10 @@
 {
   "name": "ng2-datepicker",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "ng2-datepicker",
+  "main": "bundle/ng2-datepicker.umd.js",
+  "module": "ng2-datepicker.js",
+  "typings": "ng2-datepicker.d.ts",
   "scripts": {
     "serve": "node ./scripts/index.js --serve",
     "start": "npm run serve",
@@ -13,7 +16,7 @@
     "lint": "npm run tslint \"src/**/*.ts\"",
     "tslint": "tslint",
     "sass": "node-sass src/ng2-datepicker/ng2-datepicker.sass src/ng2-datepicker/ng2-datepicker.css",
-    "build": "npm run css && ./node_modules/.bin/ngc -p tsconfig.build.json",
+    "build": "npm run css && ./node_modules/.bin/ngc -p tsconfig.build.json && rollup -c",
     "prepublish": "npm run build",
     "css": "node-sass src/styles/ng2-datepicker.sass --output src/ng2-datepicker/ --output-style expanded"
   },
@@ -71,6 +74,8 @@
     "glob": "^7.1.1",
     "jasmine": "^2.5.3",
     "jasmine-spec-reporter": "^3.2.0",
+    "jsdom": "^9.11.0",
+    "jsdom-global": "^2.1.1",
     "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",

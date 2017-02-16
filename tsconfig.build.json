@@ -25,7 +25,6 @@
     "dist"
   ],
   "files": [
-    "index.ts",
     "ng2-datepicker.ts"
   ],
   "angularCompilerOptions": {
