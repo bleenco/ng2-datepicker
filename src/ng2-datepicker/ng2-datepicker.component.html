@@ -38,8 +38,8 @@
           </span>
         </div>
         <div class="datepicker-buttons" *ngIf="!options.autoApply">
-          <button type="button" class="a-button u-is-secondary u-is-small" (click)="today()">Today</button>
-          <button type="button" class="a-button u-is-primary u-is-small" (click)="close()">Apply</button>
+          <button type="button" class="a-button u-is-secondary u-is-small" (click)="clear()">Clear</button>
+          <button type="button" class="a-button u-is-primary u-is-small" (click)="today()">Today</button>
         </div>
       </div>
       <div *ngIf="yearPicker">
