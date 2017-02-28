@@ -61,7 +61,7 @@ export class DatePickerOptions {
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
     this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
-    this.isReadOnly = obj && obj.isReadOnly ? obj.isReadOnly : null;
+    this.readOnly = obj && obj.readOnly ? obj.readOnly : null;
   }
 }
 
