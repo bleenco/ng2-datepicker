@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "ng2-datepicker",
   "main": "bundle/ng2-datepicker.umd.js",
   "module": "ng2-datepicker.js",

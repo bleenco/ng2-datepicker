@@ -23,7 +23,7 @@ $red: #fa5252
     .datepicker-input
       display: inline-block
       width: 160px
-      margin-right: 15px
+      margin-right: 10px
       border: none
       outline: none
       border-bottom: 1px solid $gray
@@ -42,9 +42,14 @@ $red: #fa5252
     .datepicker-input-icon
       display: inline-block
       i
-        font-size: 20px
         cursor: pointer
-        color: $black
+
+        svg
+          width: 15px
+          height: 15px
+          g
+            g
+              fill: $black
 
   .datepicker-calendar
     +unselectable
@@ -82,14 +87,35 @@ $red: #fa5252
         outline: none
         font-size: 12px
         cursor: pointer
+        position: relative
+
+        svg
+          display: block
+          float: left
+          width: 15px
+          height: 15px
+          position: absolute
+          top: 2px
+          left: 12px
+          g
+            fill: $white
+            path
+              fill: $white
 
       .close
         position: absolute
         top: 5px
-        right: 10px
+        right: 5px
         font-size: 20px
         color: $white
         cursor: pointer
+
+        svg
+          width: 12px
+          height: 12px
+          g
+            path
+              fill: $white
 
     .datepicker-calendar-container
       display: inline-block
@@ -205,5 +231,11 @@ $red: #fa5252
               color: #DDDDDD
             &:hover
               color: #FFFFFF
-
-
+  svg
+    display: block
+    width: 20px
+    height: 20px
+    g
+      fill: $white
+      g
+        fill: $white
