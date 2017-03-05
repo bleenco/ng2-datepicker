@@ -2,6 +2,7 @@
 **/*.js.map
 **/*.d.ts
 
+!rollup.config.js
 !scripts/index.js
 !scripts/plugins/**/*
 
