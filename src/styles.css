@@ -1,4 +1,3 @@
-@import '../../node_modules/bulma/bulma'
-
-.bg-color
+.bg-color {
   background: linear-gradient(to left, #00c6ff , #0072ff)
+}

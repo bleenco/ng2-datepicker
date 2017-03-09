@@ -1,71 +1,27 @@
-# ng2-datepicker
-Angular2 Datepicker Component
+# Ng2DatepickerCli
 
-***ng2-datepicker*** is a datepicker component for Angular2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.0.
 
-## Demo
+## Development server
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-[http://ng2-datepicker.jankuri.com](http://ng2-datepicker.jankuri.com)
+## Code scaffolding
 
-## Installation:
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
 
-Install ng2-datepicker via `npm`
+## Build
 
-````shell
-npm install ng2-datepicker --save
-````
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Integration
+## Running unit tests
 
-```ts
-// app.module.ts
-import { DatePickerModule } from 'ng2-datepicker';
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-@NgModule({
-  ...
-  imports: [ DatePickerModule ]
-  ...
-})
-export class AppModule { }
+## Running end-to-end tests
 
-// app.component.ts
-import { Component } from '@angular/core';
-import { DatePickerOptions, DateModel } from 'ng2-datepicker';
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Before running the tests make sure you are serving the app via `ng serve`.
 
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html'
-})
-export class AppComponent {
-  date: DateModel;
-  options: DatePickerOptions;
+## Further help
 
-  constructor() {
-    this.options = new DatePickerOptions();
-  }
-}
-
-// app.component.html
-<ng2-datepicker [options]="options" [(ngModel)]="date"></ng2-datepicker>
-```
-
-For more info about options please see [this](https://github.com/jkuri/ng2-datepicker/blob/master/src/ng2-datepicker/ng2-datepicker.component.ts#L43-L51).
-
-## Run Included Demo
-
-```shell
-git clone https://github.com/jkuri/ng2-datepicker.git --depth 1
-npm install
-npm start
-```
-
-## AoT Library Build
-
-```shell
-npm run build
-```
-
-## Licence
-
-This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
-
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
