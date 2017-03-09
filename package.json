@@ -1,5 +1,5 @@
 {
-  "name": "ng2-datepicker-cli",
+  "name": "ng2-datepicker-aot",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,8 @@
     "clean": "rm -rf node_modules",
     "clean:install": "npm run clean && npm install"
   },
-  "private": true,
+  "main": "./dist/ng2-datepicker.module.js",
+  "types": "./dist/ng2-datepicker.module.d.ts",
   "dependencies": {
     "@angular/common": "^2.4.0",
     "@angular/compiler": "^2.4.0",
