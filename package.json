@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker-aot",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -9,11 +9,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "clean": "rm -rf node_modules",
+    "clean": "rimraf node_modules dist dist-lib",
     "clean:install": "npm run clean && npm install"
   },
-  "main": "./dist/ng2-datepicker.module.js",
-  "types": "./dist/ng2-datepicker.module.d.ts",
+  "main": "./lib-dist/ng2-datepicker.module.js",
+  "types": "./lib-dist/ng2-datepicker.module.d.ts",
   "dependencies": {
     "@angular/common": "^2.4.0",
     "@angular/compiler": "^2.4.0",
@@ -41,10 +41,11 @@
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.0.0",
     "karma-cli": "~1.0.1",
+    "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
     "protractor": "~5.1.0",
+    "rimraf": "^2.6.1",
     "ts-node": "~2.0.0",
     "tslint": "~4.4.2",
     "typescript": "~2.0.0"
