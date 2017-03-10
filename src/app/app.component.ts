@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { DatePickerOptions, DateModel } from '../../ng2-datepicker';
+
+import { DateModel, DatePickerOptions } from '../ng2-datepicker/ng2-datepicker.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   date: DateModel;

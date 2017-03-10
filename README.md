@@ -64,10 +64,9 @@ npm start
 ## AoT Library Build
 
 ```shell
-npm run build
+npm run build:lib
 ```
 
 ## Licence
 
 This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
-
