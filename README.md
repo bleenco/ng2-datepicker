@@ -7,6 +7,8 @@ Angular2 Datepicker Component
 
 [http://ng2-datepicker.jankuri.com](http://ng2-datepicker.jankuri.com)
 
+Looking for a date range picker? Check this one: [http://ng-daterangepicker.jankuri.com](http://ng-daterangepicker.jankuri.com)
+
 ## Installation:
 
 Install ng2-datepicker via `npm`
