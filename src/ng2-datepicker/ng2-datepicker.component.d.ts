@@ -26,6 +26,9 @@ export interface IDatePickerOptions {
     initialDate?: Date;
     firstWeekdaySunday?: boolean;
     format?: string;
+    selectYearText?: string;
+    todayText?: string;
+    clearText?: string;
 }
 export declare class DatePickerOptions {
     autoApply?: boolean;
@@ -36,6 +39,10 @@ export declare class DatePickerOptions {
     initialDate?: Date;
     firstWeekdaySunday?: boolean;
     format?: string;
+    selectYearText?: string;
+    todayText?: string;
+    clearText?: string;
+
     constructor(obj?: IDatePickerOptions);
 }
 export interface CalendarDate {

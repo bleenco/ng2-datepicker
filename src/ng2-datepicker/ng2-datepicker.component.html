@@ -43,12 +43,7 @@
     <div class="datepicker-calendar-top">
       <span class="year-title">{{ currentDate.format('YYYY') }}</span>
       <button type="button" (click)="openYearPicker()" *ngIf="!yearPicker">
-        <svg width="494px" height="220px" viewBox="0 137 494 220" version="1.1">
-          <g id="long-arrow-pointing-to-the-right" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, 137.000000)">
-            <path d="M490.498,102.278 L380.866,2.349 C377.82,-0.125 374.49,-0.601 370.873,0.922 C367.26,2.447 365.446,5.205 365.446,9.204 L365.446,73.158 L9.136,73.158 C6.47,73.158 4.28,74.013 2.569,75.726 C0.859,77.438 0,79.628 0,82.292 L0,137.108 C0,139.771 0.855,141.961 2.568,143.671 C4.283,145.383 6.473,146.238 9.135,146.238 L365.448,146.238 L365.448,210.191 C365.448,214.003 367.265,216.761 370.876,218.469 C374.496,219.998 377.826,219.42 380.872,216.761 L490.504,115.684 C492.407,113.782 493.356,111.502 493.356,108.835 C493.356,106.367 492.401,104.181 490.498,102.278 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
-          </g>
-        </svg>
-        Select Year
+        {{options.selectYearText}}
       </button>
       <i class="close" (click)="close()">
         <svg width="350px" height="349px" viewBox="-1 0 350 349" version="1.1">
@@ -98,8 +93,8 @@
           </span>
         </div>
         <div class="datepicker-buttons" *ngIf="!options.autoApply">
-          <button type="button" class="a-button u-is-secondary u-is-small" (click)="clear()">Clear</button>
-          <button type="button" class="a-button u-is-primary u-is-small" (click)="today()">Today</button>
+          <button type="button" class="a-button u-is-secondary u-is-small" (click)="clear()">{{options.clearText}}</button>
+          <button type="button" class="a-button u-is-primary u-is-small" (click)="today()">{{options.todayText}}</button>
         </div>
       </div>
       <div *ngIf="yearPicker">

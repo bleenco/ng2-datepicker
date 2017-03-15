@@ -51,7 +51,7 @@ export class AppComponent {
 <ng2-datepicker [options]="options" [(ngModel)]="date"></ng2-datepicker>
 ```
 
-For more info about options please see [this](https://github.com/jkuri/ng2-datepicker/blob/master/src/ng2-datepicker/ng2-datepicker.component.ts#L43-L51).
+For more info about options please see [this](https://github.com/jkuri/ng2-datepicker/blob/master/src/ng2-datepicker/ng2-datepicker.component.ts#L41-L53).
 
 ## Run Included Demo
 
