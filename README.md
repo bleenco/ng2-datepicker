@@ -57,6 +57,7 @@ For more info about options please see [this](https://github.com/jkuri/ng2-datep
 
 ```shell
 git clone https://github.com/jkuri/ng2-datepicker.git --depth 1
+cd ng2-datepicker
 npm install
 npm start
 ```
