@@ -1,10 +1,10 @@
-import { Component, ViewContainerRef, forwardRef, OnInit, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {Component, ViewContainerRef, forwardRef, OnInit, Input} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import * as moment_ from 'moment';
 
 const moment: any = (<any>moment_).default || moment_;
 
-interface CalendarDate {
+export interface CalendarDate {
   day: number;
   month: number;
   year: number;
@@ -33,26 +33,26 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() format: string;
   @Input() viewFormat: string;
   @Input() firstWeekdaySunday: boolean;
-  @Input() weekdays: {[index: string]: string} =
-  {
-    monday: 'Mon',
-    tuesday: 'Tue',
-    wednesday: 'Wed',
-    thursday: 'Thu',
-    friday: 'Fri',
-    saturday: 'Sat',
-    sunday: 'Sun'
-  };
+  @Input() weekdays =
+    {
+      monday: 'Mon',
+      tuesday: 'Tue',
+      wednesday: 'Wed',
+      thursday: 'Thu',
+      friday: 'Fri',
+      saturday: 'Sat',
+      sunday: 'Sun'
+    };
 
-  private date: any = moment();
-  private onChange: Function;
-  private onTouched: Function;
-  private el: Element;
-  private viewDate: string = null;
-  private days: CalendarDate[] = [];
+  date: any = moment();
+  onChange: Function;
+  onTouched: Function;
+  el: Element;
+  viewDate: string = null;
+  days: CalendarDate[] = [];
 
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+  onTouchedCallback: () => void = () => {};
+  onChangeCallback: (_: any) => void = () => {};
 
   constructor(viewContainerRef: ViewContainerRef) {
     this.el = viewContainerRef.element.nativeElement;
@@ -73,7 +73,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     this.opened = this.opened || false;
     this.format = this.format || 'YYYY-MM-DD';
     this.viewFormat = this.viewFormat || 'D MMMM YYYY';
-    this.firstWeekdaySunday = this.firstWeekdaySunday || false; 
+    this.firstWeekdaySunday = this.firstWeekdaySunday || false;
     setTimeout(() => {
       if (!this.viewDate) {
         let value = moment();
@@ -85,7 +85,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
     let body = document.querySelector('body');
     body.addEventListener('click', e => {
-      if (!this.opened || !e.target) { return; };
+      if (!this.opened || !e.target) {
+        return;
+      }
+      ;
       if (this.el !== e.target && !this.el.contains((<any>e.target))) {
         this.close();
       }
@@ -108,10 +111,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     for (let i = n; i <= date.endOf('month').date(); i += 1) {
       let currentDate = moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
       let today = (moment().isSame(currentDate, 'day') && moment().isSame(currentDate, 'month')) ? true : false;
-      let selected = (selectedDate.isSame(currentDate, 'day')) ? true : false; 
+      let selected = (selectedDate.isSame(currentDate, 'day')) ? true : false;
 
       if (i > 0) {
-        this.days.push({ 
+        this.days.push({
           day: i,
           month: month + 1,
           year: year,
@@ -120,13 +123,13 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
           selected: selected
         });
       } else {
-        this.days.push({ 
+        this.days.push({
           day: null,
           month: null,
           year: null,
-          enabled:false,
+          enabled: false,
           today: false,
-          selected: false 
+          selected: false
         });
       }
     }
@@ -166,7 +169,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   toggle() {
-    this.opened = !this.opened; 
+    this.opened = !this.opened;
   }
 
   open() {
