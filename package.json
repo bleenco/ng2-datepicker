@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -22,6 +22,10 @@
   "keywords": [
     "angular",
     "angular2",
+    "angular4",
+    "ng2",
+    "ng4",
+    "ngx",
     "datepicker",
     "date",
     "component"
@@ -32,30 +36,36 @@
   },
   "homepage": "https://github.com/jkuri/ng2-datepicker#readme",
   "main": "./lib-dist/ng2-datepicker.module.js",
+  "module": "./lib-dist/ng2-datepicker.module.js",
   "types": "./lib-dist/ng2-datepicker.module.d.ts",
+  "peerDependencies": {
+    "@angular/common": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
+    "@angular/core": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
+    "@angular/forms": "^2.4.0",
+    "rxjs": ">=5.0.0 || >=5.0.0-beta",
+    "zone.js": ">=0.7.0"
+  },
   "dependencies": {
+    "moment": "^2.17.1",
+    "ng2-slimscroll": "^1.2.6"
+  },
+  "devDependencies": {
+    "@angular/cli": "1.0.0-rc.0",
     "@angular/common": "^2.4.0",
     "@angular/compiler": "^2.4.0",
+    "@angular/compiler-cli": "^2.4.0",
     "@angular/core": "^2.4.0",
     "@angular/forms": "^2.4.0",
     "@angular/http": "^2.4.0",
     "@angular/platform-browser": "^2.4.0",
     "@angular/platform-browser-dynamic": "^2.4.0",
     "@angular/router": "^3.4.0",
-    "core-js": "^2.4.1",
-    "moment": "^2.17.1",
-    "ng2-slimscroll": "^1.2.6",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.7.6"
-  },
-  "devDependencies": {
-    "@angular/cli": "1.0.0-rc.0",
-    "@angular/compiler-cli": "^2.4.0",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "angular-library-builder": "^1.3.1",
     "bulma": "^0.3.2",
     "codelyzer": "~2.0.0",
+    "core-js": "^2.4.1",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",
@@ -66,8 +76,10 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.0",
     "rimraf": "^2.6.1",
+    "rxjs": "^5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.4.2",
-    "typescript": "~2.0.0"
+    "typescript": "~2.0.0",
+    "zone.js": "^0.7.6"
   }
 }
