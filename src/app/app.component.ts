@@ -11,6 +11,17 @@ export class AppComponent {
   options: DatePickerOptions;
 
   constructor() {
-    this.options = new DatePickerOptions();
+    this.options = {
+      autoApply: true,
+      firstWeekdaySunday: true,
+      initialDate: new Date(),
+      locale: "en",
+      maxDate: new Date(),
+      minDate: null,
+      style: "normal",
+      format: "DD/MM/YYYY"
+    };
+
+   // this.options = new DatePickerOptions();
   }
 }
