@@ -42,8 +42,8 @@
     "@angular/common": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
     "@angular/core": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
     "@angular/forms": "^2.4.0",
-    "rxjs": ">=5.0.0 || >=5.0.0-beta",
-    "zone.js": ">=0.7.0"
+    "rxjs": "5.2.0",
+    "zone.js": "0.8.5"
   },
   "dependencies": {
     "moment": "^2.17.1",
@@ -78,7 +78,7 @@
     "rimraf": "^2.6.1",
     "rxjs": "^5.1.0",
     "ts-node": "~2.0.0",
-    "tslint": "~4.4.2",
+    "tslint": "5.0.0",
     "typescript": "~2.0.0",
     "zone.js": "^0.7.6"
   }
