@@ -1,4 +1,4 @@
-<div class="datepicker-container u-is-unselectable">
+<div class="datepicker-container u-is-unselectable" (click)="toggle()">
   <div class="datepicker-input-container" (click)="toggle()">
     <input type="text" class="datepicker-input" [(ngModel)]="date.formatted" (click)="toggle()" readonly>
     <div class="datepicker-input-icon">
