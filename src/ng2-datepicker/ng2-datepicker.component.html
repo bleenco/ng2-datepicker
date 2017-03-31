@@ -1,6 +1,6 @@
-<div class="datepicker-container u-is-unselectable" (click)="toggle()">
-  <div class="datepicker-input-container" (click)="toggle()">
-    <input type="text" class="datepicker-input" [(ngModel)]="date.formatted" (click)="toggle()" readonly>
+<div class="datepicker-container u-is-unselectable" (click)="toggle()" style="z-index: 99;">
+  <div class="datepicker-input-container">
+    <input type="text" class="datepicker-input" [(ngModel)]="date.formatted"readonly>
     <div class="datepicker-input-icon">
       <i>
         <svg width="58px" height="58px" viewBox="0 0 58 58" version="1.1">
