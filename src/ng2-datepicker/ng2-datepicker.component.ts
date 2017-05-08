@@ -8,7 +8,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll';
 import * as moment from 'moment';
 
@@ -36,6 +36,11 @@ export class DateModel {
     this.formatted = obj && obj.formatted ? obj.formatted : null;
     this.momentObj = obj && obj.momentObj ? obj.momentObj : null;
   }
+}
+
+export interface DatepickerCustomFormatOptions {
+    toDisplay?(date: string, format: any, language: any): string;
+    toValue?(date: string, format: any, language: any): string;
 }
 
 export interface IDatePickerOptions {
@@ -90,22 +95,23 @@ export interface CalendarDate {
   momentObj: moment.Moment;
 }
 
-export const CALENDAR_VALUE_ACCESSOR: any = {
+/*export const CALENDAR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DatePickerComponent),
   multi: true
-};
+};*/
 
 
 @Component({
   selector: 'ng2-datepicker',
   templateUrl: './ng2-datepicker.component.html',
   styleUrls: ['./ng2-datepicker.component.sass'],
-  providers: [CALENDAR_VALUE_ACCESSOR],
+  //providers: [CALENDAR_VALUE_ACCESSOR],
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() options: DatePickerOptions;
   @Input() inputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
+  @Input() format: DatepickerCustomFormatOptions;
   @Output() outputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
 
   date: DateModel;
@@ -123,7 +129,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  constructor( @Inject(ElementRef) public el: ElementRef) {
+  constructor( @Inject(ElementRef) public el: ElementRef, private control: NgControl) {
+    this.control.valueAccessor = this;
     this.opened = false;
     this.currentDate = Moment();
     this.options = this.options || {};
