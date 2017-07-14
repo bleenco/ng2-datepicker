@@ -11,6 +11,7 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll';
 import * as moment from 'moment';
+import { ILocaleManager, ILocale} from "./locales/locale-manager";
 
 const Moment: any = (<any>moment).default || moment;
 
@@ -65,7 +66,7 @@ export class DatePickerOptions {
   todayText?: string;
   clearText?: string;
 
-  constructor(obj?: IDatePickerOptions) {
+  constructor(obj?: IDatePickerOptions, locale?: ILocale) {
     this.autoApply = (obj && obj.autoApply === true) ? true : false;
     this.style = obj && obj.style ? obj.style : 'normal';
     this.locale = obj && obj.locale ? obj.locale : 'en';
@@ -74,9 +75,9 @@ export class DatePickerOptions {
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
     this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
-    this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : 'Select Year';
-    this.todayText = obj && obj.todayText ? obj.todayText : 'Today';
-    this.clearText = obj && obj.clearText ? obj.clearText : 'Clear';
+    this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : (locale)? locale.selectYearText() : 'Select Year';
+    this.todayText = obj && obj.todayText ? obj.todayText : (locale)? locale.todayText() : 'Today';
+    this.clearText = obj && obj.clearText ? obj.clearText : (locale)? locale.clearText() : 'Clear';
   }
 }
 
@@ -104,7 +105,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   providers: [CALENDAR_VALUE_ACCESSOR],
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
-  @Input() options: DatePickerOptions;
+  @Input() options: IDatePickerOptions;
   @Input() inputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
   @Output() outputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
 
@@ -123,7 +124,9 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  constructor( @Inject(ElementRef) public el: ElementRef) {
+  private _locale: ILocale;
+
+  constructor( @Inject(ElementRef) public el: ElementRef, private _localeManager: ILocaleManager) {
     this.opened = false;
     this.currentDate = Moment();
     this.options = this.options || {};
@@ -167,7 +170,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
-    this.options = new DatePickerOptions(this.options);
+    this._locale = this._localeManager.Resolve(this.options.locale);
+    this.options = new DatePickerOptions(this.options, this._locale);
     this.scrollOptions = {
       barBackground: '#C9C9C9',
       barWidth: '7',

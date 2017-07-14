@@ -65,7 +65,7 @@
               </g>
             </svg>
           </i>
-          <span class="month-title">{{ currentDate.format('MMMM') }}</span>
+          <span class="month-title">{{ currentDate.lang(_locale.langIdentifier()).format('MMMM') }}</span>
           <i (click)="nextMonth()">
             <svg width="190px" height="306px" viewBox="58 0 190 306" version="1.1">
               <g id="keyboard-right-arrow-button" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(58.000000, 0.000000)">
@@ -77,13 +77,7 @@
           </i>
         </div>
         <div class="datepicker-calendar-day-names">
-          <span>S</span>
-          <span>M</span>
-          <span>T</span>
-          <span>W</span>
-          <span>T</span>
-          <span>F</span>
-          <span>S</span>
+          <span *ngFor="let iDay of _locale.daysOfWeek();">{{iDay}}</span>
         </div>
         <div class="datepicker-calendar-days-container">
           <span class="day" *ngFor="let d of days; let i = index"
