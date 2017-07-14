@@ -77,7 +77,7 @@
           </i>
         </div>
         <div class="datepicker-calendar-day-names">
-          <span *ngFor="let iDay of _locale.daysOfWeek();">{{iDay}}</span>
+          <span *ngFor="let dayNum of [0,1,2,3,4,5,6]">{{ _locale.daysOfWeek()[(dayNum + (options.firstWeekdaySunday?0:1)) % 7]}}</span>
         </div>
         <div class="datepicker-calendar-days-container">
           <span class="day" *ngFor="let d of days; let i = index"

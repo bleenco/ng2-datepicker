@@ -1,6 +1,9 @@
 import { ILocale } from "./locale-manager";
 
 export class EnglishLocale implements ILocale{
+    firstWeekdaySunday(): boolean {
+        return true;
+    }
     langIdentifier(): string {
         return "en";
     }

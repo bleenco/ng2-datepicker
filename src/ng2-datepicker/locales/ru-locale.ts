@@ -1,6 +1,9 @@
 import { ILocale } from "./locale-manager";
 
 export class RussianLocale implements ILocale{
+    firstWeekdaySunday(): boolean {
+        return false;
+    }
     langIdentifier(): string {
         return "ru";
     }

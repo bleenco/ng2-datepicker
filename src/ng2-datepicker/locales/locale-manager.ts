@@ -8,6 +8,7 @@ export interface ILocale{
     clearText(): string;
     daysOfWeek(): string[];
     langIdentifier(): string;
+    firstWeekdaySunday(): boolean;
 }
 
 export class ILocaleManager{

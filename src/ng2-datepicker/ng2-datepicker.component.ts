@@ -73,7 +73,7 @@ export class DatePickerOptions {
     this.minDate = obj && obj.minDate ? obj.minDate : null;
     this.maxDate = obj && obj.maxDate ? obj.maxDate : null;
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
-    this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
+    this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : (locale)? locale.firstWeekdaySunday() : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
     this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : (locale)? locale.selectYearText() : 'Select Year';
     this.todayText = obj && obj.todayText ? obj.todayText : (locale)? locale.todayText() : 'Today';
