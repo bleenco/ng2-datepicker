@@ -104,7 +104,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
   providers: [CALENDAR_VALUE_ACCESSOR],
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
-  @Input() options: DatePickerOptions;
+  @Input() options: IDatePickerOptions;
   @Input() inputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
   @Output() outputEvents: EventEmitter<{ type: string, data: string | DateModel }>;
 
@@ -116,6 +116,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   years: number[];
   yearPicker: boolean;
   scrollOptions: SlimScrollOptions;
+  nameOfweekday(index: number): string{
+    let locale = (this.options && this.options.locale)? this.options.locale : "en";
+    let additinal = (this.options && this.options.firstWeekdaySunday)?6:0;
+    return moment("2013W06" + ( (index + additinal) % 7 + 1 ) ).lang(locale).format("dd");
+  }
 
   minDate: moment.Moment | any;
   maxDate: moment.Moment | any;
