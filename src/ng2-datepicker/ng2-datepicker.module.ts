@@ -7,8 +7,6 @@ import { SlimScrollModule } from 'ng2-slimscroll';
 import { DatePickerComponent } from './ng2-datepicker.component';
 export { DatePickerOptions, DateModel } from './ng2-datepicker.component';
 
-import { ILocaleManager, LocaleManager} from "./locales/locale-manager";
-
 @NgModule({
   declarations: [
     DatePickerComponent
@@ -22,9 +20,6 @@ import { ILocaleManager, LocaleManager} from "./locales/locale-manager";
     DatePickerComponent,
     SlimScrollModule,
     FormsModule
-  ],
-  providers: [ 
-    { provide: ILocaleManager, useClass: LocaleManager }   
-  ],
+  ]
 })
 export class DatePickerModule { }

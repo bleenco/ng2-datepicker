@@ -11,7 +11,6 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SlimScrollOptions } from 'ng2-slimscroll';
 import * as moment from 'moment';
-import { ILocaleManager, ILocale} from "./locales/locale-manager";
 
 const Moment: any = (<any>moment).default || moment;
 
@@ -66,18 +65,18 @@ export class DatePickerOptions {
   todayText?: string;
   clearText?: string;
 
-  constructor(obj?: IDatePickerOptions, locale?: ILocale) {
+  constructor(obj?: IDatePickerOptions) {
     this.autoApply = (obj && obj.autoApply === true) ? true : false;
     this.style = obj && obj.style ? obj.style : 'normal';
     this.locale = obj && obj.locale ? obj.locale : 'en';
     this.minDate = obj && obj.minDate ? obj.minDate : null;
     this.maxDate = obj && obj.maxDate ? obj.maxDate : null;
     this.initialDate = obj && obj.initialDate ? obj.initialDate : null;
-    this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : (locale)? locale.firstWeekdaySunday() : false;
+    this.firstWeekdaySunday = obj && obj.firstWeekdaySunday ? obj.firstWeekdaySunday : false;
     this.format = obj && obj.format ? obj.format : 'YYYY-MM-DD';
-    this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : (locale)? locale.selectYearText() : 'Select Year';
-    this.todayText = obj && obj.todayText ? obj.todayText : (locale)? locale.todayText() : 'Today';
-    this.clearText = obj && obj.clearText ? obj.clearText : (locale)? locale.clearText() : 'Clear';
+    this.selectYearText = obj && obj.selectYearText ? obj.selectYearText : 'Select Year';
+    this.todayText = obj && obj.todayText ? obj.todayText : 'Today';
+    this.clearText = obj && obj.clearText ? obj.clearText : 'Clear';
   }
 }
 
@@ -117,6 +116,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   years: number[];
   yearPicker: boolean;
   scrollOptions: SlimScrollOptions;
+  nameOfweekday(index: number): string{
+    let locale = (this.options && this.options.locale)? this.options.locale : "en";
+    let additinal = (this.options && this.options.firstWeekdaySunday)?6:0;
+    return moment("2013W06" + ( (index + additinal) % 7 + 1 ) ).lang(locale).format("dd");
+  }
 
   minDate: moment.Moment | any;
   maxDate: moment.Moment | any;
@@ -124,9 +128,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
-  private _locale: ILocale;
-
-  constructor( @Inject(ElementRef) public el: ElementRef, private _localeManager: ILocaleManager) {
+  constructor( @Inject(ElementRef) public el: ElementRef) {
     this.opened = false;
     this.currentDate = Moment();
     this.options = this.options || {};
@@ -170,8 +172,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
-    this._locale = this._localeManager.Resolve(this.options.locale);
-    this.options = new DatePickerOptions(this.options, this._locale);
+    this.options = new DatePickerOptions(this.options);
     this.scrollOptions = {
       barBackground: '#C9C9C9',
       barWidth: '7',
