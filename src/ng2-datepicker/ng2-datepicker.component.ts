@@ -237,7 +237,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
             day: date.format('DD'),
             month: date.format('MM'),
             year: date.format('YYYY'),
-            formatted: date.format(this.options.format),
+            formatted: date.lang(this.options.locale).format(this.options.format),
             momentObj: date
           };
         }
@@ -298,7 +298,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
         day: date.format('DD'),
         month: date.format('MM'),
         year: date.format('YYYY'),
-        formatted: date.format(this.options.format),
+        formatted: date.lang(this.options.locale).format(this.options.format),
         momentObj: date
       };
       this.generateCalendar();
@@ -318,7 +318,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
         day: date.format('DD'),
         month: date.format('MM'),
         year: date.format('YYYY'),
-        formatted: date.format(this.options.format),
+        formatted: date.lang(this.options.locale).format(this.options.format),
         momentObj: date
       };
       this.yearPicker = false;
