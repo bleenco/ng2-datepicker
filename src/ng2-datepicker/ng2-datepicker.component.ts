@@ -366,6 +366,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   toggle() {
+    if(Moment(this.date.formatted).isValid()) {
+      this.currentDate = Moment(this.date.formatted);
+      this.selectDate(null, this.currentDate);
+    }
+
     this.opened = !this.opened;
     if (this.opened) {
       this.onOpen();
