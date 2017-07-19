@@ -1,9 +1,11 @@
-$blue: #366AAB
-$black: #000000
+$blue: #ff9600
+$black: #099268
 $white: #FFFFFF
-$gray: #ced4da
-$gray-dark: #343a40
+$gray: #FFFFFF
+$gray-dark: #2b00ff
 $red: #fa5252
+$background: #FFFFFF
+$text-color: #000000
 
 =unselectable
   -webkit-touch-callout: none
@@ -124,21 +126,22 @@ $red: #fa5252
       display: inline-block
       width: 100%
       padding: 10px
-      background: #222628
+      background: $background
 
       .datepicker-calendar-month-section
         width: 100%
         display: flex
         justify-content: space-between
         font-size: 14px
-        color: #DDDDDD
+        color: $text-color
         text-transform: uppercase
         i
           cursor: pointer
+          margin-right: 12px
           &:first-child
             margin-left: 12px
           &:last-child
-            margin-right: 12px
+
 
       .datepicker-calendar-day-names
         width: 230px
@@ -165,20 +168,21 @@ $red: #fa5252
           align-items: center
           float: left
           font-size: 14px
-          color: #8E8E8E
+          color: $text-color
           width: calc(100% / 7)
           height: 33px
           text-align: center
           border-radius: 50%
           cursor: pointer
           &:hover:not(.disabled), &.selected
-            background: #222628
-            border: 1px solid #366AAB
+            background: $background
+            border: 1px solid $black
             border-radius: 4px
           &.disabled
             pointer-events: none
+            color: grey
           &.today
-            color: #366AAB
+            color: $black
 
       .datepicker-calendar-years-container
         width: 100%
@@ -190,15 +194,15 @@ $red: #fa5252
           align-items: center
           float: left
           font-size: 14px
-          color: #8E8E8E
+          color: $text-color
           width: calc(100% / 4)
           height: 50px
           text-align: center
           border-radius: 50%
           cursor: pointer
           &:hover, &.selected
-            background: #222628
-            border: 1px solid #366AAB
+            background: $background
+            border: 1px solid $black
             border-radius: 4px
 
       .datepicker-buttons
@@ -218,27 +222,27 @@ $red: #fa5252
           cursor: pointer
           text-align: center
           padding: 5px 10px
-          border: 1px solid #366AAB
+          border: 1px solid $black
           border-radius: 4px
 
           &.u-is-primary
-            background: #366AAB
+            background: $black
             &:active
-              background: #222628
+              background: $background
 
           &.u-is-secondary
-            background: #222628
+            background: $background
             color: #099268
             &:active
-              background: #366AAB
-              color: #DDDDDD
+              background: $black
+              color: $text-color
             &:hover
-              color: #FFFFFF
+              color: #099268
   svg
     display: block
     width: 20px
     height: 20px
     g
-      fill: $white
+      fill: $black
       g
-        fill: $white
+        fill: $black

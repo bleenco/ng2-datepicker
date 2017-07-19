@@ -11,6 +11,7 @@ export class AppComponent {
   options: DatePickerOptions;
 
   constructor() {
+
     this.options = new DatePickerOptions();
   }
 }
