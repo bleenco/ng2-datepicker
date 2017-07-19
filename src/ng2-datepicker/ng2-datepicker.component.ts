@@ -98,6 +98,7 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 
 
 @Component({
+  moduleId: module.id,
   selector: 'ng2-datepicker',
   templateUrl: './ng2-datepicker.component.html',
   styleUrls: ['./ng2-datepicker.component.sass'],
