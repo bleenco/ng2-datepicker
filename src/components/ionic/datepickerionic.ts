@@ -7,13 +7,12 @@ import { BaseSelect } from '../../selections/base.select';
 
 import { CalendarDay } from '../../models';
 
-import { extendConfig } from '../../config_helpers';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'datepicker-ionic',
   templateUrl: 'ionic.component.html',
-  styleUrls: ['ionic.css'],
+  styleUrls: ['ionic.scss'],
   inputs: ['class', 'expanded', 'opened', 'viewFormat'],
   providers: [
     {
