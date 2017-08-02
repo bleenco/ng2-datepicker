@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer, ChangeDetectorRef, Optional } from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer, ChangeDetectorRef, Optional, ChangeDetectionStrategy} from '@angular/core';
 
 import moment from 'moment';
 
@@ -8,23 +8,23 @@ import { BaseSelect } from '../../selections/base.select';
 import { CalendarDay } from '../../models';
 
 import { extendConfig } from '../../config_helpers';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
-@Component( DatePickerIonicComponent.extendConfig({
-  selector: 'datepicker-ionic'
-}, DatePickerIonicComponent))
+@Component({
+  selector: 'datepicker-ionic',
+  templateUrl: 'ionic.component.html',
+  styleUrls: ['ionic.css'],
+  inputs: ['class', 'expanded', 'opened', 'viewFormat'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: DatePickerIonicComponent,
+      multi: true,
+    },
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
 export class DatePickerIonicComponent extends DatePickerTemplate<BaseSelect<any>, any> implements OnInit {
-
-  static extendConfig(config: Component, componentClass: Function) {
-    return extendConfig(
-      super.extendConfig({
-        templateUrl: './ionic.component.html',
-        styleUrls: ['ionic.css'],
-        inputs: ['class', 'expanded', 'opened', 'viewFormat']
-      }, componentClass),
-      config
-    );
-  }
-
   static CONTAINER_CLASS = 'ui-kit-calendar-container';
 
   private _class = DatePickerIonicComponent.CONTAINER_CLASS;

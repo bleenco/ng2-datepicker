@@ -13,7 +13,7 @@ export interface Month {
 }
 
 export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements ControlValueAccessor {
-  static extendConfig(config: Component, componentClass: Function) {
+  static extendConfig(config: Component, componentClass: Function, ) {
     return extendConfig({
       //we could auto-generate it using gulp or something
       inputs: ['locale', 'showSixWeek'],
@@ -29,7 +29,7 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
 
     //with global locale we can call weekdaysShort() with a boolean to get array in locale order
     //unfortunately we can't for local locale, must do it ourselves.
-    let localeData = this.applyLocale( moment() ).localeData()
+    let localeData = this.applyLocale( moment() ).localeData();
     let weekdays = localeData.weekdaysShort();
                                                            // typings not up to date
     this.weekDaysName = weekdays.concat(weekdays.splice(0, (<any>localeData).firstDayOfWeek()))
@@ -114,15 +114,6 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     return date;
   }
 
-  /**
-   * Generate an Array of CalendarDay representing a month to display,
-   * with extra days from previous and next month to get plain weeks.
-   * @param  {number}        month
-   * @param  {number}        year
-   * @param  {boolean}       showSixWeek true if we should always returns 6 weeks,
-   * this will avoid calendar to change size depending on month displayed.
-   * @return {CalendarDay[]}             Array of CalendarDay representing a month to display
-   */
   private generateCalendarDays(date: moment.Moment): CalendarDay[] {
     let today = moment();
 
