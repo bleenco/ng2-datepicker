@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 import { BaseSelect } from '../selections/base.select';
 import { CalendarDay } from '../models';
