@@ -1,22 +1,20 @@
-import { Component, Input, ElementRef, OnInit, Renderer, ChangeDetectorRef, Optional } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer, ChangeDetectorRef, Optional } from '@angular/core';
 
 import moment from 'moment';
 
 import { DatePickerTemplate } from '../datepicker.template';
 import { BaseSelect } from '../../selections/base.select';
-import { MultiSelectDirective } from '../../selections/multi.select';
-import { RangeSelectDirective } from '../../selections/range.select';
 
 import { CalendarDay } from '../../models';
 
-import { extendConfig, formProvider } from '../../config_helpers';
+import { extendConfig } from '../../config_helpers';
 
 @Component( DatePickerIonicComponent.extendConfig({
   selector: 'datepicker-ionic'
 }, DatePickerIonicComponent))
 export class DatePickerIonicComponent extends DatePickerTemplate<BaseSelect<any>, any> implements OnInit {
 
-  static extendConfig(config: Component, componentClass: Function, ...a: any[]) {
+  static extendConfig(config: Component, componentClass: Function) {
     return extendConfig(
       super.extendConfig({
         templateUrl: './ionic.component.html',

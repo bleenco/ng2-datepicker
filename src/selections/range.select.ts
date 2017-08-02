@@ -1,8 +1,7 @@
-import { Directive, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
+import { Directive, OnChanges, SimpleChanges } from '@angular/core';
 import moment from 'moment';
 
 import { BaseSelect, isSameDay } from './base.select';
-import { DateState } from '../models';
 import { MomentPipe } from '../pipes/moment';
 
 export interface RangeDate {

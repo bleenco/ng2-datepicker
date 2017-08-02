@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
 import moment from 'moment';
@@ -13,14 +13,7 @@ export interface Month {
 }
 
 export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements ControlValueAccessor {
-
-   /**
-   * Extend the base configuration needed by @Component
-   * @param {Component} config           subclass configuration
-   * @param {any[]}     ...a             useless just to please compiler if subclass wants to add parameter
-   */
-  //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
-  static extendConfig(config: Component, componentClass: Function, ...a: any[]) {
+  static extendConfig(config: Component, componentClass: Function) {
     return extendConfig({
       //we could auto-generate it using gulp or something
       inputs: ['locale', 'showSixWeek'],

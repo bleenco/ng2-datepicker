@@ -2,7 +2,6 @@ import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import moment from 'moment';
 
 import { BaseSelect, isSameDay } from './base.select';
-import { DateState } from '../models';
 import { MomentPipe } from '../pipes/moment';
 
 @Directive(BaseSelect.extendConfig({
