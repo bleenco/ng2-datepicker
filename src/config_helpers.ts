@@ -1,6 +1,6 @@
 import { Component, Directive } from '@angular/core';
 
-function concatArr(defaultArr, newArr) {
+export function concatArr(defaultArr, newArr) {
   return defaultArr ?
           (newArr ? defaultArr.concat(newArr) : defaultArr) :
           newArr;
