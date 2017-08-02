@@ -60,7 +60,7 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     return this.months[0];
   }
 
-  constructor( protected cd: ChangeDetectorRef, protected select: T ) {
+  constructor( protected cd: ChangeDetectorRef, public select: T ) {
     if (!select)
       throw 'No SelectDirective specified. DatePicker must be coupled with a SelectDirective';
 
