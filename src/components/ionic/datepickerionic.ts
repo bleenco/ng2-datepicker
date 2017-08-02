@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer, ChangeDetectorRef, Optional, ChangeDetectionStrategy} from '@angular/core';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 import { DatePickerTemplate } from '../datepicker.template';
 import { BaseSelect } from '../../selections/base.select';

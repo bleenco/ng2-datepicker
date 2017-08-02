@@ -1,6 +1,6 @@
 import { Directive, EventEmitter, DoCheck } from '@angular/core';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 import { DateState } from '../models';
 import { extendDirConfig, selectProvider } from '../config_helpers';
