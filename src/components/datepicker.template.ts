@@ -1,7 +1,7 @@
-import { Component, Input, SimpleChanges, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 import { BaseSelect } from '../selections/base.select';
 import { CalendarDay } from '../models';
@@ -13,14 +13,7 @@ export interface Month {
 }
 
 export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements ControlValueAccessor {
-
-   /**
-   * Extend the base configuration needed by @Component
-   * @param {Component} config           subclass configuration
-   * @param {any[]}     ...a             useless just to please compiler if subclass wants to add parameter
-   */
-  //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
-  static extendConfig(config: Component, componentClass: Function, ...a: any[]) {
+  static extendConfig(config: Component, componentClass: Function, ) {
     return extendConfig({
       //we could auto-generate it using gulp or something
       inputs: ['locale', 'showSixWeek'],
@@ -36,7 +29,7 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
 
     //with global locale we can call weekdaysShort() with a boolean to get array in locale order
     //unfortunately we can't for local locale, must do it ourselves.
-    let localeData = this.applyLocale( moment() ).localeData()
+    let localeData = this.applyLocale( moment() ).localeData();
     let weekdays = localeData.weekdaysShort();
                                                            // typings not up to date
     this.weekDaysName = weekdays.concat(weekdays.splice(0, (<any>localeData).firstDayOfWeek()))
@@ -67,7 +60,7 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     return this.months[0];
   }
 
-  constructor( protected cd: ChangeDetectorRef, protected select: T ) {
+  constructor( protected cd: ChangeDetectorRef, public select: T ) {
     if (!select)
       throw 'No SelectDirective specified. DatePicker must be coupled with a SelectDirective';
 
@@ -121,15 +114,6 @@ export abstract class DatePickerTemplate<T extends BaseSelect<V>, V> implements 
     return date;
   }
 
-  /**
-   * Generate an Array of CalendarDay representing a month to display,
-   * with extra days from previous and next month to get plain weeks.
-   * @param  {number}        month
-   * @param  {number}        year
-   * @param  {boolean}       showSixWeek true if we should always returns 6 weeks,
-   * this will avoid calendar to change size depending on month displayed.
-   * @return {CalendarDay[]}             Array of CalendarDay representing a month to display
-   */
   private generateCalendarDays(date: moment.Moment): CalendarDay[] {
     let today = moment();
 

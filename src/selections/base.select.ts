@@ -1,19 +1,11 @@
-import { Directive, Input, Output, EventEmitter, DoCheck, ChangeDetectionStrategy } from '@angular/core';
+import { Directive, EventEmitter, DoCheck } from '@angular/core';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 import { DateState } from '../models';
 import { extendDirConfig, selectProvider } from '../config_helpers';
 
 export abstract class BaseSelect<T> implements DoCheck {
-
-  /**
-   * Extend the base configuration needed by @Directive
-   * @param {Directive} config           subclass configuration
-   * @param {Function}  directiveClasses subclass
-   * @param {any[]}     ...a             useless just to please compiler if subclass wants to add parameter
-   */
-  //TODO the ...a trick works to keep compiler quiet but this will be transpiled into unseless code
   static extendConfig(config: Directive, directiveClasses: Function, ...a: any[]) {
     return extendDirConfig({
       //we could auto-generate it using gulp or something
@@ -109,7 +101,7 @@ export abstract class BaseSelect<T> implements DoCheck {
    * @return {moment.Moment}      A date corresponding to a day with all time unit to 0.
    */
   protected getDay(date: moment.Moment): moment.Moment {
-    return date ? moment([ date.year, date.month, date.date]) : null;
+    return date ? moment([date.year(), date.month(), date.date()]) : null;
   }
 
   /**

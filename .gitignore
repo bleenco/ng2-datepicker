@@ -12,3 +12,4 @@ dist/
 #IDE
 *.sublime-workspace
 *.sublime-project
+.idea/
