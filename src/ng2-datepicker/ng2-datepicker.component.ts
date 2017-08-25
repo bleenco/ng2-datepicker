@@ -116,10 +116,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   years: number[];
   yearPicker: boolean;
   scrollOptions: SlimScrollOptions;
-  nameOfweekday(index: number): string{
-    let locale = (this.options && this.options.locale)? this.options.locale : "en";
-    let additinal = (this.options && this.options.firstWeekdaySunday)?6:0;
-    return moment("2013W06" + ( (index + additinal) % 7 + 1 ) ).lang(locale).format("dd");
+  nameOfweekday(index: number): string {
+    let locale = (this.options && this.options.locale) ? this.options.locale : "en";
+    let additinal = (this.options && this.options.firstWeekdaySunday) ? 6 : 0;
+    return moment("2013W06" + ((index + additinal) % 7 + 1)).lang(locale).format("dd");
   }
 
   minDate: moment.Moment | any;
@@ -169,6 +169,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     if (!date) { return; }
     this.date = date;
     this.onChangeCallback(date);
+    this.onTouchedCallback();
   }
 
   ngOnInit() {
@@ -243,6 +244,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
         }
       });
     }
+  }
+
+  onInputBlur($event): void {
+    this.onTouchedCallback();
   }
 
   generateCalendar() {
