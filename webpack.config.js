@@ -67,7 +67,7 @@ module.exports = function (options, webpackOptions) {
     devServer: {
       historyApiFallback: true,
       port: 8000,
-      open: true,
+      open: typeof options.noOpen !== 'undefined' ? false : true,
       hot: false,
       inline: true,
       stats: {

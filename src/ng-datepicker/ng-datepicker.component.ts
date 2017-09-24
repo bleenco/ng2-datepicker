@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import {
   startOfMonth,
@@ -77,7 +77,7 @@ export class NgDatepickerComponent implements OnInit, OnChanges {
     this.onChangeCallback(this.innerValue);
   }
 
-  constructor() {
+  constructor(private elementRef: ElementRef) {
     this.scrollOptions = {
       barBackground: '#DFE3E9',
       gridBackground: '#FFFFFF',
@@ -212,5 +212,21 @@ export class NgDatepickerComponent implements OnInit, OnChanges {
 
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  @HostListener('document:click', ['$event']) private onBlur(e: MouseEvent) {
+    if (!this.isOpened) {
+      return;
+    }
+
+    const input = this.elementRef.nativeElement.querySelector('.ngx-datepicker-input');
+    if (e.target === input || input.contains(<any>e.target)) {
+      return;
+    }
+
+    const container = this.elementRef.nativeElement.querySelector('.ngx-datepicker-calendar-container');
+    if (container && container !== e.target && !container.contains((<any>e.target))) {
+      this.close();
+    }
   }
 }
