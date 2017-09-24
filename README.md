@@ -1,73 +1,78 @@
 # ng2-datepicker
-Angular2 Datepicker Component
 
-***ng2-datepicker*** is a datepicker component for Angular2.
+Angular 2+ Simple and minimal datepicker component
 
-## Demo
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/1796022/30781709-624eddc2-a124-11e7-88b7-537af535c23b.png" width="300">
+</p>
 
-[http://ng2-datepicker.jankuri.com](http://ng2-datepicker.jankuri.com)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/1796022/30781711-666e5e5a-a124-11e7-9077-59e8eb7d6b03.png" width="300">
+</p>
 
-Looking for a date range picker? Check this one: [http://ng-daterangepicker.jankuri.com](http://ng-daterangepicker.jankuri.com)
+## Installation
 
-## Installation:
+1. Install package from `npm`.
 
-Install ng2-datepicker via `npm`
-
-````shell
+```sh
 npm install ng2-datepicker --save
-````
-
-## Integration
-
-```ts
-// app.module.ts
-import { DatePickerModule } from 'ng2-datepicker';
-
-@NgModule({
-  ...
-  imports: [ DatePickerModule ]
-  ...
-})
-export class AppModule { }
-
-// app.component.ts
-import { Component } from '@angular/core';
-import { DatePickerOptions, DateModel } from 'ng2-datepicker';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html'
-})
-export class AppComponent {
-  date: DateModel;
-  options: DatePickerOptions;
-
-  constructor() {
-    this.options = new DatePickerOptions();
-  }
-}
-
-// app.component.html
-<ng2-datepicker [options]="options" [(ngModel)]="date"></ng2-datepicker>
 ```
 
-For more info about options please see [this](https://github.com/jkuri/ng2-datepicker/blob/master/src/ng2-datepicker/ng2-datepicker.component.ts#L41-L53).
+2. Include NgDatepickerModule into your application.
+
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgDatepickerModule } from 'ng2-datepicker';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    NgDatepickerModule
+  ],
+  declarations: [ AppComponent ],
+  exports: [ AppComponent ]
+})
+export class AppModule {}
+```
+
+## Options
+
+```ts
+import { DatepickerOptions } from 'ng2-datepicker';
+
+options: DatepickerOptions = {
+  minYear: 1970,
+  maxYear: 2030,
+  displayFormat: 'MMM D[,] YYYY',
+  barTitleFormat: 'MMMM YYYY',
+  firstCalendarDay: 0; // 0 - Sunday, 1 - Monday
+};
+```
+
+For available `format` options check out [here](https://date-fns.org/docs/format).
 
 ## Run Included Demo
 
-```shell
-git clone https://github.com/jkuri/ng2-datepicker.git --depth 1
+1. Clone this repository
+
+```sh
+git clone https://github.com/jkuri/ng2-datepicker.git
 cd ng2-datepicker
-npm install
-npm start
 ```
 
-## AoT Library Build
+2. Install packages
 
-```shell
-npm run build:lib
+```sh
+npm install
+```
+
+3. Run Demo
+
+```sh
+npm start
 ```
 
 ## Licence
 
-This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
+MIT
