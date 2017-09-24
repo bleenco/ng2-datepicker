@@ -2,6 +2,8 @@
 
 Angular 2+ Simple and minimal datepicker component
 
+[![AbstruseCI](https://abstruse.bleenco.io/badge/6)](https://abstruse.bleenco.io/repo/6)
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/1796022/30781709-624eddc2-a124-11e7-88b7-537af535c23b.png" width="300">
 </p>
