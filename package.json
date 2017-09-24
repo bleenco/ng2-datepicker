@@ -28,7 +28,7 @@
     "prebuild:aot": "npm run clean",
     "build:aot": "webpack --env.dev --env.aot --progress --hide-modules",
     "prebuild:prod": "npm run clean",
-    "build:prod": "webpack --env.dev --env.aot --progress --hide-modules -p",
+    "build:prod": "webpack --env.prod --env.aot --progress --hide-modules -p",
     "test": "karma start",
     "pretest:e2e": "webdriver-manager update -- --standalone",
     "test:e2e": "protractor ./protractor.conf.js",

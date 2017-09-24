@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
     "noImplicitAny": true,
@@ -22,5 +22,8 @@
   ],
   "angularCompilerOptions": {
     "skipMetadataEmit": true
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "silent": true
   }
 }
