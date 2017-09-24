@@ -225,7 +225,7 @@ export class NgDatepickerComponent implements OnInit, OnChanges {
     }
 
     const container = this.elementRef.nativeElement.querySelector('.ngx-datepicker-calendar-container');
-    if (container && container !== e.target && !container.contains((<any>e.target))) {
+    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit')) {
       this.close();
     }
   }

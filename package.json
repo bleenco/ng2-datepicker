@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "bundles/ng2-datepicker.umd.js",
   "module": "lib/index.js",
   "esnext": "lib/index.js",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/jkuri/ng2-datepicker#readme",
   "scripts": {
-    "clean": "rimraf dist lib bundles ./**/*.ngsummary.*",
+    "clean": "rimraf dist lib bundles ./**/*.ngsummary.* ./**/*.ngfactory.* ./**/*.ngstyle.*",
     "prestart": "npm run clean",
     "start": "webpack-dev-server --env.dev --env.serve --progress --hot",
     "start:noopen": "webpack-dev-server --env.dev --env.serve --env.noOpen",
