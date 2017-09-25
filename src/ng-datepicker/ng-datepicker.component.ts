@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, HostListener } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   startOfMonth,
   endOfMonth,
-  addDays,
   addMonths,
   subMonths,
   setYear,
@@ -214,7 +213,7 @@ export class NgDatepickerComponent implements OnInit, OnChanges {
     this.onTouchedCallback = fn;
   }
 
-  @HostListener('document:click', ['$event']) private onBlur(e: MouseEvent) {
+  @HostListener('document:click', ['$event']) onBlur(e: MouseEvent) {
     if (!this.isOpened) {
       return;
     }
