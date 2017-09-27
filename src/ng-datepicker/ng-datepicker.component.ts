@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, HostListener } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, HostListener, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import {
   startOfMonth,
   endOfMonth,
@@ -34,10 +34,10 @@ export interface DatepickerOptions {
   templateUrl: 'ng-datepicker.component.html',
   styleUrls: ['ng-datepicker.component.sass'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: NgDatepickerComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgDatepickerComponent), multi: true }
   ]
 })
-export class NgDatepickerComponent implements OnInit, OnChanges {
+export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input() options: DatepickerOptions;
 
   isOpened: boolean;
@@ -92,7 +92,6 @@ export class NgDatepickerComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.view = 'days';
     this.date = new Date();
-    this.innerValue = new Date();
     this.setOptions();
     this.initDayNames();
     this.init();
@@ -202,7 +201,11 @@ export class NgDatepickerComponent implements OnInit, OnChanges {
   }
 
   writeValue(val: Date) {
-    this.innerValue = val;
+    if (val) {
+      this.innerValue = val;
+      this.displayValue = format(this.innerValue, this.displayFormat);
+      this.barTitle = format(startOfMonth(val), this.barTitleFormat);
+    }
   }
 
   registerOnChange(fn: any) {
