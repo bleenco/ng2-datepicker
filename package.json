@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "main": "bundles/ng2-datepicker.umd.js",
   "repository": {
     "type": "git",

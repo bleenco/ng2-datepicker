@@ -94,7 +94,6 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.date = new Date();
     this.setOptions();
     this.initDayNames();
-    this.init();
     this.initYears();
   }
 
@@ -202,7 +201,9 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
 
   writeValue(val: Date) {
     if (val) {
+      this.date = val;
       this.innerValue = val;
+      this.init();
       this.displayValue = format(this.innerValue, this.displayFormat);
       this.barTitle = format(startOfMonth(val), this.barTitleFormat);
     }
