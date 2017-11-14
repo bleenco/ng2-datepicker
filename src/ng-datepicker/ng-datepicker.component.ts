@@ -109,7 +109,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   setOptions(): void {
-    const today = new Date(); // this const was added because during my tests, I noticed that this.date is undefined
+    const today = new Date(); // this const was added because during my tests, I noticed that at this level this.date is undefined
     this.minYear = this.options && this.options.minYear || getYear(today) - 30;
     this.maxYear = this.options && this.options.maxYear || getYear(today) + 30;
     this.displayFormat = this.options && this.options.displayFormat || 'MMM D[,] YYYY';
