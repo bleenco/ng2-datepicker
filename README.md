@@ -48,7 +48,7 @@ options: DatepickerOptions = {
   maxYear: 2030,
   displayFormat: 'MMM D[,] YYYY',
   barTitleFormat: 'MMMM YYYY',
-  firstCalendarDay: 0; // 0 - Sunday, 1 - Monday
+  firstCalendarDay: 0 // 0 - Sunday, 1 - Monday
 };
 ```
 
