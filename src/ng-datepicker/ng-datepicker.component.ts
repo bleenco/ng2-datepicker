@@ -46,7 +46,11 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
    */
   @Input() headless = false;
 
-  isOpened: boolean;
+  /**
+   * Set datepicker's visibility state
+   */
+  @Input() isOpened = false;
+
   innerValue: Date;
   displayValue: string;
   displayFormat: string;
