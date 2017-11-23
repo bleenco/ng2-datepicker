@@ -38,8 +38,16 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 export class AppModule {}
 ```
 
-## Options
+## Example
+```html
+  <ng-datepicker [(ngModel)]="date" />
+```
 
+## Additional attributes
+* `headless` - Disable datepicker's input
+* `isOpened` - Show or hide datepicker
+
+## Options
 ```ts
 import { DatepickerOptions } from 'ng2-datepicker';
 import * as frLocale from 'date-fns/locale/fr';
