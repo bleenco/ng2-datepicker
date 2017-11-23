@@ -41,6 +41,11 @@ export interface DatepickerOptions {
 export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input() options: DatepickerOptions;
 
+  /**
+   * Disable datepicker's input
+   */
+  @Input() headless = false;
+
   isOpened: boolean;
   innerValue: Date;
   displayValue: string;
@@ -227,6 +232,11 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     const input = this.elementRef.nativeElement.querySelector('.ngx-datepicker-input');
+
+    if (input == null) {
+      return;
+    }
+
     if (e.target === input || input.contains(<any>e.target)) {
       return;
     }

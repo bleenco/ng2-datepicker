@@ -1,5 +1,5 @@
 <div class="ngx-datepicker-container">
-  <input type="text" class="ngx-datepicker-input" [(ngModel)]="displayValue" readonly (click)="toggle()">
+  <input type="text" *ngIf="!headless" class="ngx-datepicker-input" [(ngModel)]="displayValue" readonly (click)="toggle()">
   <div class="ngx-datepicker-calendar-container" *ngIf="isOpened">
     <div class="topbar-container">
       <svg width="7px" height="10px" viewBox="0 0 7 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" (click)="prevMonth()">
