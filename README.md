@@ -44,8 +44,11 @@ export class AppModule {}
 ```
 
 ## Additional attributes
-* `headless` - Disable datepicker's input
-* `isOpened` - Show or hide datepicker
+|Name|Type|Default|Description|
+|:--- |:--- |:--- |:--- |:--- |
+|`headless`|boolean|`false`|Disable datepicker's input|
+|`isOpened`|boolean|`false`|Show or hide datepicker|
+|`position`|string|`bottom-right`|Dropdown position (`bottom-left`, `bottom-right`, `top-left`, `top-right`)|
 
 ## Options
 ```ts
