@@ -51,6 +51,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
    */
   @Input() isOpened = false;
 
+  @Input() isAlwaysOpen = false;
+  
   /**
    * Datepicker dropdown position
    */
@@ -153,7 +155,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.date = this.days[i].date;
     this.value = this.date;
     this.init();
-    this.close();
+    if (!this.isAlwaysOpen)
+        this.close();
   }
 
   setYear(i: number): void {
@@ -217,7 +220,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   toggle(): void {
-    this.isOpened = !this.isOpened;
+    if (!this.isAlwaysOpen) 
+        this.isOpened = !this.isOpened; 
   }
 
   close(): void {
@@ -258,7 +262,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     const container = this.elementRef.nativeElement.querySelector('.ngx-datepicker-calendar-container');
-    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit')) {
+    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit') &&  (!this.isAlwaysOpen)) {
       this.close();
     }
   }
