@@ -17,7 +17,8 @@ import {
   format,
   getDay,
   subDays,
-  setDay
+  setDay, 
+  startOfDay
 } from 'date-fns';
 import { ISlimScrollOptions } from 'ngx-slimscroll';
 
@@ -52,6 +53,10 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   @Input() isOpened = false;
 
   @Input() isAlwaysOpen = false;
+  
+  @Input() busyDays: Date[] = [];
+  
+  @Input() events = [];
   
   /**
    * Datepicker dropdown position
@@ -108,7 +113,13 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       gridMargin: '0'
     };
   }
-
+  
+  addBusyDay(date) {
+      if (this.busyDays.findIndex(busyDay => busyDay.getTime() == startOfDay(date).getTime()) == -1) {
+          this.busyDays.push(startOfDay(date));
+      }
+  }
+  
   ngOnInit() {
     this.view = 'days';
     this.date = new Date();
@@ -119,6 +130,10 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     // Check if 'position' property is correct
     if (this.positions.indexOf(this.position) === -1) {
       throw new TypeError(`ng-datepicker: invalid position property value '${this.position}' (expected: ${this.positions.join(', ')})`);
+    }
+    
+    for (let e of this.events) {
+        this.addBusyDay(e.visitDate);
     }
   }
 
@@ -167,6 +182,11 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   init(): void {
+    this.busyDays = [];
+    for (let e of this.events) {
+        this.addBusyDay(e.visitDate);
+    }
+    
     const start = startOfMonth(this.date);
     const end = endOfMonth(this.date);
 
@@ -178,7 +198,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
         year: getYear(date),
         inThisMonth: true,
         isToday: isToday(date),
-        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue)
+        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue),
+        isBusy: this.busyDays.findIndex(busyDay => busyDay.getTime() == startOfDay(date).getTime()) != -1
       };
     });
 

@@ -44,7 +44,7 @@
         <span class="day-name-unit" *ngFor="let name of dayNames">{{ name }}</span>
       </div>
       <div class="main-calendar-days">
-        <span class="day-unit" *ngFor="let day of days; let i = index;" [ngClass]="{ 'is-prev-month': !day.inThisMonth, 'is-today': day.isToday, 'is-selected': day.isSelected }" (click)="setDate(i)">{{ day.day }}</span>
+        <span class="day-unit" *ngFor="let day of days; let i = index;" [ngClass]="{ 'is-prev-month': !day.inThisMonth, 'is-today': day.isToday, 'is-selected': day.isSelected, 'is-busy': day.isBusy }" (click)="setDate(i)">{{ day.day }}</span>
       </div>
     </div>
     <div class="main-calendar-container" *ngIf="view === 'years'">

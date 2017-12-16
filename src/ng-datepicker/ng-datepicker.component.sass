@@ -6,6 +6,7 @@ $radius: 4px
 $text: #3D495C
 $text-secondary: #A4A9B1
 $color: #1A91EB
+$color-busy: #f5ce1e
 
 .ngx-datepicker-position-bottom-left
   top: 40px
@@ -107,6 +108,10 @@ $color: #1A91EB
             background: $text-secondary
             color: $white
 
+          &.is-busy
+            background: $color-busy
+            color: $white
+            
           &.is-selected
             background: $color
             color: $white
