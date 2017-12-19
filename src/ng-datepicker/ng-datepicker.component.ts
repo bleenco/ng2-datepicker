@@ -28,6 +28,16 @@ export interface DatepickerOptions {
   barTitleFormat?: string; // default: 'MMMM YYYY'
   firstCalendarDay?: number; // 0 = Sunday (default), 1 = Monday, ..
   locale?: object;
+  minDate?: Date;
+  maxDate?: Date;
+}
+
+/**
+ * Internal library helper that helps to check if value is empty
+ * @param value 
+ */
+const isNil = (value) => {
+  return (typeof value === 'undefined') || (value === null);
 }
 
 @Component({
@@ -79,6 +89,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     inThisMonth: boolean;
     isToday: boolean;
     isSelected: boolean;
+    isSelectable: boolean;
   }[];
   locale: object;
 
@@ -163,6 +174,31 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.view = 'days';
   }
 
+  /**
+   * Checks if specified date is in range of min and max dates
+   * @param date 
+   */
+  private isDateSelectable(date: Date): boolean {
+    if (isNil(this.options))
+    {
+      return true;
+    }
+
+    const minDateSet = !isNil(this.options.minDate);
+    const maxDateSet = !isNil(this.options.maxDate);
+    const timestamp = date.valueOf();
+
+    if (minDateSet && (timestamp < this.options.minDate.valueOf())) {
+      return false;
+    }
+
+    if (maxDateSet && (timestamp > this.options.maxDate.valueOf())) {
+      return false;
+    }
+
+    return true;
+  }
+
   init(): void {
     const start = startOfMonth(this.date);
     const end = endOfMonth(this.date);
@@ -175,7 +211,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
         year: getYear(date),
         inThisMonth: true,
         isToday: isToday(date),
-        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue)
+        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue),
+        isSelectable: this.isDateSelectable(date)
       };
     });
 
@@ -188,7 +225,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
         year: getYear(date),
         inThisMonth: false,
         isToday: isToday(date),
-        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue)
+        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue),
+        isSelectable: this.isDateSelectable(date)
       });
     }
 
