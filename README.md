@@ -61,7 +61,9 @@ options: DatepickerOptions = {
   displayFormat: 'MMM D[,] YYYY',
   barTitleFormat: 'MMMM YYYY',
   firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-  locale: frLocale
+  locale: frLocale,
+  minDate: new Date(Date.now()), // Minimal selectable date
+  maxDate: new Date(Date.now())  // Maximal selectable date
 };
 ```
 
