@@ -44,12 +44,17 @@
         <span class="day-name-unit" *ngFor="let name of dayNames">{{ name }}</span>
       </div>
       <div class="main-calendar-days">
-        <span class="day-unit" *ngFor="let day of days; let i = index;" [ngClass]="{ 'is-prev-month': !day.inThisMonth, 'is-today': day.isToday, 'is-selected': day.isSelected }" (click)="setDate(i)">{{ day.day }}</span>
+        <span class="day-unit" *ngFor="let day of days; let i = index;" [ngClass]="{ 'is-prev-month': !day.inThisMonth, 'is-today': day.isToday, 'is-selected': day.isSelected, 'is-busy': day.isBusy }" (click)="setDate(i)">{{ day.day }}</span>
       </div>
     </div>
     <div class="main-calendar-container" *ngIf="view === 'years'">
       <div class="main-calendar-years" slimScroll [options]="scrollOptions">
         <span class="year-unit" *ngFor="let year of years; let i = index;" [ngClass]="{ 'is-selected': year.isThisYear }" (click)="setYear(i)">{{ year.year }}</span>
+      </div>
+    </div>
+    <div class="main-calendar-container" *ngIf="view === 'months'">
+      <div class="main-calendar-months" slimScroll [options]="scrollOptions">
+        <span class="month-unit" *ngFor="let month of months; let i = index;" [ngClass]="{ 'is-selected': month.isThisMonth }" (click)="setMonth(i)">{{ month.month }}</span>
       </div>
     </div>
   </div>

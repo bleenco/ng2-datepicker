@@ -6,6 +6,7 @@ $radius: 4px
 $text: #3D495C
 $text-secondary: #A4A9B1
 $color: #1A91EB
+$color-busy: #f5ce1e
 
 .ngx-datepicker-position-bottom-left
   top: 40px
@@ -81,14 +82,14 @@ $color: #1A91EB
           text-transform: uppercase
           text-align: center
 
-      .main-calendar-days, .main-calendar-years
+      .main-calendar-days, .main-calendar-years, .main-calendar-months
         padding: 15px 0
         width: 100%
         display: inline-block
         max-height: 275px
         overflow: hidden
 
-        .day-unit, .year-unit
+        .day-unit, .year-unit, .month-unit
           width: calc(100% / 7)
           height: 40px
           display: inline-flex
@@ -107,15 +108,19 @@ $color: #1A91EB
             background: $text-secondary
             color: $white
 
+          &.is-busy
+            background: $color-busy
+            color: $white
+            
           &.is-selected
             background: $color
             color: $white
 
-      .main-calendar-years
+      .main-calendar-years, .main-calendar-months
         height: 210px
         display: block
         padding: 0
 
-        .year-unit
+        .year-unit, .month-unit
           width: calc(100% / 3)
           border-radius: 10px

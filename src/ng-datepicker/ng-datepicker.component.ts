@@ -6,6 +6,7 @@ import {
   addMonths,
   subMonths,
   setYear,
+  setMonth,
   eachDay,
   getDate,
   getMonth,
@@ -17,7 +18,8 @@ import {
   format,
   getDay,
   subDays,
-  setDay
+  setDay, 
+  startOfDay
 } from 'date-fns';
 import { ISlimScrollOptions } from 'ngx-slimscroll';
 
@@ -51,6 +53,12 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
    */
   @Input() isOpened = false;
 
+  @Input() isAlwaysOpen = false;
+  
+  @Input() busyDays: Date[] = [];
+  
+  @Input() events = [];
+  
   /**
    * Datepicker dropdown position
    */
@@ -69,6 +77,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   firstCalendarDay: number;
   view: string;
   years: { year: number; isThisYear: boolean }[];
+  months: { month: string; isThisMonth: boolean }[];
   dayNames: string[];
   scrollOptions: ISlimScrollOptions;
   days: {
@@ -106,17 +115,28 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       gridMargin: '0'
     };
   }
-
+  
+  addBusyDay(date) {
+      if (this.busyDays.findIndex(busyDay => busyDay.getTime() == startOfDay(date).getTime()) == -1) {
+          this.busyDays.push(startOfDay(date));
+      }
+  }
+  
   ngOnInit() {
     this.view = 'days';
     this.date = new Date();
     this.setOptions();
     this.initDayNames();
     this.initYears();
+    this.initMonths();
 
     // Check if 'position' property is correct
     if (this.positions.indexOf(this.position) === -1) {
       throw new TypeError(`ng-datepicker: invalid position property value '${this.position}' (expected: ${this.positions.join(', ')})`);
+    }
+    
+    for (let e of this.events) {
+        this.addBusyDay(e.visitDate);
     }
   }
 
@@ -126,12 +146,13 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       this.initDayNames();
       this.init();
       this.initYears();
+      this.initMonths();
     }
   }
 
   setOptions(): void {
     const today = new Date(); // this const was added because during my tests, I noticed that at this level this.date is undefined
-    this.minYear = this.options && this.options.minYear || getYear(today) - 30;
+    this.minYear = this.options && this.options.minYear || getYear(today) - 5;
     this.maxYear = this.options && this.options.maxYear || getYear(today) + 30;
     this.displayFormat = this.options && this.options.displayFormat || 'MMM D[,] YYYY';
     this.barTitleFormat = this.options && this.options.barTitleFormat || 'MMMM YYYY';
@@ -153,17 +174,30 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.date = this.days[i].date;
     this.value = this.date;
     this.init();
-    this.close();
+    if (!this.isAlwaysOpen)
+        this.close();
   }
 
   setYear(i: number): void {
     this.date = setYear(this.date, this.years[i].year);
     this.init();
     this.initYears();
+    this.view = 'months';
+  }
+  
+  setMonth(i: number): void {
+    this.date = setMonth(this.date, i);
+    this.init();
+    this.initMonths();
     this.view = 'days';
   }
 
   init(): void {
+    this.busyDays = [];
+    for (let e of this.events) {
+        this.addBusyDay(e.visitDate);
+    }
+    
     const start = startOfMonth(this.date);
     const end = endOfMonth(this.date);
 
@@ -175,7 +209,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
         year: getYear(date),
         inThisMonth: true,
         isToday: isToday(date),
-        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue)
+        isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue),
+        isBusy: this.busyDays.findIndex(busyDay => busyDay.getTime() == startOfDay(date).getTime()) != -1
       };
     });
 
@@ -202,6 +237,14 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       return { year: year, isThisYear: year === getYear(this.date) };
     });
   }
+  
+  initMonths(): void {
+    this.months = [0,1,2,3,4,5,6,7,8,9,10,11].map(month => {
+      var tempDate = new Date(2010, month, 1);
+      var monthString = format(tempDate,'MMM');
+      return { month: monthString, isThisMonth: month === getMonth(this.date) };
+    });    
+  }
 
   initDayNames(): void {
     this.dayNames = [];
@@ -213,11 +256,18 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   toggleView(): void {
-    this.view = this.view === 'days' ? 'years' : 'days';
+    if (this.view==='days') { 
+        this.view = 'months';
+    } else if (this.view==='months') {
+        this.view = 'years';
+    } else if (this.view==='years') {
+        this.view = 'days';    
+    } 
   }
 
   toggle(): void {
-    this.isOpened = !this.isOpened;
+    if (!this.isAlwaysOpen) 
+        this.isOpened = !this.isOpened; 
   }
 
   close(): void {
@@ -258,7 +308,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     const container = this.elementRef.nativeElement.querySelector('.ngx-datepicker-calendar-container');
-    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit')) {
+    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit') &&  (!this.isAlwaysOpen)) {
       this.close();
     }
   }
