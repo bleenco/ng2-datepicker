@@ -82,14 +82,14 @@ $color-busy: #f5ce1e
           text-transform: uppercase
           text-align: center
 
-      .main-calendar-days, .main-calendar-years
+      .main-calendar-days, .main-calendar-years, .main-calendar-months
         padding: 15px 0
         width: 100%
         display: inline-block
         max-height: 275px
         overflow: hidden
 
-        .day-unit, .year-unit
+        .day-unit, .year-unit, .month-unit
           width: calc(100% / 7)
           height: 40px
           display: inline-flex
@@ -116,11 +116,11 @@ $color-busy: #f5ce1e
             background: $color
             color: $white
 
-      .main-calendar-years
+      .main-calendar-years, .main-calendar-months
         height: 210px
         display: block
         padding: 0
 
-        .year-unit
+        .year-unit, .month-unit
           width: calc(100% / 3)
           border-radius: 10px

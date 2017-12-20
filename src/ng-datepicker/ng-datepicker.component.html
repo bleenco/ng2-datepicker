@@ -52,5 +52,10 @@
         <span class="year-unit" *ngFor="let year of years; let i = index;" [ngClass]="{ 'is-selected': year.isThisYear }" (click)="setYear(i)">{{ year.year }}</span>
       </div>
     </div>
+    <div class="main-calendar-container" *ngIf="view === 'months'">
+      <div class="main-calendar-months" slimScroll [options]="scrollOptions">
+        <span class="month-unit" *ngFor="let month of months; let i = index;" [ngClass]="{ 'is-selected': month.isThisMonth }" (click)="setMonth(i)">{{ month.month }}</span>
+      </div>
+    </div>
   </div>
 </div>
