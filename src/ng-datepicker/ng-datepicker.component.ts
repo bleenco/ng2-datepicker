@@ -34,11 +34,11 @@ export interface DatepickerOptions {
 
 /**
  * Internal library helper that helps to check if value is empty
- * @param value 
+ * @param value
  */
-const isNil = (value) => {
+const isNil = (value: Date | DatepickerOptions) => {
   return (typeof value === 'undefined') || (value === null);
-}
+};
 
 @Component({
   selector: 'ng-datepicker',
@@ -176,7 +176,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
 
   /**
    * Checks if specified date is in range of min and max dates
-   * @param date 
+   * @param date
    */
   private isDateSelectable(date: Date): boolean {
     if (isNil(this.options))
