@@ -179,8 +179,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
    * @param date
    */
   private isDateSelectable(date: Date): boolean {
-    if (isNil(this.options))
-    {
+    if (isNil(this.options)) {
       return true;
     }
 
@@ -230,7 +229,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       });
     }
 
-    this.displayValue = format(this.innerValue, this.displayFormat, this.locale);
+    this.displayValue = this.innerValue ? format(this.innerValue, this.displayFormat, this.locale) : '';
     this.barTitle = format(start, this.barTitleFormat, this.locale);
   }
 
