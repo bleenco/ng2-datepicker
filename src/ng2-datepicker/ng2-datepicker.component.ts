@@ -318,6 +318,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       };
       this.yearPicker = false;
       this.generateCalendar();
+      this.outputEvents.emit({ type: 'dateChanged', data: this.value });
     });
   }
 
