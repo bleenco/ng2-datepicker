@@ -66,6 +66,11 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
    */
   @Input() position = 'bottom-right';
 
+  /**
+   * inline to keep picker open
+   */
+  @Input() inline = false;
+
   private positions = ['bottom-left', 'bottom-right', 'top-left', 'top-right'];
 
   innerValue: Date;
@@ -254,11 +259,11 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   toggle(): void {
-    this.isOpened = !this.isOpened;
+    this.isOpened = !this.isOpened || this.inline;
   }
 
   close(): void {
-    this.isOpened = false;
+    this.isOpened = this.inline;
   }
 
   writeValue(val: Date) {
