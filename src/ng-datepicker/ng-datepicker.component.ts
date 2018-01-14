@@ -26,6 +26,7 @@ export interface DatepickerOptions {
   maxYear?: number; // default: current year + 30
   displayFormat?: string; // default: 'MMM D[,] YYYY'
   barTitleFormat?: string; // default: 'MMMM YYYY'
+  barTitleIfEmpty?: string;
   firstCalendarDay?: number; // 0 = Sunday (default), 1 = Monday, ..
   locale?: object;
   minDate?: Date;
@@ -74,6 +75,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   date: Date;
   barTitle: string;
   barTitleFormat: string;
+  barTitleIfEmpty: string;
   minYear: number;
   maxYear: number;
   firstCalendarDay: number;
@@ -146,6 +148,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.maxYear = this.options && this.options.maxYear || getYear(today) + 30;
     this.displayFormat = this.options && this.options.displayFormat || 'MMM D[,] YYYY';
     this.barTitleFormat = this.options && this.options.barTitleFormat || 'MMMM YYYY';
+    this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select a date';
     this.firstCalendarDay = this.options && this.options.firstCalendarDay || 0;
     this.locale = this.options && { locale: this.options.locale } || {};
   }
@@ -230,7 +233,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     this.displayValue = this.innerValue ? format(this.innerValue, this.displayFormat, this.locale) : '';
-    this.barTitle = format(start, this.barTitleFormat, this.locale);
+    this.barTitle =  this.innerValue ? format(start, this.barTitleFormat, this.locale) : this.barTitleIfEmpty;
   }
 
   initYears(): void {
