@@ -26,7 +26,7 @@ module.exports = function (options, webpackOptions) {
       modules: [nodeModules, 'node_modules']
     },
     output: {
-      path: root('dist')
+      path: root('dist-app')
     },
     module: {
       rules: [
@@ -43,14 +43,14 @@ module.exports = function (options, webpackOptions) {
 
   config = webpackMerge({}, config, {
     output: {
-      path: root('dist'),
+      path: root('dist-app'),
       filename: '[name].bundle.js',
       chunkFilename: '[id].chunk.js'
     },
     plugins: [
       new html({
         template: root('src/index.html'),
-        output: root('dist'),
+        output: root('dist-app'),
         chunksSortMode: sort = (left, right) => {
           let leftIndex = entryPoints.indexOf(left.names[0]);
           let rightindex = entryPoints.indexOf(right.names[0]);
