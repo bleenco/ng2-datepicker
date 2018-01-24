@@ -26,6 +26,7 @@ export interface DatepickerOptions {
   maxYear?: number; // default: current year + 30
   displayFormat?: string; // default: 'MMM D[,] YYYY'
   barTitleFormat?: string; // default: 'MMMM YYYY'
+  dayNamesFormat?: string; // default 'ddd'
   barTitleIfEmpty?: string;
   firstCalendarDay?: number; // 0 = Sunday (default), 1 = Monday, ..
   locale?: object;
@@ -82,6 +83,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   view: string;
   years: { year: number; isThisYear: boolean }[];
   dayNames: string[];
+  dayNamesFormat: string;
   scrollOptions: ISlimScrollOptions;
   days: {
     date: Date;
@@ -148,6 +150,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.maxYear = this.options && this.options.maxYear || getYear(today) + 30;
     this.displayFormat = this.options && this.options.displayFormat || 'MMM D[,] YYYY';
     this.barTitleFormat = this.options && this.options.barTitleFormat || 'MMMM YYYY';
+    this.dayNamesFormat = this.options && this.options.dayNamesFormat || 'ddd';
     this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select a date';
     this.firstCalendarDay = this.options && this.options.firstCalendarDay || 0;
     this.locale = this.options && { locale: this.options.locale } || {};
@@ -248,7 +251,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     const start = this.firstCalendarDay;
     for (let i = start; i <= 6 + start; i++) {
       const date = setDay(new Date(), i);
-      this.dayNames.push(format(date, 'ddd', this.locale));
+      this.dayNames.push(format(date, this.dayNamesFormat, this.locale));
     }
   }
 
