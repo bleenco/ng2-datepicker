@@ -60,6 +60,7 @@ options: DatepickerOptions = {
   maxYear: 2030,
   displayFormat: 'MMM D[,] YYYY',
   barTitleFormat: 'MMMM YYYY',
+  dayNamesFormat: 'dd',
   firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
   locale: frLocale,
   minDate: new Date(Date.now()), // Minimal selectable date
