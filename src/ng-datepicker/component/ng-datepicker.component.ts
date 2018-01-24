@@ -221,7 +221,11 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       };
     });
 
-    for (let i = 1; i <= getDay(start) - this.firstCalendarDay; i++) {
+    const tmp = getDay(start) - this.firstCalendarDay;
+
+    const prevDays = tmp < 0 ? 7 - this.firstCalendarDay : tmp;
+
+    for (let i = 1; i <= prevDays; i++) {
       const date = subDays(start, i);
       this.days.unshift({
         date: date,
