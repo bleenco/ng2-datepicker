@@ -4,7 +4,7 @@ import {
   TestBed,
   ComponentFixture
 } from '@angular/core/testing';
-import { NgDatepickerModule } from '../../ng-datepicker';
+import { NgDatepickerModule } from '../../ng-datepicker/module/ng-datepicker.module';
 import { AppHomeComponent } from './app-home.component';
 
 describe(`App`, () => {
