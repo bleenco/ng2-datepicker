@@ -65,7 +65,8 @@ options: DatepickerOptions = {
   locale: frLocale,
   minDate: new Date(Date.now()), // Minimal selectable date
   maxDate: new Date(Date.now()),  // Maximal selectable date
-  barTitleIfEmpty: 'Click to select a date'
+  barTitleIfEmpty: 'Click to select a date',
+  placeholder: 'Enter Date'
 };
 ```
 
