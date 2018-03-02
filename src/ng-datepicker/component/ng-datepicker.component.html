@@ -1,5 +1,5 @@
 <div class="ngx-datepicker-container">
-  <input type="text" *ngIf="!headless" class="ngx-datepicker-input" [(ngModel)]="displayValue" readonly (click)="toggle()">
+  <input type="text" *ngIf="!headless" class="ngx-datepicker-input" [(ngModel)]="displayValue" placeholder="{{ placeholder }}" readonly (click)="toggle()">
   <ng-content></ng-content>
   <div class="ngx-datepicker-calendar-container ngx-datepicker-position-{{position}}" *ngIf="isOpened">
     <div class="topbar-container">

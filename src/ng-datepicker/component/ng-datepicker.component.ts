@@ -32,6 +32,7 @@ export interface DatepickerOptions {
   locale?: object;
   minDate?: Date;
   maxDate?: Date;
+  placeholder?: string;
 }
 
 /**
@@ -96,6 +97,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     isSelectable: boolean;
   }[];
   locale: object;
+  placeholder: string;
 
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
@@ -154,6 +156,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select a date';
     this.firstCalendarDay = this.options && this.options.firstCalendarDay || 0;
     this.locale = this.options && { locale: this.options.locale } || {};
+    this.placeholder = this.options && this.options.placeholder || 'Enter Date';
   }
 
   nextMonth(): void {
