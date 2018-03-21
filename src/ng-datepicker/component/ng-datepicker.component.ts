@@ -130,6 +130,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.setOptions();
     this.initDayNames();
     this.initYears();
+    this.initYear();
 
     // Check if 'position' property is correct
     if (this.positions.indexOf(this.position) === -1) {
@@ -153,7 +154,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.displayFormat = this.options && this.options.displayFormat || 'MMM D[,] YYYY';
     this.barTitleFormat = this.options && this.options.barTitleFormat || 'MMMM YYYY';
     this.dayNamesFormat = this.options && this.options.dayNamesFormat || 'ddd';
-    this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select a date';
+    this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select year';
     this.firstCalendarDay = this.options && this.options.firstCalendarDay || 0;
     this.locale = this.options && { locale: this.options.locale } || {};
     this.placeholder = this.options && this.options.placeholder || 'Enter Date';
@@ -259,6 +260,14 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       const date = setDay(new Date(), i);
       this.dayNames.push(format(date, this.dayNamesFormat, this.locale));
     }
+  }
+
+  initYear(): void {
+    this.years.forEach((year, index) => {
+      if(year.isThisYear) {
+        this.setYear(index)
+      }
+    })
   }
 
   toggleView(): void {
