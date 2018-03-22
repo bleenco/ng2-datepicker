@@ -65,14 +65,12 @@ options: DatepickerOptions = {
   locale: frLocale,
   minDate: new Date(Date.now()), // Minimal selectable date
   maxDate: new Date(Date.now()),  // Maximal selectable date
-  barTitleIfEmpty: 'Click to select a date',
+  barTitleIfEmpty: 'Click to select year',
   placeholder: 'Enter Date'
 };
 ```
 
 For available `format` options check out [here](https://date-fns.org/docs/format).
-
-In case you want to initialize with an empty value, just assign null to the model attribute you're storing the date and you can customize the message in the bar with the property `barTitleIfEmpty`.
 
 ## Run Included Demo
 
