@@ -98,6 +98,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }[];
   locale: object;
   placeholder: string;
+  selectedYear: string;
 
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
@@ -243,7 +244,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     this.displayValue = this.innerValue ? format(this.innerValue, this.displayFormat, this.locale) : '';
-    this.barTitle =  this.innerValue ? format(start, this.barTitleFormat, this.locale) : this.barTitleIfEmpty;
+    this.selectedYear =  format(start, this.barTitleFormat, this.locale);
+    this.barTitle =  this.barTitleIfEmpty;
   }
 
   initYears(): void {
@@ -316,7 +318,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     const container = this.elementRef.nativeElement.querySelector('.ngx-datepicker-calendar-container');
-    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit')) {
+    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit') && !(<any>e.target).classList.contains('topbar-title')) {
       this.close();
     }
   }

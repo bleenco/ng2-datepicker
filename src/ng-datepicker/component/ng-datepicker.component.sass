@@ -43,13 +43,15 @@ $color: #1A91EB
 
     .topbar-container
       width: 100%
-      height: 50px
+      height: 70px
       padding: 15px
       border-bottom: 1px solid $border
-      display: flex
-      justify-content: space-between
-      align-items: center
       user-select: none
+
+      .month-year-toggler
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
       svg
         cursor: pointer
@@ -62,6 +64,11 @@ $color: #1A91EB
         font-size: 14px
         font-weight: 600
         cursor: pointer
+      
+      .year-selector-title
+        padding-top: 5px;
+        display: flex;
+        justify-content: space-around;
 
     .main-calendar-container
       width: 100%
