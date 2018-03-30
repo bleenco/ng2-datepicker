@@ -157,12 +157,20 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   nextMonth(): void {
+    let currentDate = this.date;
     this.date = addMonths(this.date, 1);
+    if (this.maxYear < getYear(this.date)) {
+      this.date = currentDate;
+    }
     this.init();
   }
 
   prevMonth(): void {
+    let currentDate = this.date;
     this.date = subMonths(this.date, 1);
+    if (this.minYear > getYear(this.date)) {
+      this.date = currentDate;
+    }
     this.init();
   }
 
@@ -243,7 +251,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   initYears(): void {
-    const range = this.maxYear - this.minYear;
+    const range = (this.maxYear - this.minYear) + 1;
     this.years = Array.from(new Array(range), (x, i) => i + this.minYear).map(year => {
       return { year: year, isThisYear: year === getYear(this.date) };
     });
