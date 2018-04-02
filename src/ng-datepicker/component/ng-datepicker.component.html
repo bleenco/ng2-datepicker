@@ -40,7 +40,7 @@
           </g>
         </svg>
       </div>
-      <p class="topbar-title year-selector-title" (click)="toggleView()" *ngIf="view === 'days'">{{ barTitle }}</p>
+      <p class="topbar-title year-selector-title" (click)="toggleView()" *ngIf="!value && view === 'days'">{{ barTitle }}</p>
     </div>
     <div class="main-calendar-container" *ngIf="view === 'days'">
       <div class="main-calendar-day-names">
