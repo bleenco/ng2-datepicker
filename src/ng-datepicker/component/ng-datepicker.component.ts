@@ -269,6 +269,12 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   close(): void {
     this.isOpened = false;
   }
+  
+  reset(): void {
+    this.date = null;
+    this.innerValue = null;
+    this.init();
+  }
 
   writeValue(val: Date) {
     if (val) {
