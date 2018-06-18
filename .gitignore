@@ -7,3 +7,5 @@ lib/
 *.ngfactory.ts
 *.ngstyle.ts
 *.d.ts
+.ng_pkg_build/
+dist.tgz
