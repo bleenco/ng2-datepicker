@@ -32,6 +32,7 @@ export interface DatepickerOptions {
   locale?: object;
   minDate?: Date;
   maxDate?: Date;
+  placeholder?: string;
 }
 
 /**
@@ -96,6 +97,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     isSelectable: boolean;
   }[];
   locale: object;
+  placeholder: string;
+  selectedYear: string;
 
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
@@ -128,6 +131,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.setOptions();
     this.initDayNames();
     this.initYears();
+    this.initYear();
 
     // Check if 'position' property is correct
     if (this.positions.indexOf(this.position) === -1) {
@@ -151,9 +155,10 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.displayFormat = this.options && this.options.displayFormat || 'MMM D[,] YYYY';
     this.barTitleFormat = this.options && this.options.barTitleFormat || 'MMMM YYYY';
     this.dayNamesFormat = this.options && this.options.dayNamesFormat || 'ddd';
-    this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select a date';
+    this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select year';
     this.firstCalendarDay = this.options && this.options.firstCalendarDay || 0;
     this.locale = this.options && { locale: this.options.locale } || {};
+    this.placeholder = this.options && this.options.placeholder || 'Enter Date';
   }
 
   nextMonth(): void {
@@ -239,7 +244,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     this.displayValue = this.innerValue ? format(this.innerValue, this.displayFormat, this.locale) : '';
-    this.barTitle =  this.innerValue ? format(start, this.barTitleFormat, this.locale) : this.barTitleIfEmpty;
+    this.selectedYear =  format(start, this.barTitleFormat, this.locale);
+    this.barTitle =  this.barTitleIfEmpty;
   }
 
   initYears(): void {
@@ -256,6 +262,14 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       const date = setDay(new Date(), i);
       this.dayNames.push(format(date, this.dayNamesFormat, this.locale));
     }
+  }
+
+  initYear(): void {
+    this.years.forEach((year, index) => {
+      if(year.isThisYear) {
+        this.setYear(index)
+      }
+    })
   }
 
   toggleView(): void {
@@ -310,7 +324,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     const container = this.elementRef.nativeElement.querySelector('.ngx-datepicker-calendar-container');
-    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit')) {
+    if (container && container !== e.target && !container.contains(<any>e.target) && !(<any>e.target).classList.contains('year-unit') && !(<any>e.target).classList.contains('topbar-title')) {
       this.close();
     }
   }

@@ -14,6 +14,6 @@ export class AppComponent {
     locale: enLocale
   };
   constructor() {
-    this.date = new Date();
+    this.date = null;
   }
 }
