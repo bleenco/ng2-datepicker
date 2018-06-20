@@ -9,3 +9,4 @@ lib/
 *.d.ts
 .ng_pkg_build/
 dist.tgz
+/.idea/

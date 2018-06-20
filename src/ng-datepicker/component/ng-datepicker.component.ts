@@ -21,6 +21,8 @@ import {
 } from 'date-fns';
 import { ISlimScrollOptions } from 'ngx-slimscroll';
 
+export type AddClass = string | string[] | { [k: string]: boolean } | null;
+
 export interface DatepickerOptions {
   minYear?: number; // default: current year - 30
   maxYear?: number; // default: current year + 30
@@ -32,7 +34,20 @@ export interface DatepickerOptions {
   locale?: object;
   minDate?: Date;
   maxDate?: Date;
+  /** Placeholder for the input field */
+  placeholder?: string;
+  /** [ngClass] to add to the input field */
+  addClass?: AddClass;
+  /** [ngStyle] to add to the input field */
+  addStyle?: { [k: string]: any } | null;
+  /** ID to assign to the input field */
+  fieldId?: string;
+  /** If false, barTitleIfEmpty will be disregarded and a date will always be shown. Default: true */
+  useEmptyBarTitle?: boolean;
 }
+
+// Counter for calculating the auto-incrementing field ID
+let counter = 0;
 
 /**
  * Internal library helper that helps to check if value is empty
@@ -96,9 +111,19 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     isSelectable: boolean;
   }[];
   locale: object;
+  placeholder: string;
+  addClass: AddClass;
+  addStyle: { [k: string]: any } | null;
+  fieldId: string;
+  useEmptyBarTitle: boolean;
+  disabled: boolean;
 
   private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
+
+  public setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
 
   get value(): Date {
     return this.innerValue;
@@ -144,6 +169,14 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     }
   }
 
+  get defaultFieldId(): string {
+    // Only evaluate and increment if required
+    const value = `datepicker-${counter++}`;
+    Object.defineProperty(this, 'defaultFieldId', {value});
+
+    return value;
+  }
+
   setOptions(): void {
     const today = new Date(); // this const was added because during my tests, I noticed that at this level this.date is undefined
     this.minYear = this.options && this.options.minYear || getYear(today) - 30;
@@ -154,6 +187,11 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select a date';
     this.firstCalendarDay = this.options && this.options.firstCalendarDay || 0;
     this.locale = this.options && { locale: this.options.locale } || {};
+    this.placeholder = this.options && this.options.placeholder || '';
+    this.addClass = this.options && this.options.addClass || {};
+    this.addStyle = this.options && this.options.addStyle || {};
+    this.fieldId = this.options && this.options.fieldId || this.defaultFieldId;
+    this.useEmptyBarTitle = this.options && 'useEmptyBarTitle' in this.options ? this.options.useEmptyBarTitle : true;
   }
 
   nextMonth(): void {
@@ -238,8 +276,15 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       });
     }
 
-    this.displayValue = this.innerValue ? format(this.innerValue, this.displayFormat, this.locale) : '';
-    this.barTitle =  this.innerValue ? format(start, this.barTitleFormat, this.locale) : this.barTitleIfEmpty;
+    if (this.innerValue) {
+      this.displayValue = format(this.innerValue, this.displayFormat, this.locale);
+      this.barTitle = format(start, this.barTitleFormat, this.locale);
+    } else {
+      this.displayValue = '';
+      this.barTitle = this.useEmptyBarTitle ?
+        this.barTitleIfEmpty :
+        format(start || startOfMonth(new Date()), this.barTitleFormat, this.locale);
+    }
   }
 
   initYears(): void {
@@ -270,10 +315,13 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.isOpened = false;
   }
 
-  reset(): void {
+  reset(fireValueChangeEvent = false): void {
     this.date = null;
     this.innerValue = null;
     this.init();
+    if (fireValueChangeEvent && this.onChangeCallback) {
+      this.onChangeCallback(this.innerValue);
+    }
   }
 
   writeValue(val: Date) {
