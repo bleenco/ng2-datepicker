@@ -205,6 +205,9 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   init(): void {
+    if (isNil(this.date)) {
+       this.date = new Date();
+    }
     const start = startOfMonth(this.date);
     const end = endOfMonth(this.date);
 
