@@ -243,8 +243,10 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   init(): void {
-    const start = startOfMonth(this.date);
-    const end = endOfMonth(this.date);
+    // this.date may be null after .reset(); fall back to current date.
+    const actualDate = this.date || new Date();
+    const start = startOfMonth(actualDate);
+    const end = endOfMonth(actualDate);
 
     this.days = eachDay(start, end).map(date => {
       return {
@@ -281,9 +283,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       this.barTitle = format(start, this.barTitleFormat, this.locale);
     } else {
       this.displayValue = '';
-      this.barTitle = this.useEmptyBarTitle ?
-        this.barTitleIfEmpty :
-        format(start || startOfMonth(new Date()), this.barTitleFormat, this.locale);
+      this.barTitle = this.useEmptyBarTitle ? this.barTitleIfEmpty : format(start, this.barTitleFormat, this.locale);
     }
   }
 
