@@ -1,19 +1,11 @@
 <div class="ngx-datepicker-container">
-  <input type="text"
-         *ngIf="!headless"
-         class="ngx-datepicker-input"
-         [(ngModel)]="displayValue"
-         readonly
-         [placeholder]="placeholder"
-         [ngClass]="addClass"
-         [ngStyle]="addStyle"
-         [id]="fieldId"
-         [disabled]="disabled"
-         (click)="toggle()"/>
+  <input type="text" *ngIf="!headless" class="ngx-datepicker-input" [(ngModel)]="displayValue" readonly [placeholder]="placeholder"
+    [ngClass]="addClass" [ngStyle]="addStyle" [id]="fieldId" [disabled]="disabled" (click)="toggle()" />
   <ng-content></ng-content>
   <div class="ngx-datepicker-calendar-container ngx-datepicker-position-{{position}}" *ngIf="isOpened">
     <div class="topbar-container">
-      <svg width="7px" height="10px" viewBox="0 0 7 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" (click)="prevMonth()">
+      <svg width="7px" height="10px" viewBox="0 0 7 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        (click)="prevMonth()">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g transform="translate(-923.000000, -1882.000000)" fill="#CED0DA">
             <g transform="translate(80.000000, 1361.000000)">
@@ -31,7 +23,8 @@
         </g>
       </svg>
       <span class="topbar-title" (click)="toggleView()">{{ barTitle }}</span>
-      <svg width="7px" height="10px" viewBox="0 0 6 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" (click)="nextMonth()">
+      <svg width="7px" height="10px" viewBox="0 0 6 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        (click)="nextMonth()">
         <g id="Source-Sans---UI-Elements-Kit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g id="White-Layout" transform="translate(-1182.000000, -1882.000000)" fill="#CED0DA">
             <g id="Dropdowns-&amp;-Selector" transform="translate(80.000000, 1361.000000)">
@@ -54,12 +47,8 @@
         <span class="day-name-unit" *ngFor="let name of dayNames">{{ name }}</span>
       </div>
       <div class="main-calendar-days">
-        <span
-          class="day-unit"
-          *ngFor="let day of days; let i = index;"
-          [ngClass]="{ 'is-prev-month': !day.inThisMonth, 'is-today': day.isToday, 'is-selected': day.isSelected, 'is-disabled': !day.isSelectable }"
-          (click)="day.isSelectable && setDate(i)"
-        >
+        <span class="day-unit" *ngFor="let day of days; let i = index;" [ngClass]="{ 'is-prev-month': !day.inThisMonth, 'is-today': day.isToday, 'is-selected': day.isSelected, 'is-disabled': !day.isSelectable }"
+          (click)="day.isSelectable && setDate(i)">
           {{ day.day }}
         </span>
       </div>

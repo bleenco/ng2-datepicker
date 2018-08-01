@@ -309,10 +309,18 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
 
   toggle(): void {
     this.isOpened = !this.isOpened;
+
+    if (!this.isOpened && this.view === 'years') {
+      this.toggleView();
+    }
   }
 
   close(): void {
     this.isOpened = false;
+
+    if (this.view === 'years') {
+      this.toggleView();
+    }
   }
 
   reset(fireValueChangeEvent = false): void {
