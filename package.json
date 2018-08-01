@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "./dist/bundles/ng2-datepicker.umd.js",
   "module": "./dist/ng2-datepicker.es5.js",
   "es2015": "./dist/ng2-datepicker.js",
