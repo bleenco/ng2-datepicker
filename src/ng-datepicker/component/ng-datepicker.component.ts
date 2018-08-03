@@ -362,4 +362,13 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       this.close();
     }
   }
+  // Displays the day of year
+  toDayOfYear(date: any): number {
+    const newYearsDay: any = new Date(date.getFullYear(), 0, 0);
+    const diff: any = (date - newYearsDay);
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+
+    return dayOfYear;
+  }
 }
