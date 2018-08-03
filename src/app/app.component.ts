@@ -11,7 +11,8 @@ import * as frLocale from 'date-fns/locale/fr';
 export class AppComponent {
   date: Date;
   options: DatepickerOptions = {
-    locale: enLocale
+    locale: enLocale,
+    displayFormat: 'MMM D[,] YYYY | DDD', // Adds the day of year to Input
   };
   constructor() {
     this.date = new Date();
