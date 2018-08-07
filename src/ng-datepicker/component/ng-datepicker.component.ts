@@ -118,8 +118,10 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   useEmptyBarTitle: boolean;
   disabled: boolean;
 
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+  private onTouchedCallback: () => void = () => {
+  };
+  private onChangeCallback: (_: any) => void = () => {
+  };
 
   public setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
@@ -186,7 +188,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
     this.dayNamesFormat = this.options && this.options.dayNamesFormat || 'ddd';
     this.barTitleIfEmpty = this.options && this.options.barTitleIfEmpty || 'Click to select a date';
     this.firstCalendarDay = this.options && this.options.firstCalendarDay || 0;
-    this.locale = this.options && { locale: this.options.locale } || {};
+    this.locale = this.options && {locale: this.options.locale} || {};
     this.placeholder = this.options && this.options.placeholder || '';
     this.addClass = this.options && this.options.addClass || {};
     this.addStyle = this.options && this.options.addStyle || {};
@@ -290,7 +292,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   initYears(): void {
     const range = this.maxYear - this.minYear;
     this.years = Array.from(new Array(range), (x, i) => i + this.minYear).map(year => {
-      return { year: year, isThisYear: year === getYear(this.date) };
+      return {year: year, isThisYear: year === getYear(this.date)};
     });
   }
 
@@ -362,6 +364,7 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       this.close();
     }
   }
+
   // Displays the day of year
   toDayOfYear(date: any): number {
     const newYearsDay: any = new Date(date.getFullYear(), 0, 0);
@@ -371,4 +374,16 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
 
     return dayOfYear;
   }
+
+  public show = false;
+
+  showingChange() {
+    this.show = true;
+  }
+
+  disregardChanges() {
+    this.show = false;
+  }
 }
+
+

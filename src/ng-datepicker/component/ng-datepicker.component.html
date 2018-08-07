@@ -9,7 +9,7 @@
          [ngStyle]="addStyle"
          [id]="fieldId"
          [disabled]="disabled"
-         (click)="toggle()"/>
+         (click)="toggle()"/><button id="theButton" (click)="showingChange()">Add Day of Year</button><button id="theButton2" (click)="disregardChanges()">Remove Day of Year</button>
   <ng-content></ng-content>
   <div class="ngx-datepicker-calendar-container ngx-datepicker-position-{{position}}" *ngIf="isOpened">
     <div class="topbar-container">
@@ -63,7 +63,7 @@
           {{ day.day }}
           <br><br>
           <!--Displays the day of year-->
-         <div class="dayOfYear" >{{ toDayOfYear(day.date) }}</div>
+          <div class="dayOfYear" [ngStyle]="{'display':show == true ? 'block' : 'none' }" [ngStyle]="{'display':show == false ? 'none' : 'block'}">{{ toDayOfYear(day.date) }}</div>
         </span>
       </div>
     </div>
