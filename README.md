@@ -40,7 +40,7 @@ export class AppModule {}
 
 ## Example
 ```html
-  <ng-datepicker [(ngModel)]="date" />
+  <ng-datepicker [(ngModel)]="date"></<ng-datepicker>
 ```
 
 ## Additional attributes
