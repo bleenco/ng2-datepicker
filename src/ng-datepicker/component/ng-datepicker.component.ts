@@ -19,7 +19,7 @@ import {
   subDays,
   setDay
 } from 'date-fns';
-import { ISlimScrollOptions } from 'ngx-slimscroll';
+import {ISlimScrollOptions} from 'ngx-slimscroll/src/classes/slimscroll-options.class';
 
 export type AddClass = string | string[] | { [k: string]: boolean } | null;
 
