@@ -20,14 +20,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng-packagr -p ng-package.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "clean": "rimraf dist",
     "prebuild:lib": "npm run clean",
-    "release": "ng-packagr -p ng-package.json && release-it",
-    "prepublishOnly": "npm run build:lib"
+    "release": "npm run build && cd dist && release-it",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.901.14",
