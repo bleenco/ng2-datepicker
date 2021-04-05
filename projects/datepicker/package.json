@@ -6,6 +6,8 @@
     "@angular/core": "^11.2.8"
   },
   "dependencies": {
+    "date-fns": "^2.19.0",
+    "ngx-slimscroll": "^11.0.0",
     "tslib": "^2.0.0"
   }
 }

@@ -69,14 +69,7 @@
       "options": ["ban-keywords", "check-format", "allow-pascal-case"]
     },
     "whitespace": {
-      "options": [
-        "check-branch",
-        "check-decl",
-        "check-operator",
-        "check-separator",
-        "check-type",
-        "check-typecast"
-      ]
+      "options": ["check-branch", "check-decl", "check-operator", "check-separator", "check-type", "check-typecast"]
     },
     "component-class-suffix": true,
     "contextual-lifecycle": true,
