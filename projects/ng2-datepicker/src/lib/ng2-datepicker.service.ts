@@ -4,6 +4,5 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class Ng2DatepickerService {
-
-  constructor() { }
+  constructor() {}
 }
