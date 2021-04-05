@@ -1,25 +1,143 @@
-# Ng2Datepicker
+# ng2-datepicker
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
+ng2-datepicker is simple and minimal Angular datepicker component. It is fully customizable.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project ng2-datepicker` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng2-datepicker`.
+1. Install package from `npm`.
 
-> Note: Don't forget to add `--project ng2-datepicker` or else it will be added to the default project in your `angular.json` file.
+```sh
+npm install ng2-datepicker --save
+```
 
-## Build
+2. Include DatepickerModule into your application.
 
-Run `ng build ng2-datepicker` to build the project. The build artifacts will be stored in the `dist/` directory.
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { DatepickerModule } from 'ng2-datepicker';
 
-## Publishing
+@NgModule({
+  imports: [BrowserModule, DatepickerModule],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
 
-After building your library with `ng build ng2-datepicker`, go to the dist folder `cd dist/ng2-datepicker` and run `npm publish`.
+And that's it, you can then use it in your component as:
 
-## Running unit tests
+```ts
+date = new Date();
+```
 
-Run `ng test ng2-datepicker` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```html
+<ngx-datepicker [(ngModel)]="date"></ngx-datepicker>
+```
 
-## Further help
+## Options
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```ts
+import { DatepickerOptions } from 'ng2-datepicker';
+import { getYear } from 'date-fns';
+import { enUS } from 'date-fns/locale';
+
+// options sample with default values
+options: DatepickerOptions = {
+  minYear: getYear(new Date()) - 30, // minimum available and selectable year
+  maxYear: getYear(new Date()) + 30, // maximum available and selectable year
+  placeholder: '', // placeholder in case date model is null | undefined, example: 'Please pick a date'
+  format: 'LLLL do yyyy', // date format to display in input
+  formatTitle: 'LLLL yyyy',
+  formatDays: 'EEEEE',
+  firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+  locale: enUS, // date-fns locale
+  position: 'bottom',
+  inputClass: '', // custom input CSS class to be applied
+  calendarClass: 'datepicker-default', // custom datepicker calendar CSS class to be applied
+  scrollBarColor: '#dfe3e9' // in case you customize you theme, here you define scroll bar color
+};
+```
+
+For available `format`, `formatTitle` and `formatDays` options check out [here](https://date-fns.org/docs/format).
+
+Then you apply custom options in your template as:
+
+```html
+<ngx-datepicker [(ngModel)]="date" [options]="options"></ngx-datepicker>
+```
+
+## Theme customization
+
+This examples uses SASS as style preprocessor.
+
+1. Blue Datepicker
+
+```sass
+.datepicker-blue
+  .calendar-container
+    background: #32A8E4
+    border: 1px solid #32A8E4
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .3)
+    top: 35px
+    left: 0
+    font-weight: 700
+  .month-year-text
+    color: #ffffff
+  .control
+    path
+      fill: #eff1f5
+    &:hover
+      path
+        fill: #ffffff
+  .day-name-unit
+    color: #fafafa
+  .day-unit, .year-unit
+    color: #ffffff
+    &.is-prev-month
+      color: #8ed0f0
+    &.is-today
+      background: #8ed0f0
+    &:hover, &.is-selected
+      background: #ffffff
+      color: #686669
+    &.is-disabled
+      color: #aaa8ab
+      &:hover
+        background: transparent
+```
+
+And in your component:
+
+```ts
+import { DatepickerOptions } from 'ng2-datepicker';
+
+options: DatepickerOptions = {
+  calendarClass: 'datepicker-blue',
+  scrollBarColor: '#ffffff'
+};
+```
+
+## Run Demo
+
+1. Clone this repository.
+
+```sh
+git clone https://github.com/bleenco/ng2-datepicker
+```
+
+2. Install dependencies
+
+```sh
+npm install
+```
+
+3. Start the demo
+
+```sh
+npm start
+```
+
+## License
+
+MIT
