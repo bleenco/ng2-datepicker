@@ -1,6 +1,6 @@
 import { getYear, Locale } from 'date-fns';
 import { InjectionToken } from '@angular/core';
-import { enUS } from 'date-fns/locale';
+import locale from 'date-fns/locale/en-US';
 
 export interface DatepickerOptions {
   minDate?: Date;
@@ -33,7 +33,7 @@ export const defaultOptions: DatepickerOptions = {
   formatTitle: 'LLLL yyyy',
   formatDays: 'EEEEE',
   firstCalendarDay: 0,
-  locale: enUS,
+  locale,
   position: 'bottom',
   inputClass: '',
   calendarClass: 'datepicker-default',

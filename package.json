@@ -6,8 +6,11 @@
     "start": "ng serve demo --open --port 4440",
     "build": "ng build demo --prod",
     "build:lib": "ng build datepicker --prod",
+    "build:server": "webpack --config ./webpack.config.js",
+    "build:all": "npm run build && npm run build:server",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "changelog": "standard-changelog --save standard-changelog"
   },
   "private": true,
   "dependencies": {
@@ -43,8 +46,12 @@
     "ngx-slimscroll": "^11.0.0",
     "prettier": "^2.2.1",
     "protractor": "~7.0.0",
+    "standard-changelog": "^2.0.27",
+    "ts-loader": "^8.1.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.1.5"
+    "typescript": "~4.1.5",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.6.0"
   }
 }
