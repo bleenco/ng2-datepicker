@@ -71,8 +71,6 @@ Then you apply custom options in your template as:
 
 This examples uses SASS as style preprocessor.
 
-1. Blue Datepicker
-
 ```sass
 .datepicker-blue
   .calendar-container
