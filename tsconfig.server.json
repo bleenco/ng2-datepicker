@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": false,
+    "declaration": false,
+    "typeRoots": ["node_modules/@types"]
+  },
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 1
+  },
+  "files": ["server.ts"]
+}

@@ -40,7 +40,7 @@ date = new Date();
 ```ts
 import { DatepickerOptions } from 'ng2-datepicker';
 import { getYear } from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import locale from 'date-fns/locale/en-US';
 
 // options sample with default values
 options: DatepickerOptions = {
@@ -51,7 +51,7 @@ options: DatepickerOptions = {
   formatTitle: 'LLLL yyyy',
   formatDays: 'EEEEE',
   firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-  locale: enUS, // date-fns locale
+  locale: locale, // date-fns locale
   position: 'bottom',
   inputClass: '', // custom input CSS class to be applied
   calendarClass: 'datepicker-default', // custom datepicker calendar CSS class to be applied
