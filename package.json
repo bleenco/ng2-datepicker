@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve demo --open --port 4440",
     "build": "ng build demo --prod",
-    "build:lib": "ng build ng2-datepicker --prod",
+    "build:lib": "ng build datepicker --prod",
     "test": "ng test",
     "lint": "ng lint"
   },
@@ -31,6 +31,7 @@
     "@types/node": "^12.11.1",
     "bulma": "^0.9.2",
     "codelyzer": "^6.0.0",
+    "date-fns": "^2.19.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.1.0",

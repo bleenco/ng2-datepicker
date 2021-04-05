@@ -12,7 +12,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "paths": {
-      "ng2-datepicker": ["dist/ng2-datepicker/ng2-datepicker", "dist/ng2-datepicker"]
+      "ng2-datepicker": ["projects/datepicker/src/public-api"]
     },
     "experimentalDecorators": true,
     "moduleResolution": "node",
