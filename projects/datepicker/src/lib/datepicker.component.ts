@@ -70,6 +70,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   dayNames: string[] = [];
   scrollEvents = new EventEmitter<ISlimScrollEvent>();
   sub: Subscription = new Subscription();
+  private doc?: Document;
 
   get value(): Date {
     return this.innerValue;
@@ -81,7 +82,9 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     this.onChangeCallback(this.innerValue);
   }
 
-  constructor(public elementRef: ElementRef, @Inject(DOCUMENT) private document: Document) {}
+  constructor(public elementRef: ElementRef, @Inject(DOCUMENT) document?: any) {
+    this.doc = document as Document;
+  }
 
   get title(): string {
     return format(this.date, this.options.formatTitle as string);
@@ -107,7 +110,11 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   }
 
   ngAfterViewInit(): void {
-    this.sub = fromEvent<KeyboardEvent>(this.document, 'keyup')
+    if (!this.doc) {
+      return;
+    }
+
+    this.sub = fromEvent<KeyboardEvent>(this.doc, 'keyup')
       .pipe(filter(e => this.isOpened && e.key === 'Escape'))
       .subscribe(() => (this.isOpened = false));
   }

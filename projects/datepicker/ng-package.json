@@ -9,5 +9,5 @@
       "ngx-slimscroll": "slimscroll"
     }
   },
-  "whitelistedNonPeerDependencies": ["date-fns", "ngx-slimscroll"]
+  "allowedNonPeerDependencies": ["date-fns", "ngx-slimscroll"]
 }

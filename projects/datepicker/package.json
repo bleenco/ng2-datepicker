@@ -1,6 +1,19 @@
 {
   "name": "ng2-datepicker",
   "version": "11.0.0",
+  "author": {
+    "name": "Jan Kuri",
+    "email": "jkuri88@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bleenco/ng2-datepicker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bleenco/ng2-datepicker/issues"
+  },
+  "homepage": "https://github.com/bleenco/ng2-datepicker#readme",
   "peerDependencies": {
     "@angular/common": ">= 11.0.0",
     "@angular/core": ">= 11.0.0",
