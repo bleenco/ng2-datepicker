@@ -1,104 +1,27 @@
-# ng2-datepicker
+# Ng2Datepicker
 
-Angular 2+ Simple and minimal datepicker component
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
 
-[![AbstruseCI](https://ci.bleenco.io/badge/6)](https://ci.bleenco.io/repo/6)
+## Development server
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/1796022/30781709-624eddc2-a124-11e7-88b7-537af535c23b.png" width="300">
-</p>
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/1796022/30781711-666e5e5a-a124-11e7-9077-59e8eb7d6b03.png" width="300">
-</p>
+## Code scaffolding
 
-## Installation
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-1. Install package from `npm`.
+## Build
 
-```sh
-npm install ng2-datepicker --save
-```
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-2. Include NgDatepickerModule into your application.
+## Running unit tests
 
-```ts
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgDatepickerModule } from 'ng2-datepicker';
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-@NgModule({
-  imports: [
-    BrowserModule,
-    NgDatepickerModule
-  ],
-  declarations: [ AppComponent ],
-  exports: [ AppComponent ]
-})
-export class AppModule {}
-```
+## Running end-to-end tests
 
-## Example
-```html
-  <ng-datepicker [(ngModel)]="date" />
-```
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Additional attributes
-|Name|Type|Default|Description|
-| --- | --- | --- | --- |
-|`headless`|boolean|`false`|Disable datepicker's input|
-|`isOpened`|boolean|`false`|Show or hide datepicker|
-|`position`|string|`bottom-right`|Dropdown position (`bottom-left`, `bottom-right`, `top-left`, `top-right`)|
+## Further help
 
-## Options
-```ts
-import { DatepickerOptions } from 'ng2-datepicker';
-import * as frLocale from 'date-fns/locale/fr';
-
-options: DatepickerOptions = {
-  minYear: 1970,
-  maxYear: 2030,
-  displayFormat: 'MMM D[,] YYYY',
-  barTitleFormat: 'MMMM YYYY',
-  dayNamesFormat: 'dd',
-  firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-  locale: frLocale,
-  minDate: new Date(Date.now()), // Minimal selectable date
-  maxDate: new Date(Date.now()),  // Maximal selectable date
-  barTitleIfEmpty: 'Click to select a date',
-  placeholder: 'Click to select a date', // HTML input placeholder attribute (default: '')
-  addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
-  addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
-  fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
-  useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown 
-};
-```
-
-For available `format` options check out [here](https://date-fns.org/docs/format).
-
-In case you want to initialize with an empty value, just assign null to the model attribute you're storing the date and you can customize the message in the bar with the property `barTitleIfEmpty`.
-
-## Run Included Demo
-
-1. Clone this repository
-
-```sh
-git clone https://github.com/jkuri/ng2-datepicker.git
-cd ng2-datepicker
-```
-
-2. Install packages
-
-```sh
-npm install
-```
-
-3. Run Demo
-
-```sh
-npm start
-```
-
-## Licence
-
-MIT
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
