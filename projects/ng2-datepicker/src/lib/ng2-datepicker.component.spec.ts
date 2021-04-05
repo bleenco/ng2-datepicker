@@ -8,9 +8,8 @@ describe('Ng2DatepickerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Ng2DatepickerComponent ]
-    })
-    .compileComponents();
+      declarations: [Ng2DatepickerComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

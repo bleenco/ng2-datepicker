@@ -12,20 +12,14 @@
     "declaration": false,
     "downlevelIteration": true,
     "paths": {
-      "ng2-datepicker": [
-        "dist/ng2-datepicker/ng2-datepicker",
-        "dist/ng2-datepicker"
-      ]
+      "ng2-datepicker": ["dist/ng2-datepicker/ng2-datepicker", "dist/ng2-datepicker"]
     },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
