@@ -9,7 +9,8 @@ import {
   EventEmitter,
   AfterViewInit,
   OnDestroy,
-  Inject
+  Inject,
+  ChangeDetectorRef
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
@@ -82,7 +83,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     this.onChangeCallback(this.innerValue);
   }
 
-  constructor(public elementRef: ElementRef, @Inject(DOCUMENT) document?: any) {
+  constructor(public elementRef: ElementRef, private ref: ChangeDetectorRef, @Inject(DOCUMENT) document?: any) {
     this.doc = document as Document;
   }
 
@@ -106,7 +107,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   ngOnInit(): void {
     this.view = 'days';
     this.date = new Date();
-    this.initDays();
+    this.init();
   }
 
   ngAfterViewInit(): void {
@@ -142,7 +143,8 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   toggleView(): void {
     this.view = this.view === 'days' ? 'years' : 'days';
     if (this.view === 'years') {
-      setTimeout(() => this.scrollToYear());
+      this.ref.detectChanges();
+      this.scrollToYear();
     }
   }
 
@@ -173,9 +175,6 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   private scrollToYear(): void {
     const parent = this.elementRef.nativeElement.querySelector('.main-calendar-years');
     const el = this.elementRef.nativeElement.querySelector('.year-unit.is-selected');
-    if (!parent || !el) {
-      return;
-    }
     const y = el.offsetTop - parent.clientHeight / 2 + el.clientHeight / 2;
     const event = new SlimScrollEvent({ type: 'scrollTo', y, duration: 100 });
     this.scrollEvents.emit(event);
@@ -269,11 +268,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     }
 
     const input = this.elementRef.nativeElement.querySelector('.datepicker-container > input');
-    if (!input) {
-      return;
-    }
-
-    if (e.target === input || input.contains(e.target)) {
+    if (!input || e.target === input || input.contains(e.target)) {
       return;
     }
 
