@@ -173,6 +173,9 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   private scrollToYear(): void {
     const parent = this.elementRef.nativeElement.querySelector('.main-calendar-years');
     const el = this.elementRef.nativeElement.querySelector('.year-unit.is-selected');
+    if (!parent || !el) {
+      return;
+    }
     const y = el.offsetTop - parent.clientHeight / 2 + el.clientHeight / 2;
     const event = new SlimScrollEvent({ type: 'scrollTo', y, duration: 100 });
     this.scrollEvents.emit(event);

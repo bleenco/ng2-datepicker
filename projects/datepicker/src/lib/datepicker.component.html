@@ -10,7 +10,7 @@
 
   <div class="calendar-container" *ngIf="isOpened">
     <div class="top-container">
-      <div class="controls">
+      <div class="controls prev-month">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="control"
@@ -29,7 +29,7 @@
           <span (click)="toggleView()">{{ title }}</span>
         </span>
       </div>
-      <div class="controls">
+      <div class="controls next-month">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="control"
@@ -44,7 +44,7 @@
         </svg>
       </div>
     </div>
-    <div class="main-calendar-container" *ngIf="view === 'days'">
+    <div class="main-calendar-container is-days" *ngIf="view === 'days'">
       <div class="main-calendar-day-names">
         <span class="day-name-unit" *ngFor="let day of dayNames">{{ day }}</span>
       </div>
@@ -63,7 +63,7 @@
         >
       </div>
     </div>
-    <div class="main-calendar-container" *ngIf="view === 'years'">
+    <div class="main-calendar-container is-years" *ngIf="view === 'years'">
       <div class="main-calendar-years" slimScroll [options]="scrollOptions" [scrollEvents]="scrollEvents">
         <span
           class="year-unit"
