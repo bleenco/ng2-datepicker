@@ -3,8 +3,8 @@ import { InjectionToken } from '@angular/core';
 import locale from 'date-fns/locale/en-US';
 
 export interface DatepickerOptions {
-  minDate?: Date;
-  maxDate?: Date;
+  minDate?: Date | null;
+  maxDate?: Date | null;
   minYear?: number;
   maxYear?: number;
   placeholder?: string;
@@ -17,6 +17,7 @@ export interface DatepickerOptions {
   inputClass?: string;
   calendarClass?: string;
   scrollBarColor?: string;
+  enableKeyboard?: boolean;
 }
 
 export const DATEPICKER_OPTIONS = new InjectionToken<DatepickerOptions>('Datepicker config');
@@ -26,6 +27,8 @@ export function mergeDatepickerOptions(opts: DatepickerOptions): DatepickerOptio
 }
 
 export const defaultOptions: DatepickerOptions = {
+  minDate: null,
+  maxDate: null,
   minYear: getYear(new Date()) - 30,
   maxYear: getYear(new Date()) + 30,
   placeholder: '',
@@ -37,5 +40,6 @@ export const defaultOptions: DatepickerOptions = {
   position: 'bottom',
   inputClass: '',
   calendarClass: 'datepicker-default',
-  scrollBarColor: '#dfe3e9'
+  scrollBarColor: '#dfe3e9',
+  enableKeyboard: true
 };
