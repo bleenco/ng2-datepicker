@@ -55,7 +55,8 @@ options: DatepickerOptions = {
   position: 'bottom',
   inputClass: '', // custom input CSS class to be applied
   calendarClass: 'datepicker-default', // custom datepicker calendar CSS class to be applied
-  scrollBarColor: '#dfe3e9' // in case you customize you theme, here you define scroll bar color
+  scrollBarColor: '#dfe3e9', // in case you customize you theme, here you define scroll bar color
+  keyboardEvents: true // enable keyboard events
 };
 ```
 
