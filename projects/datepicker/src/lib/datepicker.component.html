@@ -10,10 +10,15 @@
 
   <div class="calendar-container" *ngIf="isOpened">
     <div class="top-container">
-      <div class="controls prev-month">
+      <div class="month-year-container">
+        <span class="month-year-text">
+          <span (click)="toggleView()">{{ title }}</span>
+        </span>
+      </div>
+      <div class="controls">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="control"
+          class="control prev-month"
           width="8"
           height="13"
           (click)="prevMonth()"
@@ -23,16 +28,9 @@
             d="M7.575 1.131a1.063 1.063 0 00-1.502 0l-4.93 4.93c-.42.42-.42 1.099 0 1.518l4.93 4.93a1.063 1.063 0 001.503-1.503L3.388 6.82l4.186-4.186a1.063 1.063 0 000-1.503z"
           />
         </svg>
-      </div>
-      <div class="month-year-container">
-        <span class="month-year-text">
-          <span (click)="toggleView()">{{ title }}</span>
-        </span>
-      </div>
-      <div class="controls next-month">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="control"
+          class="control next-month"
           width="8"
           height="13"
           (click)="nextMonth()"

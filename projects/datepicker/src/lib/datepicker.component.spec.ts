@@ -75,7 +75,7 @@ describe('DatepickerComponent', () => {
   });
 
   it('should go to previous month on left carot click', () => {
-    const prev = fixture.nativeElement.querySelector('.controls.prev-month > svg') as SVGElement;
+    const prev = fixture.nativeElement.querySelector('.controls > .prev-month') as SVGElement;
     expect(prev).toBeTruthy();
 
     expect(isSameMonth(component.date, new Date())).toBeTrue();
@@ -94,7 +94,7 @@ describe('DatepickerComponent', () => {
   });
 
   it('should go to next month on right carot click', () => {
-    const next = fixture.nativeElement.querySelector('.controls.next-month > svg') as SVGElement;
+    const next = fixture.nativeElement.querySelector('.controls > .next-month') as SVGElement;
     expect(next).toBeTruthy();
 
     expect(isSameMonth(component.date, new Date())).toBeTrue();

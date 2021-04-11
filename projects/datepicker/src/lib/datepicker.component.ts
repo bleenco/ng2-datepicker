@@ -7,7 +7,6 @@ import {
   HostListener,
   ElementRef,
   EventEmitter,
-  AfterViewInit,
   OnDestroy,
   Inject,
   ChangeDetectorRef
@@ -35,7 +34,9 @@ import {
   format,
   addMonths,
   subMonths,
-  setYear
+  setYear,
+  addYears,
+  subYears
 } from 'date-fns';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -57,7 +58,7 @@ interface Day {
   styleUrls: ['./datepicker.component.sass'],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: DatepickerComponent, multi: true }]
 })
-export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
   @Input() options: DatepickerOptions = { ...defaultOptions };
   @Input() scrollOptions: SlimScrollOptions = new SlimScrollOptions(this.scrollBarOptions);
   @Input() isOpened = false;
@@ -110,20 +111,49 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     this.init();
   }
 
-  ngAfterViewInit(): void {
-    if (!this.doc) {
-      return;
-    }
-
-    this.sub = fromEvent<KeyboardEvent>(this.doc, 'keyup')
-      .pipe(filter(e => this.isOpened && e.key === 'Escape'))
-      .subscribe(() => (this.isOpened = false));
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if ('options' in changes) {
       this.options = mergeDatepickerOptions(this.options);
       this.scrollOptions = new SlimScrollOptions(this.scrollBarOptions);
+
+      if (this.sub) {
+        this.sub.unsubscribe();
+      }
+
+      if (this.options.enableKeyboard) {
+        this.sub = fromEvent<KeyboardEvent>(this.doc || document, 'keyup')
+          .pipe(filter(() => this.isOpened))
+          .subscribe(e => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            switch (e.key) {
+              case 'Down':
+              case 'ArrowDown':
+                this.prevYear();
+                break;
+              case 'Up':
+              case 'ArrowUp':
+                this.nextYear();
+                break;
+              case 'Left':
+              case 'ArrowLeft':
+                this.prevMonth();
+                break;
+              case 'Right':
+              case 'ArrowRight':
+                this.nextMonth();
+                break;
+              case 'Esc':
+              case 'Escape':
+              case 'Enter':
+                this.isOpened = false;
+                break;
+              default:
+                return;
+            }
+          });
+      }
     }
   }
 
@@ -155,6 +185,16 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
 
   prevMonth(): void {
     this.date = subMonths(this.date, 1);
+    this.initDays();
+  }
+
+  nextYear(): void {
+    this.date = addYears(this.date, 1);
+    this.initDays();
+  }
+
+  prevYear(): void {
+    this.date = subYears(this.date, 1);
     this.initDays();
   }
 
