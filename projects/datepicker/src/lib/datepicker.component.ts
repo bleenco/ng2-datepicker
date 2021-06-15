@@ -271,11 +271,11 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   }
 
   private isDateSelectable(date: Date): boolean {
-    if (this.options.minDate && isBefore(this.options.minDate, date)) {
+    if (this.options.minDate && isBefore(date, this.options.minDate)) {
       return false;
     }
 
-    if (this.options.maxDate && isAfter(this.options.maxDate, date)) {
+    if (this.options.maxDate && isAfter(date, this.options.maxDate)) {
       return false;
     }
 
