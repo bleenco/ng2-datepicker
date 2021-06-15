@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker",
-  "version": "11.1.0",
+  "version": "12.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve demo --open --port 4440",
