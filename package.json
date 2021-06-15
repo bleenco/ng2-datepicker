@@ -1,5 +1,5 @@
 {
-  "name": "@ziflow/ng2-datepicker",
+  "name": "ng2-datepicker",
   "version": "11.1.0",
   "scripts": {
     "ng": "ng",
