@@ -1,0 +1,76 @@
+<div class="datepicker-container" [class]="options.calendarClass">
+  <input
+    type="text"
+    [(ngModel)]="displayValue"
+    [class]="options.inputClass"
+    [placeholder]="options.placeholder"
+    readonly
+    (click)="toggle()"
+  />
+
+  <div class="calendar-container" *ngIf="isOpened">
+    <div class="top-container">
+      <div class="month-year-container">
+        <span class="month-year-text">
+          <span (click)="toggleView()">{{ title }}</span>
+        </span>
+      </div>
+      <div class="controls">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="control prev-month"
+          width="8"
+          height="13"
+          (click)="prevMonth()"
+          *ngIf="view === 'days'"
+        >
+          <path
+            d="M7.575 1.131a1.063 1.063 0 00-1.502 0l-4.93 4.93c-.42.42-.42 1.099 0 1.518l4.93 4.93a1.063 1.063 0 001.503-1.503L3.388 6.82l4.186-4.186a1.063 1.063 0 000-1.503z"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="control next-month"
+          width="8"
+          height="13"
+          (click)="nextMonth()"
+          *ngIf="view === 'days'"
+        >
+          <path
+            d="M1.14 1.131a1.063 1.063 0 011.502 0l4.93 4.93c.42.42.42 1.099 0 1.518l-4.93 4.93a1.063 1.063 0 01-1.503-1.503L5.327 6.82 1.14 2.634a1.063 1.063 0 010-1.503z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="main-calendar-container is-days" *ngIf="view === 'days'">
+      <div class="main-calendar-day-names">
+        <span class="day-name-unit" *ngFor="let day of dayNames">{{ day }}</span>
+      </div>
+      <div class="main-calendar-days">
+        <span
+          class="day-unit"
+          *ngFor="let day of days; let i = index"
+          [ngClass]="{
+            'is-prev-month': !day.inThisMonth,
+            'is-today': day.isToday,
+            'is-selected': day.isSelected,
+            'is-disabled': !day.isSelectable
+          }"
+          (click)="day.isSelectable && setDate(i)"
+          >{{ day.day }}</span
+        >
+      </div>
+    </div>
+    <div class="main-calendar-container is-years" *ngIf="view === 'years'">
+      <div class="main-calendar-years" slimScroll [options]="scrollOptions" [scrollEvents]="scrollEvents">
+        <span
+          class="year-unit"
+          *ngFor="let year of years; let i = index"
+          [ngClass]="{ 'is-selected': year.isThisYear }"
+          (click)="setYear(i)"
+          >{{ year.year }}</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

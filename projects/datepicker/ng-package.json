@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/ng2-datepicker",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "date-fns": "dateFns",
+      "date-fns/locale": "dateFnsLocale",
+      "ngx-slimscroll": "slimscroll"
+    }
+  },
+  "allowedNonPeerDependencies": ["date-fns", "ngx-slimscroll"]
+}

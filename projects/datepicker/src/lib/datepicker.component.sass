@@ -1,0 +1,177 @@
+$text-primary: #010001
+$text-secondary: #AAA8AB
+$text-disabled: #BBBABE
+$white: #ffffff
+$color: #2E9BD2
+$border: #EAEDF3
+$box-shadow: 0 4px 12px rgba(0, 0, 0, .3)
+$background-today: #EDEEF2
+
+=unselectable
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+.datepicker-container
+  position: relative
+  display: inline-block
+  box-sizing: border-box
+
+  *
+    box-sizing: inherit
+
+  input
+    +unselectable
+    cursor: pointer
+
+  .is-hidden
+    display: none !important
+
+  .calendar-container
+    position: absolute
+    width: 320px
+    border-radius: 4px
+    top: 35px
+    left: 0
+    z-index: 10
+
+    .top-container
+      +unselectable
+      width: 100%
+      padding: 20px
+      display: flex
+      justify-content: space-between
+      align-items: center
+
+      .month-year-container
+        height: 100%
+        display: flex
+        align-items: center
+        cursor: pointer
+        position: relative
+
+        .month-year-text
+          font-size: 16px
+          width: 100%
+
+      .controls
+        height: 100%
+        display: flex
+        justify-content: flex-end
+        align-items: center
+
+        .control
+          cursor: pointer
+          margin-left: 20px
+
+    .main-calendar-container
+      width: 100%
+      height: 100%
+      font-size: 12px
+      display: block
+
+      .main-calendar-day-names
+        +unselectable
+        display: flex
+        align-items: center
+        height: 35px
+        padding: 0 10px
+
+        .day-name-unit
+          width: calc(100% / 7)
+          text-transform: uppercase
+          text-align: center
+
+      .main-calendar-days, .main-calendar-years
+        +unselectable
+        padding: 10px
+        width: 100%
+        overflow: hidden
+        text-align: left
+        display: inline-block
+
+        &.is-hidden
+          display: none
+
+        .day-unit, .year-unit
+          width: calc(100% / 7)
+          display: inline-flex
+          align-items: center
+          justify-content: center
+          cursor: pointer
+          user-select: none
+          font-size: 13px
+          border-radius: 50%
+
+          &:before
+            content: ''
+            float: left
+            padding-top: calc(100% - 5px)
+
+          &.is-disabled
+            cursor: not-allowed
+
+            &:hover
+              background: transparent
+
+      .main-calendar-years
+        display: block
+        padding: 10px
+        height: 275px
+
+        .year-unit
+          width: calc(100% / 4)
+          height: 35px
+          border-radius: 20px
+          margin: 8px 0
+
+          &:before
+            padding-top: 0
+
+
+.datepicker-default
+
+  .calendar-container
+    background: #ffffff
+    border: 1px solid #eaedf3
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .05)
+    top: 35px
+    left: 0
+    font-weight: 600
+
+  .month-year-text
+    color: #010001
+
+  .control
+    path
+      fill: #aaa8ab
+    &:hover
+      path
+        fill: #010001
+
+  .main-calendar-day-names
+    border-bottom: 1px solid #eaedf3
+
+  .day-name-unit
+    color: #aaa8ab
+
+  .day-unit, .year-unit
+    color: #010001
+
+    &.is-prev-month
+      color: #bbbabe
+
+    &.is-today
+      background: #edeef2
+
+    &:hover, &.is-selected
+      background: #010001
+      color: #ffffff
+
+    &.is-disabled
+      color: #aaa8ab
+
+      &:hover
+        background: transparent

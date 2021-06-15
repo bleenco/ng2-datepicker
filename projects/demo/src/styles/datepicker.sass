@@ -1,0 +1,63 @@
+.datepicker-blue
+  .calendar-container
+    background: #32A8E4
+    border: 1px solid #32A8E4
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .3)
+    top: 35px
+    left: 0
+    font-weight: 700
+  .month-year-text
+    color: #ffffff
+  .control
+    path
+      fill: #eff1f5
+    &:hover
+      path
+        fill: #ffffff
+  .day-name-unit
+    color: #fafafa
+  .day-unit, .year-unit
+    color: #ffffff
+    &.is-prev-month
+      color: #8ed0f0
+    &.is-today
+      background: #8ed0f0
+    &:hover, &.is-selected
+      background: #ffffff
+      color: #686669
+    &.is-disabled
+      color: #aaa8ab
+      &:hover
+        background: transparent
+
+.datepicker-dark
+  .calendar-container
+    background: #39373A
+    border: 1px solid #39373A
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .3)
+    top: 35px
+    left: 0
+    font-weight: 700
+  .month-year-text
+    color: #ffffff
+  .control
+    path
+      fill: #eff1f5
+    &:hover
+      path
+        fill: #ffffff
+  .day-name-unit
+    color: #fafafa
+  .day-unit, .year-unit
+    color: #ffffff
+    &.is-prev-month
+      color: rgba(#ffffff, .4)
+    &.is-today
+      background: lighten(#39373A, 20)
+    &:hover, &.is-selected
+      background: #ffffff
+      color: #686669
+    &.is-disabled
+      color: #aaa8ab
+      &:hover
+        background: transparent
