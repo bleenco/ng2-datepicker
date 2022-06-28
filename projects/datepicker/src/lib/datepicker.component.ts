@@ -173,6 +173,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   toggleView(): void {
     this.view = this.view === 'days' ? 'years' : 'days';
     if (this.view === 'years') {
+      this.initYears();
       this.ref.detectChanges();
       this.scrollToYear();
     }
