@@ -3,6 +3,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
+    "module": "es2015",
     "target": "es2015",
     "declaration": true,
     "declarationMap": true,
@@ -13,7 +14,9 @@
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableResourceInlining": true
+    "enableResourceInlining": true,
+    "flatModuleOutFile": "ng2-datepicker.js",
+    "flatModuleId": "ng2-datepicker",
   },
   "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

@@ -1,6 +1,6 @@
 # ng2-datepicker
 
-ng2-datepicker is simple and minimal Angular datepicker component. It is fully customizable.
+ng2-datepicker is simple and minimal Angular datepicker component. It is fully customizable. Based on 'bleenco' ng2-datepicker. In this package was fixed bug at year select, which appears after dynamically changed minYear/maxYear.
 
 ## Installation
 
