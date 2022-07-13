@@ -18,6 +18,7 @@ export interface DatepickerOptions {
   calendarClass?: string;
   scrollBarColor?: string;
   enableKeyboard?: boolean;
+  disabled?: boolean;
 }
 
 export const DATEPICKER_OPTIONS = new InjectionToken<DatepickerOptions>('Datepicker config');
@@ -41,5 +42,6 @@ export const defaultOptions: DatepickerOptions = {
   inputClass: '',
   calendarClass: 'datepicker-default',
   scrollBarColor: '#dfe3e9',
-  enableKeyboard: true
+  enableKeyboard: true,
+  disabled: false,
 };

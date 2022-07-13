@@ -5,7 +5,7 @@
     [class]="options.inputClass"
     [placeholder]="options.placeholder"
     readonly
-    (click)="toggle()"
+    (click)="!options.disabled && toggle()"
   />
 
   <div class="calendar-container" *ngIf="isOpened">
