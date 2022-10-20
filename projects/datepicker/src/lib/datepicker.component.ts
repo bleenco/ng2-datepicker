@@ -89,7 +89,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   }
 
   get title(): string {
-    return format(this.date, this.options.formatTitle as string);
+    return format(this.date, this.options.formatTitle as string, { locale: this.options.locale });
   }
 
   private get scrollBarOptions(): ISlimScrollOptions {
