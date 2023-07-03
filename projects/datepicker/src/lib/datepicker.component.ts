@@ -11,9 +11,9 @@ import {
   Inject,
   ChangeDetectorRef
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { ISlimScrollEvent, ISlimScrollOptions, SlimScrollOptions, SlimScrollEvent } from 'ngx-slimscroll';
+import { DOCUMENT, NgClass, NgFor, NgIf } from '@angular/common';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule } from '@angular/forms';
+import { ISlimScrollEvent, ISlimScrollOptions, SlimScrollOptions, SlimScrollEvent, NgSlimScrollModule } from 'ngx-slimscroll';
 import { DatepickerOptions, mergeDatepickerOptions, defaultOptions } from './datepicker-options.interface';
 import {
   eachDayOfInterval,
@@ -54,9 +54,13 @@ interface Day {
 
 @Component({
   selector: 'ngx-datepicker',
+  standalone: true,
+  imports: [NgIf, NgClass, NgFor, FormsModule, NgSlimScrollModule],
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.sass'],
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: DatepickerComponent, multi: true }]
+  providers: [
+    {provide: NG_VALUE_ACCESSOR, useExisting: DatepickerComponent, multi: true},
+  ],
 })
 export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
   @Input() options: DatepickerOptions = { ...defaultOptions };

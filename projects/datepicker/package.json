@@ -1,6 +1,6 @@
 {
   "name": "ng2-datepicker-mannavard",
-  "version": "12.1.0",
+  "version": "13.0.0",
   "author": {
     "name": "Jan Kuri",
     "email": "jkuri88@gmail.com"
@@ -15,13 +15,13 @@
   },
   "homepage": "https://github.com/bleenco/ng2-datepicker#readme",
   "peerDependencies": {
-    "@angular/common": ">= 11.0.0",
-    "@angular/core": ">= 11.0.0",
-    "@angular/forms": ">= 11.0.0"
+    "@angular/common": ">= 16.0.0",
+    "@angular/core": ">= 16.0.0",
+    "@angular/forms": ">= 16.0.0"
   },
   "dependencies": {
-    "date-fns": "^2.19.0",
-    "ngx-slimscroll": "^11.0.0",
-    "tslib": "^2.0.0"
+    "date-fns": "^2.30.0",
+    "ngx-slimscroll": "^12.2.0",
+    "tslib": "^2.6.0"
   }
 }

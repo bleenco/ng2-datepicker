@@ -10,15 +10,15 @@ ng2-datepicker is simple and minimal Angular datepicker component. It is fully c
 npm install ng2-datepicker --save
 ```
 
-2. Include DatepickerModule into your application.
+2. Include DatepickerComponent into your application.
 
 ```ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DatepickerModule } from 'ng2-datepicker';
+import { DatepickerComponent } from 'ng2-datepicker';
 
 @NgModule({
-  imports: [BrowserModule, DatepickerModule],
+  imports: [BrowserModule, DatepickerComponent],
   declarations: [AppComponent],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,10 @@
-## [11.0.1](https://github.com/jkuri/ng2-datepicker/compare/v1.7.0...v11.0.1) (2021-04-05)
+## [13.0.0](https://github.com/jkuri/ng2-datepicker/compare/v1.7.0...v11.0.1) (2023-07-03)
 
+### Features
+
+* **angularUpdate:** Update angular to version 16. Make component as Standalone
+
+## [11.0.1](https://github.com/jkuri/ng2-datepicker/compare/v1.7.0...v11.0.1) (2021-04-05)
 
 ### Bug Fixes
 
@@ -10,7 +15,6 @@
 * **docs:** Add position attribute to README ([8aa76e4](https://github.com/jkuri/ng2-datepicker/commit/8aa76e46410c202dc1f6d91ece7dccadd1088c7c))
 * **docs:** Fix table layout in documentation ([72f0d71](https://github.com/jkuri/ng2-datepicker/commit/72f0d718bae731f019e07cb35e1cae51dde36bf8))
 * init date ([1adbaeb](https://github.com/jkuri/ng2-datepicker/commit/1adbaeb2381d239bdffd1f93c8ba2ba6495142e8))
-
 
 ### Features
 

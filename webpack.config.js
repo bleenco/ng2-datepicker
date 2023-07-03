@@ -16,7 +16,7 @@ module.exports = {
     filename: '[name].js'
   },
   module: {
-    rules: [{ test: /\.ts$/, loaders: ['ts-loader?silent=true&configFile=tsconfig.server.json'] }]
+    rules: [{ test: /\.ts$/}]
   },
   optimization: {
     minimize: true,
@@ -45,10 +45,7 @@ module.exports = {
     warnings: false
   },
   node: {
-    console: false,
     global: false,
-    process: false,
-    Buffer: false,
     __filename: false,
     __dirname: false
   }
