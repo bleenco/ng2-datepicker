@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve demo --open --port 4440",
-    "build": "ng build demo --prod",
-    "build:lib": "ng build datepicker --prod",
+    "build": "ng build demo",
+    "build:lib": "ng build datepicker",
     "build:server": "webpack --config ./webpack.config.js",
     "build:all": "npm run build && npm run build:server",
     "test": "ng test",
