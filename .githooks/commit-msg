@@ -1,0 +1,20 @@
+#!/bin/sh
+# Reject a commit message that records the tool that wrote the commit.
+#
+# History is read months later to find when a behaviour changed. An attribution
+# footer or a link to the session that produced the patch says nothing about the
+# change and outlives the conversation it points at, so it does not belong in the
+# message. Enable this hook, and every other hook this directory carries, with:
+#
+#   git config core.hooksPath .githooks
+set -u
+
+msg=$(cat "$1")
+
+if printf '%s\n' "$msg" | grep -Eiq 'co-authored-by: *(claude|codex|copilot)|generated with|🤖|claude\.ai/code|^(claude|codex|assistant)-session:'; then
+	echo "commit-msg: the message carries an assistant attribution footer or a session link." >&2
+	echo "            strip it and commit again." >&2
+	exit 1
+fi
+
+exit 0
